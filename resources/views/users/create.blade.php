@@ -7,7 +7,7 @@
         @csrf
         <div class="row mb-3">
             <div class="col">
-                <input type="file" name="User_image" accept="jpg/png/jpeg">
+                <input type="file" name="image" accept="jpg/png/jpeg" placeholder="Enter your image" required>
             </div>
             <div class="col">
                 <label class="form-label">Name:</label>

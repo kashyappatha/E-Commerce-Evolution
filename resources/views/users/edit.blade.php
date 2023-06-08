@@ -11,6 +11,69 @@
 
         <div class="row">
             <div class="col mb-3">
+                <label class="form-label">image:</label>
+                <input type="file" name="image" class="form-control"
+                    accept="image/jpeg, image/png, image/jpg, image/svg" onchange="previewImage(event)">
+                @if ($user->image)
+                    <img id="preview" src="{{ asset('admin_assets/img/' . $user->image) }}" alt="Image"
+                        style="max-width:60px;" accept="image/jpeg, image/png, image/jpg">
+                    @if ($user->image)
+                        <div class="mt-2">
+                            <button type="button" class="btn btn-danger" onclick="confirmDelete()">
+                                <i class="fas fa-trash"></i> Delete
+                            </button>
+                        </div>
+                    @endif
+                @endif
+                <script>
+                    function previewImage(event) {
+                        var render = new FileReader();
+                        render.onload = function() {
+                            var output = document.getElementById('preview');
+                            output.src = render.result;
+                        }
+                        render.readAsDataURL(event.target.files[0]);
+                    }
+                </script>
+                <script>
+                    function confirmDelete() {
+                        Swal.fire({
+                            title: 'Delete Confirmation',
+                            text: 'Are you sure you want to delete this image?',
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#d33',
+                            cancelButtonColor: '#3085d6',
+                            confirmButtonText: 'Yes, delete it!',
+                            cancelButtonText: 'Cancel'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                // Delete the image from the server
+                                deleteImage();
+                            }
+                        });
+                    }
+
+                    function deleteImage() {
+                        // Send an AJAX request to delete the image
+                        axios.delete('{{ route('customers.deleteImage', $customer->id) }}')
+                            .then((response) => {
+                                if (response.data.success) {
+                                    alert('Image deleted!');
+                                    // Reload the page or perform any other necessary action
+                                } else {
+                                    alert('Failed to delete image!');
+                                }
+                            })
+                            .catch((error) => {
+                                alert('An error occurred while deleting the image!');
+                                console.error(error);
+                            });
+                    }
+                </script>
+            </div>
+
+            <div class="col mb-3">
                 <label class="form-label">User Name:</label>
                 <input type="text" name="name" class="form-control" placeholder="User Name"
                     value="{{ $user->name }}">
@@ -27,21 +90,7 @@
                 <input type="password" name="password" class="form-control" placeholder="Password"
                     value="{{ $user->password }}">
             </div>
-            <div class="col mb-3">
-                <label class="form-label">Profile Image:</label>
-                <input type="file" name="profile_image" class="form-control"
-                    accept="image/jpeg, image/png, image/jpg, image/svg" placeholder="Select Profile Image">
-                @if ($user->profile_image)
-                    <img src="{{ asset('admin_assets/img/' . $user->profile_image) }}" alt="Profile Image"
-                        style="max-width:60px;" accept="image/jpeg, image/png, image/jpg">
-                    <div class="mt-2">
-                        <label class="form-check-label">
-                            <button type="submit" name="profile_image" value="Delete" class="form-check-input"
-                                onclick="confirmDeleteProfileImage()"><i class="fas fa-trash">Delete</i></button>
-                        </label>
-                    </div>
-                @endif
-            </div>
+
         </div>
 
 

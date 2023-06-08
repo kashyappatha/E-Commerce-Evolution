@@ -65,8 +65,12 @@ Route::prefix('admin')->group(function(){
         });
 
 
-        Route::get('profile',[App\Http\Controllers\AuthController::class,'profile'])->name('profile');
-        Route::post('profileupdate',[App\Http\Controllers\AuthController::class,'profileupdate'])->name('profileupdate');
+        Route::get('profile', [App\Http\Controllers\AuthController::class,'profile'])->name('profile');
+        Route::post('/profile/update',[App\Http\Controllers\ProfileController::class,'profileupdate'])->name('profileupdate');
+        // Route::post('/profile/update', 'ProfileController@profileupdate')->name('profileupdate');
+
+
+        // Route::post('profileupdate',[App\Http\Controllers\AuthController::class,'profileupdate'])->name('profileupdate');
         Route::post('check-email-unique', [App\Http\Controllers\AuthController::class, 'checkEmailUnique'])->name('check.email.unique');
         Route::get('search_results', [CategoryController::class, 'search'])->name('search');
 

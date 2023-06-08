@@ -31,7 +31,7 @@
                         <option value="">Select Country</option>
                         <option value="india">India</option>
                         <option value="australia">Australia</option>
-                        <option value="sri  lanka">Srilanka</option>
+                        <option value="srilanka">Srilanka</option>
                         <option value="nepal">Nepal</option>
                         <option value="america">America</option>
 

@@ -90,8 +90,6 @@
                 <div>
                     <select class="form-select" name="country" value="{{ $customer->country }}"required>
                         <option value="">Select Country</option>
-                        <option value="india">India</option>
-                        <option value="Australia">Australia</option>
 
                     </select>
                 </div>
@@ -101,8 +99,7 @@
                 <div>
                     <select class="form-select" name="state" value="{{ $customer->state }}"required>
                         <option value="">Select state</option>
-                        <option value="Gujarat">Gujarat</option>
-                        <option value="Maharastra">Maharastra</option>
+
                     </select>
                 </div>
             </div>
@@ -111,8 +108,7 @@
                 <div>
                     <select class="form-select" name="city" value="{{ $customer->city }}" required>
                         <option value="">Select city</option>
-                        <option value="Rajkot">Rajkot</option>
-                        <option value="Mumbai">Mumbai</option>
+
                     </select>
                 </div>
             </div>

@@ -7,18 +7,7 @@
     </div>
 
     <hr />
-    {{-- <form action="{{ route('search') }}" method="GET" id="searchForm"
-        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-        <div class="input-group">
-            <input type="search" name="search" class="form-control bg-light border-0 small" placeholder="Search for..."
-                aria-label="Search" aria-describedby="basic-addon2">
-            <div class="input-group-append">
-                <button class="btn btn-primary" type="submit">
-                    <i class="fas fa-search fa-sm"></i>
-                </button>
-            </div>
-        </div>
-    </form> --}}
+
     @if (Session::has('success'))
         <div class="alert alert-success" role="alert">
             {{ Session::get('success') }}
@@ -259,16 +248,16 @@
     {!! $customers->links() !!}
 @endsection
 @push('scripts')
-    {{-- <!-- Add DataTables CSS and JS files -->
+    <!-- Add DataTables CSS and JS files -->
 
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"
         integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"
         integrity="sha512-F636MAkMAhtTplahL9F6KmTfxTmYcAcjcCkyu0f0voT3N/6vzAuJ4Num55a0gEJ+hRLHhdz3vDvZpf6kqgEa5w=="
-        {{-- crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-    {{-- <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script> --}}
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
@@ -334,10 +323,10 @@
                 ]
             });
 
-            $('#searchForm').on('submit', function(e) {
-                e.preventDefault();
-                table.draw();
-            });
+            // $('#searchForm').on('submit', function(e) {
+            //     e.preventDefault();
+            //     table.draw();
+            // });
         });
     </script>
 @endpush
