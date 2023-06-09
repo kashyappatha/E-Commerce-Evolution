@@ -7,7 +7,10 @@
         @csrf
         <div class="row mb-3">
             <div class="col">
-                <input type="file" name="image" accept="jpg/png/jpeg" placeholder="Enter your image" required>
+                <label class="form-label">Profile Image:</label>
+                <input type="file" name="profile_image" class="form-control" placeholder="Select Profile Image"
+                    accept="image/jpeg, image/png, image/jpg, image/svg">
+
             </div>
             <div class="col">
                 <label class="form-label">Name:</label>
@@ -21,10 +24,7 @@
                 <label class="form-label">Password:</label>
                 <input type="password" name="password" class="form-control" placeholder="Enter Password Here" required>
             </div>
-            {{-- <div class="col">
-                <label class="form-label">Profile Image:</label>
-                <input type="file" name="profile_image" class="form-control" placeholder="Select Profile Image">
-            </div> --}}
+
         </div>
         <div class="row">
             <div class="d-grid">

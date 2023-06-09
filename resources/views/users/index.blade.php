@@ -32,7 +32,8 @@
                     <tr>
                         <td class="align-middle">{{ $loop->iteration }}</td>
                         <td class="align-middle">
-                            <img src="{{ asset('admin_assets/img/' . $rs->image) }}"alt="Image" width="70">
+                            <img src="{{ asset('admin_assets/img/' . $rs->profile_image) }}"alt="Image" width="50"
+                                style="border-radius:23px;">
                         </td>
                         <td class="align-middle">{{ $rs->name }}</td>
                         <td class="align-middle">{{ $rs->email }}</td>
@@ -102,7 +103,7 @@
                                         success: function(response) {
                                             Swal.fire({
                                                 title: 'Detailed!',
-                                                text: 'The category has been Viewing.',
+                                                text: 'The users details has been Viewing.',
                                                 icon: 'success',
                                                 timer: 2000,
                                                 timerProgressBar: true,
@@ -114,7 +115,7 @@
                                         error: function(xhr, status, error) {
                                             Swal.fire({
                                                 title: 'Error!',
-                                                text: 'An error occurred while Viewing the category.',
+                                                text: 'An error occurred while Viewing the users.',
                                                 icon: 'error',
                                                 timer: 2000,
                                                 timerProgressBar: true,
@@ -127,8 +128,8 @@
 
                                 function showEdit(url) {
                                     Swal.fire({
-                                        title: 'Edit Category',
-                                        text: 'Are you sure you want to Edit this category?',
+                                        title: 'Edit Users Details',
+                                        text: 'Are you sure you want to Edit this Users Detail?',
                                         icon: 'warning',
                                         showCancelButton: true,
                                         confirmButtonColor: '#d33',
@@ -155,7 +156,7 @@
                                         success: function(response) {
                                             Swal.fire({
                                                 title: 'edited!',
-                                                text: 'The category has been edited.',
+                                                text: 'The Users Details has been edited.',
                                                 icon: 'success',
                                                 timer: 2000,
                                                 timerProgressBar: true,
@@ -167,7 +168,7 @@
                                         error: function(xhr, status, error) {
                                             Swal.fire({
                                                 title: 'Error!',
-                                                text: 'An error occurred while editing the category.',
+                                                text: 'An error occurred while editing the User Details.',
                                                 icon: 'error',
                                                 timer: 2000,
                                                 timerProgressBar: true,
@@ -179,8 +180,8 @@
 
                                 function confirmDelete(url) {
                                     Swal.fire({
-                                        title: 'Delete Category',
-                                        text: 'Are you sure you want to delete this category?',
+                                        title: 'Delete Users ',
+                                        text: 'Are you sure you want to delete this Users?',
                                         icon: 'warning',
                                         showCancelButton: true,
                                         confirmButtonColor: '#d33',
@@ -205,7 +206,7 @@
                                         success: function(response) {
                                             Swal.fire({
                                                 title: 'Deleted!',
-                                                text: 'The category has been deleted.',
+                                                text: 'The Users has been deleted.',
                                                 icon: 'success',
                                                 timer: 2000,
                                                 timerProgressBar: true,
@@ -217,7 +218,7 @@
                                         error: function(xhr, status, error) {
                                             Swal.fire({
                                                 title: 'Error!',
-                                                text: 'An error occurred while deleting the category.',
+                                                text: 'An error occurred while deleting the Users.',
                                                 icon: 'error',
                                                 timer: 2000,
                                                 timerProgressBar: true,
@@ -252,9 +253,9 @@
         integrity="sha512-F636MAkMAhtTplahL9F6KmTfxTmYcAcjcCkyu0f0voT3N/6vzAuJ4Num55a0gEJ+hRLHhdz3vDvZpf6kqgEa5w=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-
+    {{--
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script> --}}
 
 
     <script>

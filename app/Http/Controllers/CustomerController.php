@@ -3,29 +3,30 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
-use  Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
-use  Illuminate\Database\Eloquent\Collection;
-use Illuminate\Pagination\LengthAwarePaginator;
-use App\Http\Controllers\File;
+use Illuminate\Support\Facades\File;
 
 class CustomerController extends Controller
 {
-    public function index(){
-        // $customers = Customer::all();
+    public function index(Request $request)
+    {
+        $customers = Customer::query();
 
-       // Or use any other logic to fetch the users
+        if ($request->has('search')) {
+            $search = $request->search;
+            $customers->where('customer', 'like', "%$search%");
+        }
 
-       $customers = Customer::paginate(10);
+        $customers = $customers->paginate(10);
 
-        // $customer = $customer->paginate(10);
-        return view('customers.index' ,compact('customers'));
-
+        return view('customers.index', compact('customers'));
     }
 
-    public function create(){
+    public function create()
+    {
         return view('customers.create');
     }
+
     public function store(Request $request)
     {
         Customer::create($request->all());
@@ -35,11 +36,9 @@ class CustomerController extends Controller
 
     public function show(string $id)
     {
-
         $customer = Customer::findOrFail($id);
 
         return view('customers.show', compact('customer'));
-
     }
 
     public function edit(string $id)
@@ -49,16 +48,14 @@ class CustomerController extends Controller
         return view('customers.edit', compact('customer'));
     }
 
-    public function update(Request $request , string $id)
+    public function update(Request $request, string $id)
     {
-
         $customer = Customer::findOrFail($id);
 
         $customer->update($request->all());
 
-        return redirect()->route('customers')->with('success', 'customers updated successfully');
+        return redirect()->route('customers')->with('success', 'Customers updated successfully');
     }
-
 
     public function destroy($id)
     {
@@ -66,28 +63,42 @@ class CustomerController extends Controller
 
         $customer->delete();
 
-        return redirect()->route('customers')->with('success', 'customers deleted successfully');
+        return redirect()->route('customers')->with('success', 'Customers deleted successfully');
     }
-    public function deleteImage($id)
-{
-    $customer = Customer::findOrFail($id);
 
-    if ($customer->profile_image) {
-        // Delete the image file from the server
-        $imagePath = public_path('admin_assets/img/' . $customer->profile_image);
-        if (File::exists($imagePath)) {
-            File::delete($imagePath);
+    public function deleteImage($id)
+    {
+        $customer = Customer::findOrFail($id);
+
+        if ($customer->profile_image) {
+            // Delete the image file from the server
+            $imagePath = public_path('admin_assets/img/' . $customer->profile_image);
+            if (File::exists($imagePath)) {
+                File::delete($imagePath);
+            }
+
+            // Clear the image field in the category record
+            $customer->profile_image = null;
+            $customer->save();
+
+            return response()->json(['success' => true]);
         }
 
-        // Clear the image field in the category record
-        $customer->profile_image = null;
-        $customer->save();
-
-        return response()->json(['success' => true]);
+        return response()->json(['success' => false]);
     }
 
-    return response()->json(['success' => false]);
-}
+    public function search(Request $request)
+    {
+        $search = $request->input('search');
 
+        $query = Customer::query();
 
+        if ($search) {
+            $query->where('customer', 'like', '%' . $search . '%');
+        }
+
+        $categories = $query->paginate(10);
+
+        return view('customer', compact('categories'));
+    }
 }

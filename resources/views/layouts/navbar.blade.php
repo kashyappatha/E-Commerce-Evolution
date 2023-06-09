@@ -191,7 +191,7 @@
                     <small>{{ auth()->user()->level }}</small>
                 </span>
                 <img class="img-profile rounded-circle"
-                    src="https://startbootstrap.github.io/startbootstrap-sb-admin-2/img/undraw_profile.svg">
+                    src="{{ asset('admin_assets/img/' . auth()->user()->profile_image) }}">
             </a>
 
             <!-- Dropdown - User Information -->
@@ -201,11 +201,11 @@
                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                     Profile
                 </a>
-                <a class="dropdown-item" href="#">
+                <a class="dropdown-item" href="profile">
                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                     Settings
                 </a>
-                <a class="dropdown-item" href="#">
+                <a class="dropdown-item" href="{{ route('dashboard') }}">
                     <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
                     Activity Log
                 </a>

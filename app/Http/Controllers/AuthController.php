@@ -30,6 +30,7 @@ class AuthController extends Controller
         ])->validate();
 
         User::create([
+            'profile_image'=>$request->image,
             'name' => $request->name,
             'email' => $request->email,
            'password' => Hash::make($request->password),

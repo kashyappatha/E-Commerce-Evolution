@@ -249,18 +249,22 @@
 @endsection
 @push('scripts')
     <!-- Add DataTables CSS and JS files -->
-
+    {{--
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"
         integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"
         integrity="sha512-F636MAkMAhtTplahL9F6KmTfxTmYcAcjcCkyu0f0voT3N/6vzAuJ4Num55a0gEJ+hRLHhdz3vDvZpf6kqgEa5w=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}
 
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+
+    <script
+        src="https://cdn.datatables.net/v/bs4/dt-1.13.4/af-2.5.3/b-2.3.6/b-colvis-2.3.6/b-html5-2.3.6/date-1.4.1/fc-4.2.2/sl-1.6.2/sr-1.2.2/datatables.min.js">
+    </script>
 
     <script>
         $(document).ready(function() {
@@ -323,10 +327,10 @@
                 ]
             });
 
-            // $('#searchForm').on('submit', function(e) {
-            //     e.preventDefault();
-            //     table.draw();
-            // });
+            $('search').on('submit', function(e) {
+                e.preventDefault();
+                table.draw();
+            });
         });
     </script>
 @endpush

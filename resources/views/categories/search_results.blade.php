@@ -1,4 +1,4 @@
-@extends('layouts.app')
+{{-- @extends('layouts.app')
 
 @section('content')
     <form action="{{ route('search') }}" method="GET" id="searchForm"
@@ -88,4 +88,4 @@
             });
         });
     </script>
-@endsection
+@endsection --}}

@@ -53,17 +53,21 @@
                                                         title: 'Oops...',
                                                         text: "{{ $error }}",
                                                         timer: 5000,
-                                                        showConfirmButton: false
+                                                        showConfirmButton: false;
                                                     });
                                                 @endforeach
                                             </script>
                                         @endif
                                         <div class="form-group">
+                                            <label class="form-label">Email:</label>
                                             <input name="email" type="email" class="form-control form-control-user"
                                                 id="exampleInputEmail" aria-describedby="emailHelp"
                                                 placeholder="Enter Email Address...">
                                         </div>
                                         <div class="form-group">
+                                            <label class="form-label">Password:</label>
+                                            <a href="{{ '/forgot-password' }}" class="float-right">Forgot
+                                                Password?</a>
                                             <input name="password" type="password"
                                                 class="form-control form-control-user" id="exampleInputPassword"
                                                 placeholder="Password">
