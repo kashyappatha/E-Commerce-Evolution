@@ -88,4 +88,9 @@ class AuthController extends Controller
         $user = Auth::user();
         return view('profile', compact('user'));
     }
+    public function view()
+    {
+        $user = Auth::user();
+        return view('view',compact('user'));
+    }
 }

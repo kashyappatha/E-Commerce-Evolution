@@ -12,7 +12,7 @@
             {{ Session::get('success') }}
         </div>
     @endif
-    <table class="table table-hover">
+    <table class="table table-hover" id="kashyap">
         <thead class="table-primary">
             <tr>
                 <th>#</th>
@@ -201,5 +201,76 @@
         </tbody>
     </table>
     <!-- Pagination links -->
-    {{-- {{ $rs->links() }} --}}
+    {{-- {{ !!$rs->links() !!}} --}}
 @endsection
+@push('scripts')
+    <!-- Add DataTables CSS and JS files -->
+    {{--
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+        integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"
+        integrity="sha512-F636MAkMAhtTplahL9F6KmTfxTmYcAcjcCkyu0f0voT3N/6vzAuJ4Num55a0gEJ+hRLHhdz3vDvZpf6kqgEa5w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}
+
+    {{-- <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script> --}}
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+
+    <link
+        href="https://cdn.datatables.net/v/bs4/dt-1.13.4/af-2.5.3/b-2.3.6/b-colvis-2.3.6/b-html5-2.3.6/date-1.4.1/fc-4.2.2/sl-1.6.2/sr-1.2.2/datatables.min.css"
+        rel="stylesheet" />
+
+    <script
+        src="https://cdn.datatables.net/v/bs4/dt-1.13.4/af-2.5.3/b-2.3.6/b-colvis-2.3.6/b-html5-2.3.6/date-1.4.1/fc-4.2.2/sl-1.6.2/sr-1.2.2/datatables.min.js">
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            var table = $('#kashyap').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url: '{{ route('search') }}',
+                    data: function(d) {
+                        d.search = $('input[name=search]').val();
+                    }
+                },
+                columns: [{
+                        data: 'id',
+                        name: 'id'
+                    },
+                    {
+                        data: 'title',
+                        name: 'title'
+                    } {
+                        data: 'type',
+                        name: 'type'
+                    },
+                    {
+                        data: 'price',
+                        name: 'price'
+                    },
+                    {
+                        data: 'product_code',
+                        name: 'product_code'
+                    },
+                    {
+                        data: 'description',
+                        name: 'description'
+                    },
+                    {
+                        data: 'image',
+                        name: 'image'
+                    },
+
+                ]
+            });
+
+            $('search').on('submit', function(e) {
+                e.preventDefault();
+                table.draw();
+            });
+        });
+    </script>

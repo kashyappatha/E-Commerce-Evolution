@@ -14,7 +14,7 @@ class CustomerController extends Controller
 
         if ($request->has('search')) {
             $search = $request->search;
-            $customers->where('customer', 'like', "%$search%");
+            $customers->where('name', 'like', "%$search%");
         }
 
         $customers = $customers->paginate(10);
@@ -94,11 +94,11 @@ class CustomerController extends Controller
         $query = Customer::query();
 
         if ($search) {
-            $query->where('customer', 'like', '%' . $search . '%');
+            $query->where('name', 'like', '%' . $search . '%');
         }
 
         $categories = $query->paginate(10);
 
-        return view('customer', compact('categories'));
+        return view('name', compact('customers'));
     }
 }

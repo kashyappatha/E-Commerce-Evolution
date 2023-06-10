@@ -68,6 +68,7 @@ Route::prefix('admin')->group(function(){
 
 
         Route::get('profile', [App\Http\Controllers\AuthController::class,'profile'])->name('profile');
+        Route::get('view',[App\Http\Controllers\AuthController::class,'view'])->name('view');
         Route::post('/profile/update',[App\Http\Controllers\ProfileController::class,'profileupdate'])->name('profileupdate');
         Route::delete('/profile/{id}/delete-image', [ProfileController::class, 'deleteImage'])->name('profileupdate.deleteImage');
 
@@ -102,19 +103,21 @@ Route::prefix('admin')->group(function(){
 
         });
 
-        // Password Reset Routes
-
 
 
 
     });
 
 });
-Route::get('/forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('auth.request');
-// Route::get('/password/reset', 'App\Http\Controllers\ResetPasswordController@showResetForm')->name('password.request');
-Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('auth.email');
+
+    // Password Reset Routes
+
+    Route::get('/forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('auth.request');
+    // Route::get('/password/reset', 'App\Http\Controllers\ResetPasswordController@showResetForm')->name('password.request');
+    Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('auth.email');
 
 
 
-Route::get('/reset-password/{token}', [ResetPasswordController::class, 'showResetForm'])->name('auth.reset');
-Route::post('/reset-password', [ResetPasswordController::class, 'reset'])->name('auth.update');
+    Route::get('/reset-password/{token}', [ResetPasswordController::class, 'showResetForm'])->name('auth.reset');
+    Route::post('/reset-password', [ResetPasswordController::class, 'reset'])->name('auth.update');
+

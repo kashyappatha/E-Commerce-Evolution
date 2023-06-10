@@ -53,7 +53,7 @@
                                                         title: 'Oops...',
                                                         text: "{{ $error }}",
                                                         timer: 5000,
-                                                        showConfirmButton: false;
+                                                        showConfirmButton: false // Corrected semicolon (;) to comma (,)
                                                     });
                                                 @endforeach
                                             </script>
