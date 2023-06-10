@@ -66,7 +66,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label class="form-label">Password:</label>
-                                            <a href="{{ '/forgot-password' }}" class="float-right">Forgot
+                                            <a href="{{ route('forget.password.get') }}" class="float-right">Forgot
                                                 Password?</a>
                                             <input name="password" type="password"
                                                 class="form-control form-control-user" id="exampleInputPassword"

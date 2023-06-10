@@ -188,22 +188,23 @@
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">
                     {{ auth()->user()->name }}
                     <br>
+                    <img src="{{ asset('admin_assets/img/' . auth()->user()->profile_image) }}"alt="Image"
+                        width="30" style="border-radius:23px;">
                     <small>{{ auth()->user()->level }}</small>
                 </span>
-                <img class="img-profile rounded-circle"
-                    src="{{ asset('admin_assets/img/' . auth()->user()->profile_image) }}">
+
             </a>
 
             <!-- Dropdown - User Information -->
             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                 <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="text-decoration:none;">
                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                     Profile
                 </a>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                     <a class="dropdown-item" href="view">View Profile</a>
-                    <a class="dropdown-item" href="/forgot-password">Update Password</a>
+                    <a class="dropdown-item" href="{{ route('forget.password.get') }}">Update Password</a>
 
                     <a class="dropdown-item" href="profile">
                         <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>

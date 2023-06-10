@@ -106,18 +106,13 @@ Route::prefix('admin')->group(function(){
 
 
 
+
     });
+Route::get('forget-password', [ForgotPasswordController::class, 'showForgetPasswordForm'])->name('forget.password.get');
+Route::post('forget-password', [ForgotPasswordController::class, 'submitForgetPasswordForm'])->name('forget.password.post');
+Route::get('reset-password/{token}', [ForgotPasswordController::class, 'showResetPasswordForm'])->name('reset.password.get');
+Route::post('reset-password', [ForgotPasswordController::class, 'submitResetPasswordForm'])->name('reset.password.post');
 
 });
 
     // Password Reset Routes
-
-    Route::get('/forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('auth.request');
-    // Route::get('/password/reset', 'App\Http\Controllers\ResetPasswordController@showResetForm')->name('password.request');
-    Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('auth.email');
-
-
-
-    Route::get('/reset-password/{token}', [ResetPasswordController::class, 'showResetForm'])->name('auth.reset');
-    Route::post('/reset-password', [ResetPasswordController::class, 'reset'])->name('auth.update');
-

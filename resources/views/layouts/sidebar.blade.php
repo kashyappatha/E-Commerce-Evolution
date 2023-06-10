@@ -6,12 +6,11 @@
         <div class="sidebar-brand-icon">
 
 
-            <img class="img-profile rounded-circle"
-                src="https://startbootstrap.github.io/startbootstrap-sb-admin-2/img/undraw_profile.svg" width="30">
-            <span class="mr-2 d-none d-lg-inline small">
-                {{ auth()->user()->name }}
+            <img src="{{ asset('admin_assets/img/' . auth()->user()->profile_image) }}"alt="Image" width="30"
+                style="border-radius:23px;">
+            <span class="mr-2 d-none d-lg-inline">
+                {{ auth()->user()->name ?? 'None' }}
                 <br>
-                <small>{{ auth()->user()->level }}</small>
 
             </span>
         </div>
