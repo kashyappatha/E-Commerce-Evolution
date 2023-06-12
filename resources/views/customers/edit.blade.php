@@ -1,14 +1,105 @@
 @extends('layouts.app')
 @section('category', 'Edit category')
 @section('contents')
-    <h1 class="mb-0">Edit Customer</h1><br />
+
+    <marquee width="30%" scrollamount="13">
+        <h1 class="mb-0 bg-primary text-white text-center">Edit Customer</h1><br />
+    </marquee>
+
+
+    <div class="mt-4">
+        <div class="col-md-4 float-right">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title fw-bolder">Additional Information about Customers</h5>
+                    <hr />
+                    <p class="card-text"></p>
+                    <div class="dropdown">
+                        <a href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                            customers
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ route('customers.show', $customer->id) }}">viewpage</a></li>
+                            <li><a href="#">Orders</a>
+                            <li><a href="logout">logout</a></li>
+                        </ul>
+                    </div>
+                    <br />
+
+                    <h2 id="view-profile-heading">View Customers Page</h2>
+                    <div class="card-body" id="view-profile-section" style="display: none;">
+                        <div class="card-body">
+                            <table class="table table-bordered">
+                                <tr>
+                                    <th>Profile Image:</th>
+                                    <td><img src="{{ asset('admin_assets/img/' . $customer->profile_image) }}"
+                                            alt="Profile Image" style="max-width: 55px; border-radius: 25px;"></td>
+                                </tr>
+                                <tr>
+                                    <th>Name:</th>
+                                    <td>{{ $customer->name }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Email:</th>
+                                    <td>{{ $customer->email }}</td>
+                                </tr>
+                                <tr>
+                                    <th>country:</th>
+                                    <td>{{ $customer->country }}</td>
+                                </tr>
+                                <tr>
+                                    <th>State:</th>
+                                    <td>{{ $customer->state }}</td>
+                                </tr>
+                                <tr>
+                                    <th>city:</th>
+                                    <td>{{ $customer->city }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Address_1:</th>
+                                    <td>{{ $customer->Address_1 }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Address_2:</th>
+                                    <td>{{ $customer->Address_2 }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Postalcode:</th>
+                                    <td>{{ $customer->postalcode }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Phone:</th>
+                                    <td>{{ $customer->phone }}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                    <script>
+                        $(document).ready(function() {
+                            $("#view-profile-heading").click(function() {
+                                $("#view-profile-section").toggle();
+                            });
+                        });
+                        $(document).ready(function() {
+                            $('#update-password-heading').click(function() {
+                                $('#password-card').toggle();
+                            });
+                        });
+                    </script>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
 
     <hr />
     <form action="{{ route('customers.update', $customer->id) }}" method="POST">
         @csrf
         @method('PUT')
         <input type="hidden" name="id" value="{{ $customer->id }}">
-        <table class="table table-bordered">
+        <table class="table table-bordered col-md-8">
             <tr>
                 <td>
                     <label class="form-label">profile_image:</label>
@@ -17,8 +108,8 @@
                     <input type="file" name="profile_image" class="form-control"
                         accept="image/jpeg, image/png, image/jpg, image/svg" onchange="previewImage(event)">
                     @if ($customer->profile_image)
-                        <img id="preview" src="{{ asset('admin_assets/img/' . $customer->profile_image) }}" alt="Image"
-                            style="max-width:60px;" accept="image/jpeg, image/png, image/jpg">
+                        <img id="preview" src="{{ asset('admin_assets/img/' . $customer->profile_image) }}"
+                            alt="Image" style="max-width:60px;" accept="image/jpeg, image/png, image/jpg">
                         @if ($customer->profile_image)
                             <div class="mt-2">
                                 <button type="button" class="btn btn-danger" onclick="confirmDelete()">
@@ -141,6 +232,7 @@
             </div>
             <button class="btn btn-primary">Back</button>
             <button class="btn btn-primary">Reset</button>
+        </div>
         </div>
     </form>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/css/bootstrap.min.css">

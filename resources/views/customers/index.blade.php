@@ -2,7 +2,9 @@
 @section('customer', 'Customer')
 @section('contents')
     <div class="d-flex align-items-center justify-content-between">
-        <h1 class="mb-0">List Customers</h1>
+        <marquee width="30%" scrollamount="10">
+            <h1 class="mb-0 bg-primary text-white text-center">List Customers</h1>
+        </marquee>
         <a href="{{ route('customers.create') }}" class="btn btn-primary">Add Customer</a>
     </div>
 

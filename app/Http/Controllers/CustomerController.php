@@ -45,6 +45,8 @@ class CustomerController extends Controller
     {
         $customer = Customer::findOrFail($id);
 
+        // $customer->save();
+
         return view('customers.edit', compact('customer'));
     }
 

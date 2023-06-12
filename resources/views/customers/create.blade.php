@@ -113,12 +113,58 @@
             <div class="d-grid">
                 <button type="submit" class="btn btn-primary">Submit</button>
                 <button class="btn btn-primary">Back</button>
-                <button class="btn btn-primary">Reset</button>
+                <button type="reset"class="btn btn-primary">Reset</button>
             </div>
         </div>
     </form>
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
     <script>
+        function previewImage(event) {
+            var render = new FileReader();
+            render.onload = function() {
+                var output = document.getElementById('preview');
+                output.src = render.result;
+            }
+            render.readAsDataURL(event.target.files[0]);
+        }
+
+        function confirmDelete() {
+            Swal.fire({
+                title: 'Delete Confirmation',
+                text: 'Are you sure you want to delete this image?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Delete the image from the server
+                    deleteImage();
+                }
+            });
+        }
+
+
+        function toggleState(countrySelect) {
+            var stateContainer = document.getElementById('stateContainer');
+            var cityContainer = document.getElementById('cityContainer');
+
+            if (countrySelect.value !== '') {
+                stateContainer.style.display = 'block';
+                cityContainer.style.display = 'block';
+            } else {
+                stateContainer.style.display = 'none';
+                cityContainer.style.display = 'none';
+            }
+        }
+
         const countrySelect = document.getElementById('country');
         const stateSelect = document.getElementById('state');
         const citySelect = document.getElementById('city');
@@ -182,4 +228,5 @@
         countrySelect.addEventListener('change', populateStates);
         stateSelect.addEventListener('change', populateCities);
     </script>
+
 @endsection

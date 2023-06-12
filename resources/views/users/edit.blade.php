@@ -1,7 +1,9 @@
 @extends('layouts.app')
 @section('users', 'Edit users')
 @section('contents')
-    <h1 class="mb-0">Edit User</h1><br />
+    <marquee width="30%" scrollamount="10">
+        <h1 class="mb-0">Edit User</h1><br />
+    </marquee>
 
     <hr />
     <form action="{{ route('users.update', $user->id) }}" method="POST">
@@ -84,14 +86,14 @@
             </div>
         </div>
 
-        <div class="row">
+        {{-- <div class="row">
             <div class="col mb-3">
                 <label class="form-label">Password:</label>
                 <input type="password" name="password" class="form-control" placeholder="Password"
                     value="{{ $user->password }}">
             </div>
 
-        </div>
+        </div> --}}
 
 
         <div class="row">

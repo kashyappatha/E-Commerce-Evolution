@@ -15,7 +15,7 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a href="view">viewpage</a></li>
-                            <li><a href="">Update Password</a></li>
+                            <li><a href="{{ 'forget.get' }}">Update Password</a></li>
                             <li><a href="">logout</a></li>
                         </ul>
                     </div>
@@ -68,6 +68,10 @@
                                 <div class="col-md-6 offset-md-4">
                                     <button type="submit" class="btn btn-primary">Send Reset Link</button>
                                 </div>
+                                <br />
+                                <div class="col-md-6 offset-md-4">
+                                    <button type="reset" class="btn btn-primary">Reset</button>
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -103,7 +107,9 @@
         <table class="table table-bordered col-md-8">
             <tr>
                 <th colspan="2">
-                    <h4 class="text-left bg-primary text-white ">Profile Settings</h4>
+                    <marquee width="29%" scrollamount="10">
+                        <h4 class="text-left bg-primary text-white  text-center ">Profile Settings</h4>
+                    </marquee>
                 </th>
             </tr>
             <tr>
@@ -160,6 +166,7 @@
                 <td colspan="2" class="text-center">
                     <button id="btn" class="btn btn-primary profile-button" type="submit">Edit Profile</button>
                     <a href="{{ url()->previous() }}" class="btn btn-info">Back</a>
+                    <button type="reset" class="btn btn-primary">Reset</button>
                 </td>
             </tr>
         </table>
@@ -209,8 +216,32 @@
                             title: 'Image Deleted',
                             text: 'The image has been deleted successfully.',
                         }).then(() => {
-                            // Reload the page or perform any other necessary action
-                            location.reload();
+                            // Generate avatar using initials
+                            var initials = generateInitials('{{ auth()->user()->name }}');
+                            var avatarUrl = generateAvatarUrl(initials);
+
+                            // Store the avatar URL in the session
+                            axios.post('{{ route('profileupdate.storeAvatar') }}', {
+                                avatarUrl: avatarUrl
+                            }).then((response) => {
+                                if (response.data.success) {
+                                    // Reload the page or perform any other necessary action
+                                    location.reload();
+                                } else {
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Failed',
+                                        text: 'Failed to store the avatar in the session.',
+                                    });
+                                }
+                            }).catch((error) => {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Error',
+                                    text: 'An error occurred while storing the avatar in the session.',
+                                });
+                                console.error(error);
+                            });
                         });
                     } else {
                         Swal.fire({

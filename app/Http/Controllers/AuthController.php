@@ -86,11 +86,14 @@ class AuthController extends Controller
     public function profile()
     {
         $user = Auth::user();
+        session(['default_avatar' => asset('admin_assets/img/default-avatar.png')]);
         return view('profile', compact('user'));
     }
     public function view()
     {
         $user = Auth::user();
+        session(['default_avatar' => asset('admin_assets/img/default-avatar.png')]);
+
         return view('view',compact('user'));
     }
 }

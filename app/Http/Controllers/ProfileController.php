@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Session;
 
 
 
@@ -33,7 +34,7 @@ class ProfileController extends Controller
             // Update the user's profile image in the database
             $user = Auth::user();
             $user->profile_image = $imageName;
-            $user->save();
+             $user->save();
         }
 
         // Update the other profile fields as needed
@@ -46,4 +47,16 @@ class ProfileController extends Controller
 
         return redirect()->back()->with('success', 'Profile updated successfully');
     }
+    public function storeAvatar(Request $request)
+{
+    $avatarUrl = $request->input('avatarUrl');
+
+    // Store the avatar URL in the session
+    Session::put('default_avatar', $avatarUrl);
+
+
+    return response()->json(['success' => true]);
+
+    // $avatarUrl->save();
+}
 }

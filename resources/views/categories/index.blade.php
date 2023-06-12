@@ -1,9 +1,34 @@
     @extends('layouts.app')
 
-    @section('category', 'Home Product')
+    @section('category', 'Home Category')
+
+    @section('style')
+
+        <link rel="stylesheet" href="{{ asset('css/datatables/datatables.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/datatables/dataTables.bootstrap5.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/datatables/autoFill.bootstrap5.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/datatables/buttons.bootstrap5.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/datatables/colReorder.bootstrap5.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/datatables/dataTables.dateTime.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/datatables/fixedColumns.bootstrap5.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/datatables/fixedHeader.bootstrap5.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/datatables/keyTable.bootstrap5.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/datatables/responsive.bootstrap5.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/datatables/rowGroup.bootstrap5.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/datatables/rowReorder.bootstrap5.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/datatables/scroller.bootstrap5.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/datatables/searchBuilder.bootstrap5.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/datatables/searchPanes.bootstrap5.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/datatables/select.bootstrap5.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/datatables/stateRestore.bootstrap5.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/sweetalert2.min.css') }}">
+
+    @endsection
     @section('contents')
         <div class="d-flex align-items-center justify-content-between">
-            <h1 class="mb-0">List Category</h1>
+            <marquee width="30%" scrollamount="12">
+                <h1 class="mb-0 bg-primary text-white text-center">List Category</h1>
+            </marquee>
             <a href="{{ route('categories.create') }}" class="btn btn-primary">Add Category</a>
         </div>
 
@@ -14,18 +39,69 @@
                 {{ Session::get('success') }}
             </div>
         @endif
-        <table class="table table-hover" id="category">
+        <div class="col-12 mt-1 mb-3">
+            <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);"
+                aria-label="breadcrumb">
+                @if (@isset($breadcrumbs))
+                    <ol class="breadcrumb">
+                        {{-- this will load breadcrumbs dynamically from controller --}}
+                        @foreach ($breadcrumbs as $breadcrumb)
+                            <li class="breadcrumb-item">
+                                @if (isset($breadcrumb['link']))
+                                    <a
+                                        href="{{ $breadcrumb['link'] == 'javascript:void(0)' ? $breadcrumb['link'] : url($breadcrumb['link']) }}">
+                                @endif
+                                {{ $breadcrumb['name'] }}
+                                @if (isset($breadcrumb['link']))
+                                    </a>
+                                @endif
+                            </li>
+                        @endforeach
+                    </ol>
+                @endisset
+        </nav>
+    </div>
+
+    </div>
+    {{-- breadcrumb-end --}}
+
+    <!-- Datatables -->
+
+    @can('category-list')
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+
+                        <table id="zero_configuration_table" class="table table-striped" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>id</th>
+                                    <th>Category Name</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endcan
+
+    {{-- <table class="table table-hover" id="zero_configuration_table">
             <thead class="table-primary">
                 <tr>
                     <th>#</th>
                     <th>Category</th>
                     <th>Image</th>
-                    <th>Status</th>
-                    {{-- <th>Availibilty</th> --}}
-                    <th>Action</th>
+                    <th>Status</th> --}}
+    {{-- <th>Availibilty</th> --}}
+    {{-- <th>Action</th>
                 </tr>
-            </thead>
-            <tbody>
+            </thead> --}}
+    {{-- <tbody>
                 @if ($category && $category->count() > 0)
                     @foreach ($category as $rs)
                         <tr>
@@ -38,18 +114,19 @@
                             <td class="align-middle">
                                 <label class="form-label">Status:</label>
                                 {{ $rs->status }}
-                            </td>
-                            {{-- <td class="align-middle">
+                            </td> --}}
+    {{-- <td class="align-middle">
                                 <label class="form-label">Availibilty:</label>
                                 {{ $rs->available }}
                             </td> --}}
-                            <td class="align-middle">
+    {{-- <td class="align-middle">
                                 <div class="btn-group" role="group" aria-label="Basic example">
                                     <a href="{{ route('categories.show', $rs->id) }}" type="button" class="btn btn-info"
                                         onclick="showDetail('{{ route('categories.show', $rs->id) }}')">
                                         <i class="fas fa-eye"></i>
                                     </a>
-                                    <a href="{{ route('categories.edit', $rs->id) }}" type="button" class="btn btn-warning"
+                                    <a href="{{ route('categories.edit', $rs->id) }}" type="button"
+                                        class="btn btn-warning"
                                         onclick="showEdit('{{ route('categories.edit', $rs->id) }}')">
                                         <i class="fas fa-edit"></i>
                                     </a>
@@ -63,11 +140,8 @@
                                         </button>
                                     </form>
                                 </div>
-                            </td>
-                            @push('scripts')
-                                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11">
-
-                                <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+                            </td> --}}
+    {{-- @push('scripts')
                                 <script>
                                     function showDetail(url) {
                                         Swal.fire({
@@ -235,65 +309,107 @@
                 @endif
                 @stack('scripts')
             </tbody>
-        </table>
-        <!-- Pagination links -->
-        {{-- {!! $category->links() !!} --}}
-    @endsection
+        </table> --}}
+
+    {{-- @endsection --}}
+
+    <style>
+        /* romove order arrow icon */
+        table.dataTable thead>tr>th.sorting:before,
+        table.dataTable thead>tr>th.sorting_asc:before,
+        table.dataTable thead>tr>th.sorting_desc:before,
+        table.dataTable thead>tr>th.sorting_asc_disabled:before,
+        table.dataTable thead>tr>th.sorting_desc_disabled:before,
+        table.dataTable thead>tr>td.sorting:before,
+        table.dataTable thead>tr>td.sorting_asc:before,
+        table.dataTable thead>tr>td.sorting_desc:before,
+        table.dataTable thead>tr>td.sorting_asc_disabled:before,
+        table.dataTable thead>tr>td.sorting_desc_disabled:before {
+            content: none;
+        }
+
+        table.dataTable thead>tr>th.sorting:after,
+        table.dataTable thead>tr>th.sorting_asc:after,
+        table.dataTable thead>tr>th.sorting_desc:after,
+        table.dataTable thead>tr>th.sorting_asc_disabled:after,
+        table.dataTable thead>tr>th.sorting_desc_disabled:after,
+        table.dataTable thead>tr>td.sorting:after,
+        table.dataTable thead>tr>td.sorting_asc:after,
+        table.dataTable thead>tr>td.sorting_desc:after,
+        table.dataTable thead>tr>td.sorting_asc_disabled:after,
+        table.dataTable thead>tr>td.sorting_desc_disabled:after {
+            content: none;
+        }
+    </style>
     @push('scripts')
-        {{-- <!-- Add DataTables CSS and JS files -->
+        <script src="{{ asset('js/datatables/datatables.min.js') }}"></script>
+        <script src="{{ asset('js/datatables/dataTables.bootstrap5.min.js') }}"></script>
+        <script src="{{ asset('js/datatables/autoFill.bootstrap5.min.js') }}"></script>
+        <script src="{{ asset('js/datatables/buttons.bootstrap5.min.js') }}"></script>
+        <script src="{{ asset('js/datatables/colReorder.bootstrap5.min.js') }}"></script>
+        <script src="{{ asset('js/datatables/dataTables.dateTime.min.js') }}"></script>
+        <script src="{{ asset('js/datatables/fixedColumns.bootstrap5.min.js') }}"></script>
+        <script src="{{ asset('js/datatables/fixedHeader.bootstrap5.min.js') }}"></script>
+        <script src="{{ asset('js/datatables/jszip.min.js') }}"></script>
+        <script src="{{ asset('js/datatables/keyTable.bootstrap5.min.js') }}"></script>
+        <script src="{{ asset('js/datatables/pdfmake.min.js') }}"></script>
+        <script src="{{ asset('js/datatables/responsive.bootstrap5.min.js') }}"></script>
+        <script src="{{ asset('js/datatables/rowGroup.bootstrap5.min.js') }}"></script>
+        <script src="{{ asset('js/datatables/rowReorder.bootstrap5.min.js') }}"></script>
+        <script src="{{ asset('js/datatables/scroller.bootstrap5.min.js') }}"></script>
+        <script src="{{ asset('js/datatables/searchBuilder.bootstrap5.min.js') }}"></script>
+        <script src="{{ asset('js/datatables/searchPanes.bootstrap5.min.js') }}"></script>
+        <script src="{{ asset('js/datatables/select.bootstrap5.min.js') }}"></script>
+        <script src="{{ asset('js/datatables/stateRestore.bootstrap5.min.js') }}"></script>
+        <script src="{{ asset('js/datatables/vfs_fonts.js') }}"></script>
+        <script src="{{ asset('js/sweetalert2.all.min.js') }}"></script>
 
-        <script src="https://code.jquery.com/jquery-3.7.0.min.js"
-            integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
-
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"
-            integrity="sha512-F636MAkMAhtTplahL9F6KmTfxTmYcAcjcCkyu0f0voT3N/6vzAuJ4Num55a0gEJ+hRLHhdz3vDvZpf6kqgEa5w=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-        {{-- <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script> --}}
-
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
-        <link
-            href="https://cdn.datatables.net/v/bs4/dt-1.13.4/af-2.5.3/b-2.3.6/b-colvis-2.3.6/b-html5-2.3.6/date-1.4.1/fc-4.2.2/sl-1.6.2/sr-1.2.2/datatables.min.css"
-            rel="stylesheet" />
-
-        <script
-            src="https://cdn.datatables.net/v/bs4/dt-1.13.4/af-2.5.3/b-2.3.6/b-colvis-2.3.6/b-html5-2.3.6/date-1.4.1/fc-4.2.2/sl-1.6.2/sr-1.2.2/datatables.min.js">
-        </script>
 
         <script>
+            $.ajaxSetup({
+
+                headers: {
+
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+
+                }
+
+            });
+
             $(document).ready(function() {
-                var table = $('#category').DataTable({
-                    processing: true,
-                    serverSide: true,
-                    ajax: {
-                        url: '{{ route('search') }}',
-                        data: function(d) {
-                            d.search = $('input[name=search]').val();
-                        }
+                dtable = $('#zero_configuration_table').DataTable({
+                    "language": {
+                        "lengthMenu": "_MENU_",
                     },
-                    columns: [{
-                            data: 'id',
-                            name: 'id'
+                    "columnDefs": [{
+                        "targets": "_all",
+                        "orderable": false
+                    }],
+                    responsive: true,
+                    'serverSide': true, // Feature control DataTables' server-side processing mode.
+
+                    "ajax": {
+                        "url": "{{ route('categories') }}",
+                        'beforeSend': function(request) {
+                            request.setRequestHeader("X-CSRF-TOKEN", $('meta[name="csrf-token"]').attr(
+                                'content'));
                         },
-                        {
-                            data: 'category',
-                            name: 'category'
+                        "type": "POST",
+                        "data": function(data) {
+
                         },
-                        {
-                            data: 'image',
-                            name: 'image'
-                        },
-                        {
-                            data: 'status',
-                            name: 'status'
-                        },
-                        {
-                            data: 'action',
-                            name: 'action'
-                        },
-                    ]
+                    },
                 });
+
+                $('.panel-ctrls').append("<i class='separator'></i>");
+
+                $('.panel-footer').append($(".dataTable+.row"));
+                $('.dataTables_paginate>ul.pagination').addClass("pull-right");
+
+                $("#apply_filter_btn").click(function() {
+                    dtable.ajax.reload(null, false);
+                });
+
 
                 $('search').on('submit', function(e) {
                     e.preventDefault();

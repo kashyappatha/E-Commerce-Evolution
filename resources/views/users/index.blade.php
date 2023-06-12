@@ -2,7 +2,9 @@
 @section('users', 'Home users')
 @section('contents')
     <div class="d-flex align-items-center justify-content-between">
-        <h1 class="mb-0">List User</h1>
+        <marquee width="30%" scrollamount="10">
+            <h1 class="mb-0 bg-primary text-white text-center">List User</h1>
+        </marquee>
         <a href="{{ route('users.create') }}" class="btn btn-primary">Add User</a>
     </div>
 
@@ -20,7 +22,7 @@
                 <th>image</th>
                 <th>Name</th>
                 <th>Email</th>
-                <th>Password</th>
+                {{-- <th>Password</th> --}}
 
                 {{-- <th>Availibilty</th> --}}
                 <th>Action</th>
@@ -37,7 +39,7 @@
                         </td>
                         <td class="align-middle">{{ $rs->name }}</td>
                         <td class="align-middle">{{ $rs->email }}</td>
-                        <td class="align-middle">{{ $rs->password }}</td>
+                        {{-- <td class="align-middle">{{ $rs->password }}</td> --}}
 
                         {{-- <td class="align-middle">
                             <label class="form-label">Status:</label>

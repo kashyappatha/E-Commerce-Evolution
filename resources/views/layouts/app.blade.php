@@ -7,16 +7,38 @@
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
+    <meta content="{{ csrf_token() }}" name="csrf-token">
+
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <meta name="description" content="">
 
     <meta name="author" content="">
     <title>Kashyappathak Dashboard</title>
-
+    @section('style')
+        <link rel="stylesheet" href="{{ asset('css/datatables/datatables.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/datatables/dataTables.bootstrap5.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/datatables/autoFill.bootstrap5.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/datatables/buttons.bootstrap5.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/datatables/colReorder.bootstrap5.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/datatables/dataTables.dateTime.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/datatables/fixedColumns.bootstrap5.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/datatables/fixedHeader.bootstrap5.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/datatables/keyTable.bootstrap5.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/datatables/responsive.bootstrap5.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/datatables/rowGroup.bootstrap5.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/datatables/rowReorder.bootstrap5.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/datatables/scroller.bootstrap5.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/datatables/searchBuilder.bootstrap5.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/datatables/searchPanes.bootstrap5.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/datatables/select.bootstrap5.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/datatables/stateRestore.bootstrap5.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/sweetalert2.min.css') }}">
+        <link rel="icon" type="image/x-icon" href="/admin_assets/img/images.png">
+    @endsection
 
     <!-- Custom fonts for this template-->
-    <link rel="icon" type="image/x-icon" href="/admin_assets/img/images.png">
+    {{-- <link rel="icon" type="image/x-icon" href="/admin_assets/img/images.png"> --}}
 
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
 

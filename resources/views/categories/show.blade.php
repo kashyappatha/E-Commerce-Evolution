@@ -19,7 +19,7 @@
                         <tr>
                             <th>Image:</th>
                             <td><img src="{{ asset('admin_assets/img/' . $category->image) }}" alt="Image"
-                                    style="max-width: 70px; border-radius: 19px;"></td>
+                                    style="max-width: 70px; border-radius: 10px;"></td>
                         </tr>
                         <tr>
                             <th>Status:</th>

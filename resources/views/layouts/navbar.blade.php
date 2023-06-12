@@ -184,16 +184,20 @@
         <!-- Nav Item - User Information -->
         <li class="nav-item dropdown no-arrow">
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                style="display: inline-block; background-color: #fff; padding: 5px; border-radius: 5px;"
+                onmouseover="this.style.backgroundColor='lightblue'; this.style.boxShadow='0 0 5px rgba(0, 0, 0, 0.2)';"
+                onmouseout="this.style.backgroundColor='#ffF'; this.style.boxShadow='';">
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small text-white">
                     {{ auth()->user()->name }}
                     <br>
-                    <img src="{{ asset('admin_assets/img/' . auth()->user()->profile_image) }}"alt="Image"
-                        width="30" style="border-radius:23px;">
+                    <img src="{{ asset('admin_assets/img/' . auth()->user()->profile_image) }}" alt="Image"
+                        width="30" style="border-radius: 23px;">
                     <small>{{ auth()->user()->level }}</small>
                 </span>
-
             </a>
+
+
 
             <!-- Dropdown - User Information -->
             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">

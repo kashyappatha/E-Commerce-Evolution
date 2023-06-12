@@ -9,7 +9,7 @@
             <img src="{{ asset('admin_assets/img/' . auth()->user()->profile_image) }}"alt="Image" width="30"
                 style="border-radius:23px;">
             <span class="mr-2 d-none d-lg-inline">
-                {{ auth()->user()->name ?? 'None' }}
+                {{ auth()->user()->name }}
                 <br>
 
             </span>
