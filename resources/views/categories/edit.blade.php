@@ -5,6 +5,69 @@
         <h1 class="mb-0 bg-primary text-white col-md-8">Edit category</h1>
     </marquee>
     <br />
+
+    <div class="mt-4">
+        <div class="col-md-4 float-right">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title fw-bolder">Additional Information about Category</h5>
+                    <hr />
+                    <p class="card-text"></p>
+                    <div class="dropdown">
+                        <a href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                            category
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ route('categories.show', $category->id) }}">viewpage</a></li>
+                            <li><a href="#">Products</a>
+                            <li><a href="logout">logout</a></li>
+                        </ul>
+                    </div>
+                    <br />
+
+                    <h2 id="view-profile-heading">View category Page</h2>
+                    <div class="card-body" id="view-profile-section" style="display: none;">
+                        <div class="card-body">
+                            <table class="table table-bordered">
+
+                                <tr>
+                                    <th>Name:</th>
+                                    <td>{{ $category->category }}</td>
+                                </tr>
+                                <tr>
+                                    <th> Image:</th>
+                                    <td><img src="{{ asset('admin_assets/img/' . $category->image) }}" alt="Image"
+                                            style="max-width: 55px; border-radius: 10px;"></td>
+                                </tr>
+                                <tr>
+                                    <th>Status:</th>
+                                    <td>{{ $category->status }}</td>
+                                </tr>
+
+
+                            </table>
+                        </div>
+                    </div>
+                    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                    <script>
+                        $(document).ready(function() {
+                            $("#view-profile-heading").click(function() {
+                                $("#view-profile-section").toggle();
+                            });
+                        });
+                        $(document).ready(function() {
+                            $('#update-password-heading').click(function() {
+                                $('#password-card').toggle();
+                            });
+                        });
+                    </script>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
     <hr />
     <form action="{{ route('categories.update', $category->id) }}" method="POST" id="kp">
         @csrf

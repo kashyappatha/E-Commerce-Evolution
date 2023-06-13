@@ -52,25 +52,28 @@ Route::prefix('admin')->group(function(){
 
         });
         Route::prefix('categories')->group(function () {
-            Route::get('', [CategoryController::class, 'index'])->name('categories');
+            Route::get('', [CategoryController::class, 'category'])->name('categories');
+            Route::post('/getcategory', [CategoryController::class, 'getcategory'])->name('getcategory');
             Route::get('create', [CategoryController::class, 'create'])->name('categories.create');
             Route::get('store', [CategoryController::class, 'store'])->name('categories.store');
             Route::get('show/{id}', [CategoryController::class, 'show'])->name('categories.show');
             Route::get('edit/{id}', [CategoryController::class, 'edit'])->name('categories.edit');
             Route::put('update/{id}', [CategoryController::class, 'update'])->name('categories.update');
-            Route::delete('destroy/{id}', [CategoryController::class, 'destroy'])->name('categories.destroy');
+            Route::get('destroy/{id}', [CategoryController::class, 'destroy'])->name('categories.destroy');
             Route::delete('/categories/{id}/delete-image', [CategoryController::class, 'deleteImage'])->name('categories.deleteImage');
 
             // Route::post('/update-category-status', 'CategoryController@updateStatus');
            //  Route::get('/changeStatus', [CategoryController::class, 'changeCategoryStaus'])->name('categories.changeStatus');
 
         });
+        // Route::post('categories',[CategoryController::class,'index'])->name('cateegories');
 
 
         Route::get('profile', [App\Http\Controllers\AuthController::class,'profile'])->name('profile');
         Route::get('view',[App\Http\Controllers\AuthController::class,'view'])->name('view');
         Route::post('/profile/update',[App\Http\Controllers\ProfileController::class,'profileupdate'])->name('profileupdate');
         Route::delete('/profile/{id}/delete-image', [ProfileController::class, 'deleteImage'])->name('profileupdate.deleteImage');
+        Route::post('/increment-change-count', [ProfileController::class, 'incrementChangeCount'])->name('incrementChangeCount');
         Route::post('/store-avatar', [ProfileUpdateController::class, 'storeAvatar'])->name('profileupdate.storeAvatar');
 
         //  Route::post('/profile/update', 'ProfileController@profileupdate')->name('profileupdate');
@@ -81,7 +84,8 @@ Route::prefix('admin')->group(function(){
         Route::get('search_results', [CategoryController::class, 'search'])->name('search');
 
         Route::prefix('users')->group(function(){
-            Route::get('',[UserController::class ,'index'])->name('users');
+            Route::get('', [UserController::class, 'user'])->name('users');
+            Route::post('/getuser', [UserController::class, 'getuser'])->name('getuser');
             Route::get('create',[UserController::class,'create'])->name('users.create');
             Route::post('store',[UserController::class,'store'])->name('users.store');
             Route::get('show/{id}',[UserController::class,'show'])->name('users.show');
@@ -93,14 +97,17 @@ Route::prefix('admin')->group(function(){
 
 
         Route::prefix('customers')->group(function(){
-            Route::get('',[CustomerController::class ,'index'])->name('customers');
+            Route::get('', [CustomerController::class, 'customer'])->name('customers');
+            Route::post('/getcustomer', [CustomerController::class, 'getcustomer'])->name('getcustomer');
             Route::get('create',[CustomerController::class,'create'])->name('customers.create');
-            Route::get('store',[CustomerController::class,'store'])->name('customers.store');
+            Route::post('store',[CustomerController::class,'store'])->name('customers.store');
             Route::get('show/{id}',[CustomerController::class,'show'])->name('customers.show');
             Route::get('edit/{id}',[CustomerController::class,'edit'])->name('customers.edit');
             Route::put('update/{id}',[CustomerController::class,'update'])->name('customers.update');
             Route::delete('destroy/{id}',[CustomerController::class,'destroy'])->name('customers.destroy');
-            Route::delete('/customers/{id}/delete-image', [CategoryController::class, 'deleteImage'])->name('customers.deleteImage');
+            Route::delete('/customers/{id}/delete-image', [CustomerController::class, 'deleteImage'])->name('customers.deleteImage');
+            // Route::get('index', [CustomerController::class, 'index'])->name('customers.index');
+
 
         });
 

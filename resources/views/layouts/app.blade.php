@@ -12,35 +12,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <meta name="description" content="">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"
+        integrity="sha512-F636MAkMAhtTplahL9F6KmTfxTmYcAcjcCkyu0f0voT3N/6vzAuJ4Num55a0gEJ+hRLHhdz3vDvZpf6kqgEa5w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <meta name="author" content="">
-    <title>Kashyappathak Dashboard</title>
-    @section('style')
-        <link rel="stylesheet" href="{{ asset('css/datatables/datatables.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('css/datatables/dataTables.bootstrap5.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('css/datatables/autoFill.bootstrap5.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('css/datatables/buttons.bootstrap5.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('css/datatables/colReorder.bootstrap5.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('css/datatables/dataTables.dateTime.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('css/datatables/fixedColumns.bootstrap5.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('css/datatables/fixedHeader.bootstrap5.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('css/datatables/keyTable.bootstrap5.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('css/datatables/responsive.bootstrap5.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('css/datatables/rowGroup.bootstrap5.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('css/datatables/rowReorder.bootstrap5.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('css/datatables/scroller.bootstrap5.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('css/datatables/searchBuilder.bootstrap5.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('css/datatables/searchPanes.bootstrap5.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('css/datatables/select.bootstrap5.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('css/datatables/stateRestore.bootstrap5.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('css/sweetalert2.min.css') }}">
-        <link rel="icon" type="image/x-icon" href="/admin_assets/img/images.png">
-    @endsection
+    <title> Kashyap E-Commerce | @yield('title')</title>
 
-    <!-- Custom fonts for this template-->
-    {{-- <link rel="icon" type="image/x-icon" href="/admin_assets/img/images.png"> --}}
 
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+
+
 
 
 
@@ -56,11 +40,8 @@
 
     <link href="{{ asset('admin_assets/css/sb-admin-2.min.css') }}" rel="stylesheet">
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-toggle@3.6.1/css/bootstrap-toggle.min.css" rel="stylesheet">
+    @yield('style')
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-toggle/2.2.2/css/bootstrap-toggle.css"
-        integrity="sha512-9tISBnhZjiw7MV4a1gbemtB9tmPcoJ7ahj8QWIc0daBCdvlKjEA48oLlo6zALYm3037tPYYulT0YQyJIJJoyMQ=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 </head>
 
@@ -100,14 +81,9 @@
                     </div>
 
 
-
-                    <!-- Include DataTables JS -->
-                    <script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
                     <!-- Contents section -->
                     @yield('contents')
 
-                    <!-- Additional scripts specific to DataTables -->
-                    @stack('scripts')
 
 
 
@@ -164,13 +140,10 @@
     <!-- Page level plugins -->
 
     <script src="{{ asset('admin_assets/vendor/chart.js/Chart.min.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap-toggle@3.6.1/js/bootstrap-toggle.min.js"></script>
+
+    @yield('scripts')
 
 
-    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"
-        integrity="sha512-F636MAkMAhtTplahL9F6KmTfxTmYcAcjcCkyu0f0voT3N/6vzAuJ4Num55a0gEJ+hRLHhdz3vDvZpf6kqgEa5w=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </body>
 
 </html>

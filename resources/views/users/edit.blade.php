@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('users', 'Edit users')
 @section('contents')
-    <marquee width="30%" scrollamount="10">
+    <marquee width="30%" scrollamount="10" direction="down">
         <h1 class="mb-0">Edit User</h1><br />
     </marquee>
 

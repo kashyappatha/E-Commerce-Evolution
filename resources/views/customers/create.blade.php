@@ -118,7 +118,7 @@
         </div>
     </form>
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/css/bootstrap.min.css">
+    {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/css/bootstrap.min.css"> --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -184,7 +184,7 @@
                 victoria: ['Melbourne', 'Geelong'],
                 nsw: ['Sydney', 'Newcastle']
             },
-            'srilanka': {
+            srilanka: {
                 batticaloa: ['panomapattu', 'Erroverpattu'],
                 colombo: ['sinhalese']
             }
@@ -224,8 +224,9 @@
             }
         }
 
-        // Event listeners for country and state select elements
+        // Event listener for country select element
         countrySelect.addEventListener('change', populateStates);
+        // Event listener for state select element
         stateSelect.addEventListener('change', populateCities);
     </script>
 

@@ -15,10 +15,15 @@ use Illuminate\Support\Facades\File;
 class CategoryController extends Controller
 {
 
+    public function category()
+    {
+        return view('categories.index');
+    }
 
-    public function index(Request $request)
-{
-    $draw = $request->get('draw');
+
+    public function getcategory(Request $request)
+    {
+        $draw = $request->get('draw');
         $start = $request->get("start");
         $rowperpage = $request->get("length"); // Rows display per page
 
@@ -27,97 +32,95 @@ class CategoryController extends Controller
 
         $order_arr = $request->get('order');
         $search_arr = $request->get('search');
-        $columnIndex = null;
-        $columnName = null;
-        $columnSortOrder = null;
-        $searchValue = null;
 
-        if (!empty($columnIndex_arr) && isset($columnIndex_arr[0]['column'])) {
-            $columnIndex = $columnIndex_arr[0]['column'];
-        }
+        $columnIndex = $columnIndex_arr[0]['column']; // Column index
+        $columnName = $columnName_arr[$columnIndex]['data']; // Column name
+        $columnSortOrder = $order_arr[0]['dir']; // asc or desc
+        $searchValue = $search_arr['value']; // Search value
 
-        if (!empty($columnName_arr) && isset($columnName_arr[$columnIndex]['data'])) {
-            $columnName = $columnName_arr[$columnIndex]['data'];
-        }
+            // Total records
+            $totalRecords = Category::select('count(*) as allcount')->count();
+            $totalRecordswithFilter = Category::select('count(*) as allcount')->where('category', 'like', '%' . $searchValue . '%')->count();
 
-        if (!empty($order_arr) && isset($order_arr[0]['dir'])) {
-            $columnSortOrder = $order_arr[0]['dir'];
-        }
+            // Fetch records
+            $categories = Category::orderBy('categories.id', "desc")
+                ->where('category', 'like', '%' . $searchValue . '%')
+                ->select('categories.*')
+                ->take($start)
+                ->take($rowperpage)
+                ->get();
 
-        if (!empty($search_arr) && isset($search_arr['value'])) {
-            $searchValue = $search_arr['value'];
-        }
+            $data = array();
+            $counter = 0;
+            foreach ($categories as $category) {
 
-        // Total records
-        $totalRecords = Category::select('count(*) as allcount')->count();
-        $totalRecordswithFilter = Category::select('count(*) as allcount')->where('category', 'like', '%' . $searchValue . '%')->count();
+                if($category['status'] == '1')
+                {
+                    $status = '<span class="badge rounded-pill text-bg-success">Active</span>';
+                }
+                else
+                {
+                    $status = '<span class="badge rounded-pill text-bg-danger">Inactive</span>';
+                }
 
-        // Fetch records
-        $categories = Category::orderBy('categories.id', "desc")
-            ->where('category', 'like', '%' . $searchValue . '%')
-            ->select('categories.*')
-            ->take($start)
-            ->take($rowperpage)
-            ->get();
+                $row = array();
+                $row[] = ++$counter;
 
-        $data = array();
-        $counter = 0;
-        foreach ($categories as $category) {
+                $row[] = $category['category'];
 
-            if($category['status'] == '1')
-            {
-                $status = '<span class="badge rounded-pill text-bg-success">Active</span>';
+                $row[] = '<img src="' . asset('admin_assets/img/' . $category->image) . '" alt="Image" style="max-width: 70px; border-radius: 10px;">';
+
+
+                $row[] = $status;
+
+                $Action = '';
+
+                $Action .= '<a href="' . route(('categories.edit'), [$category["id"]]) . '">&nbsp;<i class="fas fa-edit"></i>|';
+
+                $Action .= '<a href="' . route(('categories.show'), [$category["id"]]) . '">&nbsp;<i class="fas fa-eye"></i>|';
+
+                $Action .= '<a data-id="' . $category["id"] . '" href="' . route("categories.destroy", ["id" => $category["id"]]) . '" onclick="event.preventDefault(); deleteCategory(' . $category["id"] . ')"><i class="fas fa-trash-alt"></i></a>';
+
+                // JavaScript code for the SweetAlert confirmation dialog
+                $Action .= '
+                <script>
+
+                    function deleteCategory(id) {
+                        Swal.fire({
+                            title: "Are you sure?",
+                            text: "You Want to delete the category!",
+                            icon: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#3085d6",
+                            cancelButtonColor: "#d33",
+                            confirmButtonText: "Yes, delete it!",
+
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                // Perform the delete action here
+                                window.location.href = "' . route("categories.destroy", ["id" => $category["id"]]) . '?id=" + id;
+                            }
+                        });
+                    }
+                </script>';
+
+
+
+                $row[] = $Action;
+                $data[] = $row;
             }
-            else
-            {
-                $status = '<span class="badge rounded-pill text-bg-danger">Inactive</span>';
-            }
 
-            $row = array();
-            $row[] = ++$counter;
+            $output = array(
+                "draw" => intval($draw),
+                "recordsTotal" => $totalRecords,
+                "recordsFiltered" => $totalRecordswithFilter,
+                "data" => $data,
+            );
 
-            $row[] = $category['category'];
+            echo json_encode($output);
+            exit;
 
-            $row[] = $status;
-
-            $Action = '';
-
-
-
-                $Action .= '<a href="' . route(('categories.edit'), [$category["id"]]) . '">;';
-
-
-
-
-
-                $Action .= '<a href="' . route(('categories.show'), [$category["id"]]) . '">';
-
-
-
-
-
-                $Action .= '<a data-id="' . $category["id"] . '" href="' . route("categories.destroy", ["id" => $category["id"]]) . '" class="deleteRecord"><i class="fa-regular fa-trash-can"></i></a>&nbsp;&nbsp;&nbsp;';
-
-
-
-            $row[] = $Action;
-            $data[] = $row;
-        }
-
-        $output = array(
-            "draw" => intval($draw),
-            "recordsTotal" => $totalRecords,
-            "recordsFiltered" => $totalRecordswithFilter,
-            "data" => $data,
-        );
-
-        echo json_encode($output);
-        exit;
-
-
-
-    return view('categories.index', compact('category'));
-}
+    }
 
     public function create()
     {

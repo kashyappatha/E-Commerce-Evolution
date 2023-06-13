@@ -14,14 +14,103 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class UserController extends Controller
 {
-    public function index()
+    public function user()
     {
-        $users = User::all(); // Or use any other logic to fetch the users
-        $users = User::paginate(10);
+        return view('users.index');
+    }
+    public function getuser(Request $request)
+    {
+        $draw = $request->get('draw');
+        $start = $request->get("start");
+        $rowperpage = $request->get("length"); // Rows display per page
+
+        $columnIndex_arr = $request->get('order');
+        $columnName_arr = $request->get('columns');
+
+        $order_arr = $request->get('order');
+        $search_arr = $request->get('search');
+
+        $columnIndex = $columnIndex_arr[0]['column']; // Column index
+        $columnName = $columnName_arr[$columnIndex]['data']; // Column name
+        $columnSortOrder = $order_arr[0]['dir']; // asc or desc
+        $searchValue = $search_arr['value']; // Search value
+
+            // Total records
+            $totalRecords = User::select('count(*) as allcount')->count();
+            $totalRecordswithFilter = User::select('count(*) as allcount')->where('name', 'like', '%' . $searchValue . '%')->count();
+
+            // Fetch records
+            $categories = User::orderBy('users.id', "desc")
+                ->where('name', 'like', '%' . $searchValue . '%')
+                ->select('users.*')
+                ->take($start)
+                ->take($rowperpage)
+                ->get();
+
+            $data = array();
+            $counter = 0;
+            foreach ($categories as $user) {
 
 
-        return view('users.index', compact('users'));
-        // return view('users.index');
+
+                $row = array();
+                $row[] = ++$counter;
+
+
+                $row[] = '<img src="' . asset('admin_assets/img/' . $user->profile_image) . '" alt="Image" style="max-width: 70px; border-radius: 10px;">';
+
+
+                $row[] = $user['name'];
+                $row[] = $user['email'];
+                // $row[] = $user['password'];
+
+                $Action = '';
+
+                $Action .= '<a href="' . route(('users.edit'), [$user["id"]]) . '">&nbsp;<i class="fas fa-edit"></i>|';
+
+                $Action .= '<a href="' . route(('users.show'), [$user["id"]]) . '">&nbsp;<i class="fas fa-eye"></i>|';
+
+
+                $Action .= '<a data-id="' . $user["id"] . '" href="' . route("users.destroy", ["id" => $user["id"]]) . '" onclick="event
+                .preventDefault(); deleteUser(' . $user["id"] . ')"><i class="fas fa-trash-alt"></i></a>';
+
+                // JavaScript code for the SweetAlert confirmation dialog
+                $Action .= '
+                <script>
+
+                    function deleteUser(id) {
+                        Swal.fire({
+                            title: "Are you sure?",
+                            text: "You Want to Remove the User !",
+                            icon: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#3085d6",
+                            cancelButtonColor: "#d33",
+                            confirmButtonText: "Yes, remove it!",
+
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                // Perform the delete action here
+                                window.location.href = "' . route("users.destroy", ["id" => $user["id"]]) . '?id=" + id;
+                            }
+                        });
+                    }
+                </script>';
+
+                $row[] = $Action;
+                $data[] = $row;
+            }
+
+            $output = array(
+                "draw" => intval($draw),
+                "recordsTotal" => $totalRecords,
+                "recordsFiltered" => $totalRecordswithFilter,
+                "data" => $data,
+            );
+
+            echo json_encode($output);
+            exit;
+
     }
 
     public function create(Request $request)

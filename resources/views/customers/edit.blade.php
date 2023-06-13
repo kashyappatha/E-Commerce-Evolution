@@ -311,7 +311,10 @@
                 maharashtra: ['Mumbai', 'Pune', 'thane', 'Nashik', 'Amravati'],
                 rajasthan: ['Jaipur', 'Ajmer', 'Udaipur', 'kota', 'Nagpur', 'Jodhpur'],
                 delhi: ['New Delhi', 'Old Delhi', 'North Delhi', 'South Delhi', 'East Delhi', 'West Delhi'],
-                utterpradesh: ['Agra']
+                utterpradesh: ['Agra'],
+                tamilnadu: ['Chennai', 'Coimbatore', 'Madurai', 'Tiruchirappalli', 'Salem'],
+                karnataka: ['Bengaluru', 'Mysuru', 'Hubli', 'Mangaluru', 'Belagavi'],
+                punjab: ['Amritsar', 'Ludhiana', 'Jalandhar', 'Patiala', 'Mohali'],
             },
             australia: {
                 victoria: ['Melbourne', 'Geelong'],
@@ -320,7 +323,19 @@
             'srilanka': {
                 batticaloa: ['panomapattu', 'Erroverpattu'],
                 colombo: ['sinhalese']
-            }
+            },
+            america: {
+                california: ['Los Angeles', 'San Francisco', 'San Diego', 'Sacramento'],
+                newyork: ['New York City', 'Buffalo', 'Albany', 'Rochester'],
+                texas: ['Houston', 'Dallas', 'Austin', 'San Antonio'],
+                florida: ['Miami', 'Orlando', 'Tampa', 'Jacksonville'],
+                illinois: ['Chicago', 'Springfield', 'Peoria', 'Naperville'],
+                arizona: ['Phoenix', 'Tucson', 'Mesa', 'Scottsdale'],
+                colorado: ['Denver', 'Colorado Springs', 'Boulder', 'Fort Collins'],
+                georgia: ['Atlanta', 'Savannah', 'Augusta', 'Athens'],
+                washington: ['Seattle', 'Spokane', 'Tacoma', 'Vancouver'],
+                michigan: ['Detroit', 'Grand Rapids', 'Lansing', 'Ann Arbor'],
+            },
         };
 
         // Function to populate the options for states based on the selected country

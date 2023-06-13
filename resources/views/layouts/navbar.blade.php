@@ -150,29 +150,7 @@
                         <div class="small text-gray-500">Kp</div>
                     </div>
                 </a>
-                {{-- <a class="dropdown-item d-flex align-items-center" href="#">
-                    <div class="dropdown-list-image mr-3">
-                        <img class="rounded-circle"
-                            src="https://startbootstrap.github.io/startbootstrap-sb-admin-2/img/undraw_profile_3.svg"
-                            alt="...">
-                        <div class="status-indicator bg-warning"></div>
-                    </div>
-                    <div>
-                        <div class="text-truncate"></div>
-                        <div class="small text-gray-500"></div>
-                    </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                    <div class="dropdown-list-image mr-3">
-                        <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60"
-                            alt="...">
-                        <div class="status-indicator bg-success"></div>
-                    </div>
-                    <div>
-                        <div class="text-truncate"></div>
-                        <div class="small text-gray-500"></div>
-                    </div>
-                </a> --}}
+
                 <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
             </div>
 

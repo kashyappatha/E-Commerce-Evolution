@@ -2,6 +2,11 @@
 @section('title', 'Profile')
 @section('contents')
 
+
+    @php
+        $changeCount = 0;
+    @endphp
+
     <div class="mt-4">
         <div class="col-md-4 float-right">
             <div class="card">
@@ -107,7 +112,7 @@
         <table class="table table-bordered col-md-8">
             <tr>
                 <th colspan="2">
-                    <marquee width="29%" scrollamount="10">
+                    <marquee width="29%" scrollamount="7" direction="up">
                         <h4 class="text-left bg-primary text-white  text-center ">Profile Settings</h4>
                     </marquee>
                 </th>
@@ -172,12 +177,47 @@
         </table>
 
     </form>
+    <div class="col-md-4 float-center">
+        <div class="card">
+            <div class="card-header">Change Count</div>
+            <div class="card-body">
+                <h5 class="card-title" id="changeCount">{{ $changeCount }}</h5>
+            </div>
+        </div>
+    </div>
 
 
     </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+    <script>
+        function updateChangeCount() {
+            const countElement = document.getElementById('changeCount');
+            countElement.innerText = "{{ $changeCount }}";
+        }
+
+        function incrementChangeCount() {
+            axios.post('{{ route('incrementChangeCount') }}')
+                .then((response) => {
+                    if (response.data.success) {
+                        // Increment the change count on the server
+                        {{ $changeCount++ }};
+                        // Update the count element on the page
+                        updateChangeCount();
+                    }
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        }
+
+        // Update the change count on page load
+        updateChangeCount();
+
+        // Add your remaining JavaScript code here
+    </script>
     <script>
         function previewImage(event) {
             var reader = new FileReader();
@@ -216,6 +256,37 @@
                             title: 'Image Deleted',
                             text: 'The image has been deleted successfully.',
                         }).then(() => {
+                            // Delete the image from the server-side
+                            deleteImageFromServer('{{ auth()->user()->profile_image }}');
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Failed',
+                            text: 'Failed to delete the image.',
+                        });
+                    }
+                })
+                .catch((error) => {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'An error occurred while deleting the image.',
+                    });
+                    console.error(error);
+                });
+        }
+
+        function deleteImageFromServer(imagePath) {
+            // Send an AJAX request to delete the image from the server
+            axios.delete('{{ asset('admin_assets/img/') }}' + '/' + imagePath)
+                .then((response) => {
+                    if (response.data.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Image Deleted',
+                            text: 'The image has been deleted from the server.',
+                        }).then(() => {
                             // Generate avatar using initials
                             var initials = generateInitials('{{ auth()->user()->name }}');
                             var avatarUrl = generateAvatarUrl(initials);
@@ -247,7 +318,7 @@
                         Swal.fire({
                             icon: 'error',
                             title: 'Failed',
-                            text: 'Failed to delete the image.',
+                            text: 'Failed to delete the image from the server.',
                         });
                     }
                 })
@@ -255,7 +326,7 @@
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',
-                        text: 'An error occurred while deleting the image.',
+                        text: 'An error occurred while deleting the image from the server.',
                     });
                     console.error(error);
                 });

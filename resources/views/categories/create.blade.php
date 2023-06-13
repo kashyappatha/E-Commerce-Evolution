@@ -1,7 +1,9 @@
 @extends('layouts.app')
 @section('category', 'Create category')
 @section('contents')
-    <h1 class="mb-0 bg-primary text-white">Add Category</h1>
+    <marquee direction="up" scrollamount="5">
+        <h1 class="mb-0 bg-primary text-white">Add Category</h1>
+    </marquee>
     <hr />
     <form action="{{ route('categories.store') }}" method="GET" enctype="multipart/form-data">
         @csrf
