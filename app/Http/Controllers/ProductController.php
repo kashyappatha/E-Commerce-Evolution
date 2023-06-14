@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProductFormRequest;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\Product;
+// use App\Models\File;
 
 class ProductController extends Controller
 {
@@ -34,19 +37,48 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('products.create');
+        $categories = Category::all();
+        return view('products.create', compact('categories'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        Product::create($request->all());
+    public function store(ProductFormRequest $request){
+        $validatedData = $request->validated();
 
-        return redirect()->route('products')->with('success', 'Product added successfully');
+        $category = Category::findOrFail($validatedData['category_id']);
+        $product = $category->products()->create([
+            'category_id'=>$validatedData['category_id'],
+            'title'=>$validatedData['title'],
+            'small_description'=>$validatedData['small_description'],
+            'description'=>$validatedData['description'],
+            'quantity'=>$validatedData['quantity'],
+            'status'=>$request->status == true ? '1':'0',
+
+
+        ]);
+
+        if($request->hasFile('image')){
+            $uploadPath = 'uploads/products/';
+
+            foreach($request->file('image') as $imageFile){
+                $extention = $imageFile->getClientOrignalExtension();
+                $filename = time().'.'.$extention;
+                $imageFile->move($uploadPath,$filename);
+                $finalImagePathName = $uploadPath.'-'.$filename;
+                $product->productImages()->create([
+                    'product_id'=> $product->id,
+                    'image'=> $finalImagePathName,
+                ]);
+            }
+        }
+
+        return redirect('admin/products')->with('message','Product Added Sucsessfully');
+
+        // return $product->id;
+
     }
-
     /**
      * Display the specified resource.
      */

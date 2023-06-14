@@ -163,7 +163,7 @@
                     <label class="labels">Password:</label>
                 </td>
                 <td>
-                    <input type="password" name="password" disabled class="form-control" placeholder="Password"
+                    <input type="password" name="password" class="form-control" placeholder="Password"
                         value="{{ auth()->user()->password }}">
                 </td>
             </tr>

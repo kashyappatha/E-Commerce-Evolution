@@ -44,7 +44,7 @@ Route::prefix('admin')->group(function(){
         Route::controller(ProductController::class)->prefix('products')->group(function (){
             Route::get('' , 'index')->name('products');
             Route::get('create','create')->name('products.create');
-            Route::get('store' , 'store')->name('products.store');
+            Route::post('store' , 'store')->name('products.store');
             Route::get('show{id}' ,'show')->name('products.show');
             Route::get('edit/{id}','edit')->name('products.edit');
             Route::put('update/{id}','update')->name('products.update');
