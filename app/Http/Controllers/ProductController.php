@@ -17,17 +17,18 @@ class ProductController extends Controller
 
     public function index(Request $request)
     {
-        $product = Product::orderBy('created_at', 'DESC')->get();
+//         $product = Product::orderBy('created_at', 'DESC')->get();
+        $products=Product::all();
 
-        return view('products.index', compact('product'));
+        return view('products.index', compact('products'));
 
 
-        if ($request->has('search')) {
-            $search = $request->search;
-            $product->where('title', 'like', "%$search%");
-        }
+//         if ($request->has('search')) {
+//             $search = $request->search;
+//             $product->where('title', 'like', "%$search%");
+//         }
 
-        $product = $product->paginate(10);
+//         $product = $product->paginate(10);
 
         // return view('categories.index', compact('category'));
     }
