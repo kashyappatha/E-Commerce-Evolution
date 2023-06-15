@@ -27,9 +27,33 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td></td>
-                            </tr>
+                            @forelse ($products as $product)
+                                <tr>
+                                    <td>{{ $product->id }}</td>
+                                    <td>{{ $product->category_id }}</td>
+                                    <td>{{ $product->title }}</td>
+                                    <td>{{ $product->quantity }}</td>
+                                    <td>{{ $product->status == '1' ? 'Hidden' : 'Visible' }}</td>
+                                    <td>
+                                        <a href=""class="btn btn-success">Edit</a>
+                                        <a href=""class="btn btn-success">show</a>
+						                <a href="" class="btn btn-danger">Delete</a>
+
+
+                                    </td>
+
+
+
+
+
+                                </tr>
+
+                            @empty
+                                <tr>
+                                    <td colspan="7">No Products Available</td>
+                                </tr>
+                            @endforelse
+
                         </tbody>
 
                     </table>
