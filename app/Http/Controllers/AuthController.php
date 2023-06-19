@@ -53,7 +53,7 @@ class AuthController extends Controller
             'password'=>'required|min:8'
         ])->validate();
 
-        if(!Auth::attempt( $request->only('email','password'),$request->boolean('remember'))){
+        if(!Auth::attempt( $request->all('email','password'),$request->boolean('remember'))){
             throw ValidationException::withMessages([
                 'email' => trans('auth.failed')
             ]);

@@ -12,7 +12,7 @@
                 <div class="card-body">
 
                     @if ($errors->any())
-                        <div class="alert alert-warning">
+                        <div class="alert alert-danger">
                             @foreach ($errors->all() as $error)
                                 <div>{{ $error }}</div>
                             @endforeach
@@ -61,6 +61,10 @@
                                     <input type="text" name="title" class="form-control">
                                 </div>
                                 <div class="mb-3">
+                                    <label>Product Price</label>
+                                    <input type="number" name="price" class="form-control">
+                                </div>
+                                <div class="mb-3">
                                     <label>Small_description:</label>
                                     <textarea name="small_description" class="form-control" rows="4"></textarea>
                                 </div>
@@ -75,6 +79,12 @@
                                         <div class="mb-3">
                                             <label>Quantity</label>
                                             <input type="number" name="quantity" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label>Product_code</label>
+                                            <input type="number" name="product_code " class="form-control">
                                         </div>
                                     </div>
                                     <div class="col-md-4">

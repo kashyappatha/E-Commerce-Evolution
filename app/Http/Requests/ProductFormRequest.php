@@ -32,6 +32,14 @@ class ProductFormRequest extends FormRequest
                 'required',
                 'string'
             ],
+            'price'=>[
+                'required',
+                'integer'
+            ],
+            'product'=>[
+                'required',
+                'string'
+            ],
             'small_description'=>[
                 'required',
                 'string'

@@ -39,6 +39,7 @@
     <!-- Custom styles for this template-->
 
     <link href="{{ asset('admin_assets/css/sb-admin-2.min.css') }}" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/admin_assets/img/th2.jfif">
 
     @yield('style')
 
