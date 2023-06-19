@@ -32,6 +32,7 @@
                             @forelse ($products as $product)
                                 <tr>
                                     <td>{{ $product->id }}</td>
+<<<<<<< HEAD
                                     <td>
                                         @if ($product->category)
                                             {{ $product->category->category }}
@@ -53,6 +54,16 @@
                                                 class="fas fa-eye"></a></i>
                                         <a href="{{ route('products.destroy', $product->id) }}" class="btn btn-danger"><i
                                                 class="fas fa-trash-alt"></a></i>
+=======
+                                    <td>{{ $product->category_id }}</td>
+                                    <td>{{ $product->title }}</td>
+                                    <td>{{ $product->quantity }}</td>
+                                    <td>{{ $product->status == '1' ? 'Hidden' : 'Visible' }}</td>
+                                    <td>
+                                        <a href=""class="btn btn-success">Edit</a>
+                                        <a href=""class="btn btn-success">show</a>
+						                <a href="" class="btn btn-danger">Delete</a>
+>>>>>>> 9a24babc18bf0406d16fb6e1551253b56b987ee4
 
 
                                     </td>
