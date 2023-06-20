@@ -6,6 +6,12 @@ use App\Http\Requests\ProductFormRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\Product;
+use Illuminate\Support\Str;
+use App\Http\Controllers\Controller;
+use App\Models\ProductImage;
+use Illuminate\Support\Facades\File;
+// use Symfony\Component\HttpFoundation\File\File;
+
 // use App\Models\File;
 
 class ProductController extends Controller
@@ -84,11 +90,12 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(int $product_id)
     {
-        $product = Product::findOrFail($id);
+        $categories = Category::all();
+        $product = Product::findOrFail($product_id);
 
-        return view('products.show', compact('product'));
+        return view('products.show', compact('product','categories'));
     }
 
     /**
@@ -146,16 +153,33 @@ class ProductController extends Controller
 
         // return redirect()->route('products.index')->with('success', 'Product updated successfully');
     }
+    public function destroyImage(int $product_image_id){
+        $productImage = ProductImage::findOrFail($product_image_id);
+        if(File::exists($productImage->image)){
+            File::delete($productImage->image);
 
+        }
+        $productImage->delete();
+        return redirect('')->back()->with('message','Product Image Deleted');
+    }
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($product_id)
+    public function destroy(int $product_id)
     {
         $product = Product::findOrFail($product_id);
+        if($product->productImages()){
+            foreach($product->productImages() as $image){
+                if(File::exists($image->image)){
+                    File::delete($image->image);
+
+                }
+            }
+        }
 
         $product->delete();
 
-        return redirect('')->route('products')->with('success', 'product deleted successfully');
+        return redirect('')->back()->with('success', 'product deleted with all its image');
     }
+
 }

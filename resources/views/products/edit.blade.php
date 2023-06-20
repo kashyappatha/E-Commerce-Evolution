@@ -4,12 +4,17 @@
 
     <div class="row">
         <div class="col-md-12">
+            @if (session('message'))
+                <h4 class="alert alert-success">{{ session('message') }}</h4>
+            @endif
+
             <div class="card">
                 <div class="card-header">
-                    <h3> Add Products</h3>
+                    <h3> edit Products</h3>
                     <a href="{{ url('admin/products') }}" class="btn btn-primary float-end">Back</a>
                 </div>
                 <div class="card-body">
+
 
                     @if ($errors->any())
                         <div class="alert alert-danger">
@@ -23,7 +28,7 @@
 
                     <form action="{{ route('products.update', $product->id) }}" method="POST" enctype="multipart/form-data">
                         @csrf
-                        {{-- @method('PUT') --}}
+                        @method('PUT')
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home"
@@ -92,27 +97,36 @@
                                                 name="status"{{ $product->status == '1' ? 'checked' : '' }}>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    {{-- <div class="col-md-4">
                                         <div class="mb-3">
                                             <label>Product_code</label>
                                             <input type="number" name="product_code">
                                         </div>
-                                    </div>
+                                    </div> --}}
 
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="image-tab-pane" role="tabpanel" aria-labelledby="image-tab">
                                 <div class="mb-3">
                                     <label>Upload Product image</label>
+                                    <input type="file" name="image[]" multiple class="form-control" />
                                 </div>
-                                <input type="file" name="image[]" multiple class="form-control" />
+
                                 <div>
                                     @if ($product->productImages)
-                                        @foreach ($product->productImages as $image)
-                                            <img src="{{ asset('$image->image') }}" alt="Image" class="me-4 border"
-                                                style="width:80px;height:80px;" />
-                                            <a href="">Remove</a>
-                                        @endforeach
+                                        <div class="row">
+                                            @foreach ($product->productImages as $image)
+                                                <div class="col-md-32">
+                                                    <img src="{{ asset($image->image) }}" alt="Image"
+                                                        class="me-4 border" />
+
+                                                    <a href="{{ route('images.destroy', $image->id) }}"
+                                                        class="d-block">Remove</a>
+
+
+                                                </div>
+                                            @endforeach
+                                        </div>
                                     @else
                                         <h5>No Image Added</h5>
                                     @endif
@@ -120,7 +134,7 @@
                             </div>
                         </div>
                         <div>
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="submit" class="btn btn-primary">Update</button>
                         </div>
                     </form>
                 </div>

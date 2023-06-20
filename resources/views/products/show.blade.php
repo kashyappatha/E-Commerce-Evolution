@@ -12,29 +12,50 @@
             <hr />
             <table class="table table-bordered">
                 <tr>
-                    <th>Title:</th>
-                    <td>{{ $product->title }}</td>
+                    <th>Category:</th>
+                    <td>
+                        <select name="category_id" class="form-control">
+                            @foreach ($categories as $category)
+                                <option value="{{ $category->id }}"
+                                    {{ $category->id == $product->category_id ? 'selected' : '' }}>
+                                    {{ $category->category }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </td>
                 </tr>
                 <tr>
-                    <th>Category:</th>
-                    <td>{{ $product->type }}</td>
+                    <th>Title:</th>
+                    <td>{{ $product->title }}</td>
                 </tr>
                 <tr>
                     <th>Price:</th>
                     <td>{{ $product->price }}</td>
                 </tr>
-                <tr>
+                {{-- <tr>
                     <th>Product Code:</th>
                     <td>{{ $product->product_code }}</td>
+                </tr> --}}
+                <tr>
+                    <th>small_description</th>
+                    <td>{{ $product->small_description }}</td>
                 </tr>
                 <tr>
                     <th>Description:</th>
                     <td>{{ $product->description }}</td>
                 </tr>
                 <tr>
-                    <th>Product Image:</th>
-                    <td><img src="{{ asset('admin_assets/img/' . $product->image) }}" alt="Image"></td>
+                    <th>quantity</th>
+                    <td>{{ $product->quantity }}</td>
                 </tr>
+                <tr>
+                    <th>Status</th>
+                    <td>{{ $product->status }}</td>
+                </tr>
+                <tr>
+
+                </tr>
+
                 <tr>
                     <th>Created At:</th>
                     <td>{{ $product->created_at }}</td>

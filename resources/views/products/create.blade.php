@@ -81,12 +81,12 @@
                                             <input type="number" name="quantity" class="form-control">
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    {{-- <div class="col-md-4">
                                         <div class="mb-3">
                                             <label>Product_code</label>
                                             <input type="number" name="product_code " class="form-control">
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="col-md-4">
                                         <div class="mb-3">
                                             <label>Status</label>

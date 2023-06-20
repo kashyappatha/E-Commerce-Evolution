@@ -48,8 +48,9 @@ Route::prefix('admin')->group(function(){
             Route::post('store', [ProductController::class, 'store'])->name('products.store');
             Route::get('show/{id}', [ProductController::class, 'show'])->name('products.show');
             Route::get('edit/{id}', [ProductController::class, 'edit'])->name('products.edit');
-            Route::post('update/{product}', [ProductController::class, 'update'])->name('products.update');
-            Route::delete('destroy/{id}', [ProductController::class, 'destroy'])->name('products.destroy');
+            Route::put('update/{product}', [ProductController::class, 'update'])->name('products.update');
+            Route::get('destroy/{id}', [ProductController::class, 'destroy'])->name('products.destroy');
+            Route::get('/images/{image}', 'ImageController@destroy')->name('images.destroy');
         });
 
 
