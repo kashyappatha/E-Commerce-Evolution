@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('price');
             $table->string('brand')->nullable();
-            $table->string('product_code');
+            $table->string('product_code')->unique();
             $table->mediumText('small_description')->nullable();
             $table->string('description');
             $table->integer('quantity');

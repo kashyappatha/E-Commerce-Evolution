@@ -6,9 +6,9 @@
     <style>
         /* Custom CSS */
         /* .email-scroll {
-                                                padding: 3px;
-                                                background-color: #f7f7f7;
-                                            } */
+                                                        padding: 3px;
+                                                        background-color: #f7f7f7;
+                                                    } */
 
         .email-scroll p {
             padding: 3px;
@@ -83,35 +83,37 @@
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-body d-flex flex-column align-items-center">
-                        <h5>Profiles</h5>
+                        <h5 class="card-title" data-toggle="collapse" data-target="#profileCard">Profiles</h5>
                         <hr />
-                        <div class="text-center">
-                            <img src="{{ asset('admin_assets/img/' . auth()->user()->profile_image) }}" alt="Profile Image"
-                                class="img-fluid rounded-circle mb-3" style="max-width: 100px;">
-                            <h4 class="mb-0">{{ auth()->user()->name }}</h4>
-                            <div class="email-scroll">
-                                <p class="text-muted">{{ auth()->user()->email }}</p>
+                        <div id="profileCard" class="collapse">
+                            <div class="text-center">
+                                <img src="{{ asset('admin_assets/img/' . auth()->user()->profile_image) }}"
+                                    alt="Profile Image" class="img-fluid rounded-circle mb-3" style="max-width: 100px;">
+                                <h4 class="mb-0">{{ auth()->user()->name }}</h4>
+                                <div class="email-scroll">
+                                    <p class="text-muted">{{ auth()->user()->email }}</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <th>Name:</th>
+                                        <td>{{ auth()->user()->name }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Email:</th>
+                                        <td>{{ auth()->user()->email }}</td>
+                                    </tr>
+                                    @php $changeCount = 0; @endphp
+                                </table>
                             </div>
                         </div>
-                        <hr>
-                        <div class="table-responsive">
-                            <table class="table table-bordered">
-                                <tr>
-                                    <th>Name:</th>
-                                    <td>{{ auth()->user()->name }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Email:</th>
-                                    <td>{{ auth()->user()->email }}</td>
-                                </tr>
-                                @php $changeCount = 0; @endphp
-                            </table>
-                        </div>
-                        <h2>Change Count: {{ $changeCount }}</h2>
                     </div>
                 </div>
             </div>
         </div>
+
 
     </div>
 @endsection

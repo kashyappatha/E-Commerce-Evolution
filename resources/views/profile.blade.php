@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Profile')
+@section('title', '')
 @section('contents')
 
 
@@ -20,7 +20,7 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a href="view">viewpage</a></li>
-                            <li><a href="{{ 'forget.get' }}">Update Password</a></li>
+                            <li><a href="{{ route('forget.password.get') }}">Update Password</a></li>
                             <li><a href="">logout</a></li>
                         </ul>
                     </div>
@@ -43,6 +43,10 @@
                                     <th>Email:</th>
                                     <td>{{ auth()->user()->email }}</td>
                                 </tr>
+                                <tr>
+                                    <th>Password</th>
+                                    <td>{{ auth()->user()->password }}</td>
+                                </tr>
                             </table>
                         </div>
                     </div>
@@ -57,25 +61,41 @@
                                 </div>
                             @endif
 
-                            <form action="{{ route('forget.password.post') }}" method="POST">
+                            <form id="editPasswordForm" action="{{ route('profileupdate') }}"method="POST">
                                 @csrf
-                                <div class="form-group row">
-                                    <label for="email_address" class="col-md-4 col-form-label text-md-right">E-Mail
-                                        Address</label>
+
+                                <div class="row">
                                     <div class="col-md-6">
-                                        <input type="text" id="email_address" class="form-control" name="email"
-                                            required autofocus>
-                                        @if ($errors->has('email'))
-                                            <span class="text-danger">{{ $errors->first('email') }}</span>
-                                        @endif
+                                        <div class="form-group">
+                                            <label>Old password:</label>
+                                            <input type="password" name="old_password" id="old_password"
+                                                class="form-control">
+
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6 offset-md-4">
-                                    <button type="submit" class="btn btn-primary">Send Reset Link</button>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>New password:</label>
+                                            <input type="password" name="new_password" id="new_password"
+                                                class="form-control">
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Confirm new password:</label>
+                                            <input type="password" name="confirm_password" id="confirm_password"
+                                                class="form-control">
+
+                                        </div>
+                                    </div>
                                 </div>
-                                <br />
-                                <div class="col-md-6 offset-md-4">
-                                    <button type="reset" class="btn btn-primary">Reset</button>
+                                <div>
+                                    <button class="btn btn-primary">Update</button>
+                                    <input type="reset" class="btn btn-primary">
                                 </div>
                             </form>
                         </div>
@@ -112,7 +132,7 @@
         <table class="table table-bordered col-md-8">
             <tr>
                 <th colspan="2">
-                    <marquee width="29%" scrollamount="7" direction="up">
+                    <marquee width="29%" scrollamount="3.5" direction="down">
                         <h4 class="text-left bg-primary text-white  text-center ">Profile Settings</h4>
                     </marquee>
                 </th>

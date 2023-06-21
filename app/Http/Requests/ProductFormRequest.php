@@ -37,9 +37,19 @@ class ProductFormRequest extends FormRequest
                 'integer'
             ],
             'product_code'=>[
+                'required',
+                'string'
 
-                'integer'
             ],
+            'image'=>[
+                'nullable',
+                // 'string',
+                // 'image|mimes:jpeg,png,jpg'
+            ],
+            // 'image'=>[
+            //     'required',
+            //     'string'
+            // ],
             'small_description'=>[
                 'required',
                 'string'
@@ -55,10 +65,7 @@ class ProductFormRequest extends FormRequest
             'status'=>[
                'nullable'
             ],
-            'image'=>[
-                'nullable',
-                // 'image|mimes:jpeg,png,jpg'
-            ]
+
 
 
 

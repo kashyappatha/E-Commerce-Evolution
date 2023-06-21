@@ -54,14 +54,14 @@ class CategoryController extends Controller
             $counter = 0;
             foreach ($categories as $category) {
 
-                if($category['status'] == '1')
+                if ($category['status'] === 'Active')
                 {
-                    $status = '<span class="badge rounded-pill text-bg-success">Active</span>';
-                }
-                else
+                    $status = '<span class="badge rounded-pill text-success bg-success text-light">Active</span>';
+                } else
                 {
-                    $status = '<span class="badge rounded-pill text-bg-danger">Inactive</span>';
+                    $status = '<span class="badge rounded-pill text-danger bg-danger text-light">Inactive</span>';
                 }
+
 
                 $row = array();
                 $row[] = ++$counter;

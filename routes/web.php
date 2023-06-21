@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\ResetPasswordController;
+use App\Models\Product;
 use App\Models\User;
 
 
@@ -43,7 +44,8 @@ Route::prefix('admin')->group(function(){
         })->name('dashboard');
 
         Route::prefix('products')->group(function () {
-            Route::get('', [ProductController::class, 'index'])->name('products');
+            Route::get('', [ProductController::class, 'product'])->name('products');
+            Route::post('/getproduct', [ProductController::class, 'getproduct'])->name('getproduct');
             Route::get('create', [ProductController::class, 'create'])->name('products.create');
             Route::post('store', [ProductController::class, 'store'])->name('products.store');
             Route::get('show/{id}', [ProductController::class, 'show'])->name('products.show');
@@ -51,6 +53,7 @@ Route::prefix('admin')->group(function(){
             Route::put('update/{product}', [ProductController::class, 'update'])->name('products.update');
             Route::get('destroy/{id}', [ProductController::class, 'destroy'])->name('products.destroy');
             Route::get('/images/{image}', 'ImageController@destroy')->name('images.destroy');
+            Route::delete('/products/{id}/delete-image', [ProductController::class, 'deleteImage'])->name('products.deleteImage');
         });
 
 

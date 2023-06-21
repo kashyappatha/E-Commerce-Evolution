@@ -26,7 +26,7 @@
 
 
 
-                    <form action="{{ route('products.update', $product->id) }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('products.update', $product->id) }}" method="POST">
                         @csrf
                         @method('PUT')
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -69,7 +69,7 @@
                                     <input type="text" name="title" value="{{ $product->title }}" class="form-control">
                                 </div>
                                 <div class="mb-3">
-                                    <label>Price</label>
+                                    <label>Price:</label>
                                     <input type="number" name="price" value="{{ $product->price }}" class="form-control">
                                 </div>
                                 <div class="mb-3">
@@ -85,31 +85,90 @@
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="mb-3">
-                                            <label>Quantity</label>
+                                            <label>Quantity:</label>
                                             <input type="number" name="quantity" value="{{ $product->quantity }}"
                                                 class="form-control">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="mb-3">
-                                            <label>Status</label>
+                                            <label>Product_code:</label>
+                                            <input type="text" name="product_code"
+                                                value="{{ $product->product_code }}"class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label>Image:</label>
+                                            <input type="file" name="image" class="form-control"
+                                                accept="image/jpeg, image/png, image/jpg, image/svg"
+                                                value="{{ $product->image }}" placeholder="Enter Image">
+                                            @if ($product->image)
+                                                <img src="{{ asset('admin_assets/img/' . $product->image) }}"
+                                                    alt="Image" style="max-width:60px;"
+                                                    accept="image/jpeg, image/png, image/jpg">
+                                                @if ($product->image)
+                                                    <div class="mt-2">
+                                                        <button type="button" class="btn btn-danger"
+                                                            onclick="confirmDelete()">
+                                                            <i class="fas fa-trash"></i> Delete
+                                                        </button>
+                                                    </div>
+                                                @endif
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <script>
+                                        function confirmDelete() {
+                                            Swal.fire({
+                                                title: 'Delete Confirmation',
+                                                text: 'Are you sure you want to delete this image?',
+                                                icon: 'warning',
+                                                showCancelButton: true,
+                                                confirmButtonColor: '#d33',
+                                                cancelButtonColor: '#3085d6',
+                                                confirmButtonText: 'Yes, delete it!',
+                                                cancelButtonText: 'Cancel'
+                                            }).then((result) => {
+                                                if (result.isConfirmed) {
+                                                    // Delete the image from the server
+                                                    deleteImage();
+                                                }
+                                            });
+                                        }
+
+                                        function deleteImage() {
+                                            // Send an AJAX request to delete the image
+                                            axios.delete('{{ route('products', $product->id) }}')
+                                                .then((response) => {
+                                                    if (response.data.success) {
+                                                        alert('Image deleted!');
+                                                        // Reload the page or perform any other necessary action
+                                                    } else {
+                                                        alert('Failed to delete image!');
+                                                    }
+                                                })
+                                                .catch((error) => {
+                                                    alert('An error occurred while deleting the image!');
+                                                    console.error(error);
+                                                });
+                                        }
+                                    </script>
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label>Status:</label><br>
                                             <input type="checkbox"
                                                 name="status"{{ $product->status == '1' ? 'checked' : '' }}>
                                         </div>
                                     </div>
-                                    {{-- <div class="col-md-4">
-                                        <div class="mb-3">
-                                            <label>Product_code</label>
-                                            <input type="number" name="product_code">
-                                        </div>
-                                    </div> --}}
 
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="image-tab-pane" role="tabpanel" aria-labelledby="image-tab">
                                 <div class="mb-3">
-                                    <label>Upload Product image</label>
+                                    <label>Upload Product image:</label>
                                     <input type="file" name="image[]" multiple class="form-control" />
+
                                 </div>
 
                                 <div>

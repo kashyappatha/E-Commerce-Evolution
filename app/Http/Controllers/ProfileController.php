@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use Illuminate\Database\Console\Migrations\MigrateCommand;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rules\Password;
 // use App\Models\User;
 
 
@@ -26,11 +29,29 @@ class ProfileController extends Controller
     }
     public function profileupdate(Request $request)
     {
-        // Validate the request
         $request->validate([
             'profile_image' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Adjust the validation rules as per your requirements
+            // 'old_password' => 'required',
+            // 'new_password' => ['required', 'string', Password::min(8)->letters()->numbers()->mixedCase()->symbols()],
+            // 'confirm_password' => 'required|same:new_password',
             // Other fields validation rules
         ]);
+        // if (!Hash::check($request->old_password, Auth::user()->password)) {
+        //     return response()->json(['error' => 'Incorrect old password']);
+        // }
+        // if ($request->old_password === $request->new_password) {
+        //     return response()->json(['error' => 'Old and new passwords cannot be the same']);
+        // }
+
+        // $user = [
+        //     'password' =>Hash::make($request->new_password),
+        // ];
+        //   $user->save();
+
+
+        // Auth::user()
+        //     ->where('id', Auth::user()->id)
+        //     ->update($user);
 
         // Check if a new profile image was uploaded
         if ($request->hasFile('profile_image')) {
@@ -46,6 +67,8 @@ class ProfileController extends Controller
             // Update the user's profile image in the database
             $user = Auth::user();
             $user->profile_image = $imageName;
+
+
             $user->save();
         }
 
@@ -53,12 +76,15 @@ class ProfileController extends Controller
         $user = Auth::user();
         $user->name = $request->input('name');
         $user->email = $request->input('email');
-        $user->password = bcrypt($request->input('password'));
+        $user->password = $request->input('password');
+
 
         $user->save();
 
         return redirect()->back()->with('success', 'Profile updated successfully');
     }
+
+
 
 public function deleteImage($userId)
 {

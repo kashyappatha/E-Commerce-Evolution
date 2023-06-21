@@ -81,12 +81,19 @@
                                             <input type="number" name="quantity" class="form-control">
                                         </div>
                                     </div>
-                                    {{-- <div class="col-md-4">
+                                    <div class="col-md-4">
                                         <div class="mb-3">
-                                            <label>Product_code</label>
-                                            <input type="number" name="product_code " class="form-control">
+                                            <label>Product Code</label>
+                                            <input type="text" name="product_code" class="form-control" unique>
                                         </div>
-                                    </div> --}}
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label class="form-label">Image:</label>
+                                            <input type="file" name="image" class="form-control"
+                                                placeholder="Enter Files Here" accept="jpg/png/jpeg" required>
+                                        </div>
+                                    </div>
                                     <div class="col-md-4">
                                         <div class="mb-3">
                                             <label>Status</label>

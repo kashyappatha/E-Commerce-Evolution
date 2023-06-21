@@ -1,80 +1,137 @@
 @extends('layouts.app')
-@section('title', 'Home Product')
+
+@section('title', 'Home Products')
+
+@section('style')
+
+    {{-- <link rel="stylesheet" href="{{ asset('css/sweetalert2.min.css') }}"> --}}
+
+    <link href="https://cdn.datatables.net/v/bs5/dt-1.13.4/datatables.min.css" rel="stylesheet" />
+
+
+
+@endsection
+
+
 @section('contents')
-
-
+    <div class="d-flex align-items-center justify-content-between">
+        <div></div> <!-- Add an empty div to create space on the left side -->
+        <a href="{{ route('products.create') }}" class="btn btn-primary">Add Products</a>
+    </div>
     <div class="row">
-        <div class="col-md-12">
-            @if (session('message'))
-                <div class="alert alert-success">{{ session('message') }}</div>
-            @endif
-
+        <div class="col-12">
             <div class="card">
-                <div class="card-header">
-                    <h3>Products</h3>
-                    <a href="{{ route('products.create') }}" class="btn btn-primary float-end">Add Products</a>
-                </div>
                 <div class="card-body">
-                    <table class="table table-bordered table-striped">
+
+                    <table id="zero_configuration_table" class="table table-striped" style="width:100%">
                         <thead>
                             <tr>
-                                <th>Id</th>
-                                <th>Category</th>
-                                <th>Product Name</th>
+                                <th>id</th>
+                                <th>Category_id</th>
+                                <th>Brand</th>
                                 <th>Price</th>
-                                <th>Quantity</th>
-                                {{-- <th>Product_code</th>   --}}
+                                <th>small_description</th>
+                                <th>description</th>
+                                <th>quantity</th>
+                                <th>Product_code</th>
+                                <th>product_image</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            @forelse ($products as $product)
-                                <tr>
-                                    <td>{{ $product->id }}</td>
-                                    <td>
-                                        @if ($product->category)
-                                            {{ $product->category->category }}
-                                        @else
-                                            No Category
-                                        @endif
-
-                                    </td>
-                                    <td>{{ $product->title }}</td>
-                                    <td>{{ $product->price }}</td>
-                                    <td>{{ $product->quantity }}</td>
-                                    {{-- <td>{{ $product->product_code }}</td> --}}
-
-                                    <td>{{ $product->status == '1' ? 'Hidden' : 'Visible' }}</td>
-                                    <td>
-                                        <a href="{{ route('products.edit', $product->id) }}"class="btn btn-success"><i
-                                                class="fas fa-edit"></a></i>
-                                        <a href="{{ route('products.show', $product->id) }}"class="btn btn-info"><i
-                                                class="fas fa-eye"></a></i>
-                                        <a href="{{ route('products.destroy', $product->id) }}" class="btn btn-danger"><i
-                                                class="fas fa-trash-alt"
-                                                onclick="return confirm('Are You Sure you want to delete this')"></a></i>
-                                    </td>
-
-
-
-
-
-                                </tr>
-
-                            @empty
-                                <tr>
-                                    <td colspan="8">No Products Available</td>
-                                </tr>
-                            @endforelse
-
-                        </tbody>
-
                     </table>
+
                 </div>
             </div>
         </div>
     </div>
 
 
+    <style>
+        /* romove order arrow icon */
+        table.dataTable thead>tr>th.sorting:before,
+        table.dataTable thead>tr>th.sorting_asc:before,
+        table.dataTable thead>tr>th.sorting_desc:before,
+        table.dataTable thead>tr>th.sorting_asc_disabled:before,
+        table.dataTable thead>tr>th.sorting_desc_disabled:before,
+        table.dataTable thead>tr>td.sorting:before,
+        table.dataTable thead>tr>td.sorting_asc:before,
+        table.dataTable thead>tr>td.sorting_desc:before,
+        table.dataTable thead>tr>td.sorting_asc_disabled:before,
+        table.dataTable thead>tr>td.sorting_desc_disabled:before {
+            content: none;
+        }
+
+        table.dataTable thead>tr>th.sorting:after,
+        table.dataTable thead>tr>th.sorting_asc:after,
+        table.dataTable thead>tr>th.sorting_desc:after,
+        table.dataTable thead>tr>th.sorting_asc_disabled:after,
+        table.dataTable thead>tr>th.sorting_desc_disabled:after,
+        table.dataTable thead>tr>td.sorting:after,
+        table.dataTable thead>tr>td.sorting_asc:after,
+        table.dataTable thead>tr>td.sorting_desc:after,
+        table.dataTable thead>tr>td.sorting_asc_disabled:after,
+        table.dataTable thead>tr>td.sorting_desc_disabled:after {
+            content: none;
+        }
+    </style>
+
+
+@endsection
+
+
+@section('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+    <script src="https://cdn.datatables.net/v/bs5/dt-1.13.4/datatables.min.js"></script>
+
+    <script>
+        $.ajaxSetup({
+
+            headers: {
+
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+
+            }
+
+        });
+
+        $(document).ready(function() {
+            dtable = $('#zero_configuration_table').DataTable({
+                "language": {
+                    "lengthMenu": "_MENU_",
+                },
+                "columnDefs": [{
+                    "targets": "_all",
+                    "orderable": false
+                }],
+                responsive: true,
+                'serverSide': true, // Feature control DataTables' server-side processing mode.
+
+                "ajax": {
+                    "url": "{{ route('getproduct') }}",
+                    'beforeSend': function(request) {
+                        request.setRequestHeader("X-CSRF-TOKEN", $('meta[name="csrf-token"]').attr(
+                            'content'));
+                    },
+                    "type": "POST",
+                    "data": function(data) {
+
+
+
+                    },
+                },
+            });
+
+            $('.panel-ctrls').append("<i class='separator'></i>");
+
+            $('.panel-footer').append($(".dataTable+.row"));
+            $('.dataTables_paginate>ul.pagination').addClass("pull-right");
+
+            $("#apply_filter_btn").click(function() {
+                dtable.ajax.reload(null, false);
+            });
+
+        });
+    </script>
 @endsection

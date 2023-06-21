@@ -32,10 +32,15 @@
                     <th>Price:</th>
                     <td>{{ $product->price }}</td>
                 </tr>
-                {{-- <tr>
+                <tr>
                     <th>Product Code:</th>
                     <td>{{ $product->product_code }}</td>
-                </tr> --}}
+                </tr>
+                <tr>
+                    <th>Image:</th>
+                    <td><img src="{{ asset('admin_assets/img/' . $product->image) }}" alt="Image"
+                            style="max-width: 70px; border-radius: 10px;"></td>
+                </tr>
                 <tr>
                     <th>small_description</th>
                     <td>{{ $product->small_description }}</td>
