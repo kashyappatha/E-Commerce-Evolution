@@ -4,35 +4,23 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\ProductImage;
 
 class Product extends Model
 {
     use HasFactory;
+    protected  $table ="products";
 
-    protected  $table = 'products';
-
-    protected $fillable = [
-        'category_id',
+    protected $fillable=[
+        'categoy_id',
         'title',
-        'type',
         'brand',
         'small_description',
-        'price',
+        'descryption',
+        'orignal_price',
+        'selling_price',
+        'product_id',
         'quantity',
-        'status',
-        'product_code',
-        'description',
-        'image'
-
+        'status'
     ];
-    // Retrieve the form input
-
-    public function category(){
-        return $this->belongsTo(Category::class, 'category_id','id');
-    }
-    public function productImages(){
-        return  $this->hasMany(ProductImage::class,'product_id','id');
-    }
 
 }
