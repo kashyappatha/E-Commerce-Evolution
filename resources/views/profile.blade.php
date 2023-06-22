@@ -129,11 +129,11 @@
     <form method="POST" enctype="multipart/form-data" id="profile_setup_frm" action="{{ route('profileupdate') }}">
         @csrf
         @method('post')
-        <table class="table table-bordered col-md-8">
+        <table class="table table-bordered col-md-8" style="border-collapse: collapse; width: 100%;">
             <tr>
-                <th colspan="2">
+                <th colspan="2" style="background-color: #007bff; color: #fff; padding: 10px; text-align: center;">
                     <marquee width="29%" scrollamount="3.5" direction="down">
-                        <h4 class="text-left bg-primary text-white  text-center ">Profile Settings</h4>
+                        <h4 class="text-left  text-white  text-center ">Profile Settings</h4>
                     </marquee>
                 </th>
             </tr>
@@ -151,7 +151,7 @@
                         value="{{ auth()->user()->profile_image }}" onchange="previewImage(event)">
                     @if ($user->profile_image)
                         <img id="preview" src="{{ asset('admin_assets/img/' . $user->profile_image) }}" alt="Image"
-                            style="max-width: 60px;" accept="image/jpeg, image/png, image/jpg">
+                            style="max-width: 50px;border-radius:100px" accept="image/jpeg, image/png, image/jpg">
                         <div class="mt-2">
                             <button type="button" class="btn btn-danger" onclick="confirmDelete()">
                                 <i class="fas fa-trash"></i> Delete
@@ -161,50 +161,64 @@
                 </td>
             </tr>
             <tr>
-                <td>
+                <td style="padding: 10px;">
                     <label class="labels">Name:</label>
                 </td>
-                <td>
+                <td style="padding: 10px;">
                     <input type="text" name="name" class="form-control" placeholder="First Name"
-                        value="{{ auth()->user()->name }}">
+                        value="{{ auth()->user()->name }}"
+                        style="width: 100%; padding: 8px; border-radius: 4px; border: 1px solid #ccc; box-sizing: border-box;">
                 </td>
             </tr>
             <tr>
-                <td>
+                <td style="padding: 10px;">
                     <label class="labels">Email:</label>
                 </td>
-                <td>
+                <td style="padding: 10px;">
                     <input type="text" name="email" class="form-control" value="{{ auth()->user()->email }}"
-                        placeholder="Email">
+                        placeholder="Email"
+                        style="width: 100%; padding: 8px; border-radius: 4px; border: 1px solid #ccc; box-sizing: border-box;">
                 </td>
             </tr>
             <tr>
-                <td>
+                <td style="padding: 10px;">
                     <label class="labels">Password:</label>
                 </td>
-                <td>
+                <td style="padding: 10px;">
                     <input type="password" name="password" class="form-control" placeholder="Password"
-                        value="{{ auth()->user()->password }}">
+                        value="{{ auth()->user()->password }}"
+                        style="width: 100%; padding: 8px; border-radius: 4px; border: 1px solid #ccc; box-sizing: border-box;">
                 </td>
             </tr>
             <tr>
                 <td colspan="2" class="text-center">
-                    <button id="btn" class="btn btn-primary profile-button" type="submit">Edit Profile</button>
-                    <a href="{{ url()->previous() }}" class="btn btn-info">Back</a>
-                    <button type="reset" class="btn btn-primary">Reset</button>
+                    <button id="btn" class="btn btn-primary profile-button" type="submit"
+                        style="background-color: #007bff; color: #fff; border-radius: 4px; padding: 8px 16px; cursor: pointer;">Edit
+                        Profile</button>
+                    <a href="{{ url()->previous() }}" class="btn btn-info"
+                        style="background-color: #17a2b8; color: #fff; border-radius: 4px; padding: 8px 16px; text-decoration: none; cursor: pointer;">Back</a>
+                    <button type="reset" class="btn btn-primary"
+                        style="background-color: #dc3545; color: #fff; border-radius: 4px; padding: 8px 16px; cursor: pointer;">Reset</button>
                 </td>
             </tr>
         </table>
 
+
     </form>
-    <div class="col-md-4 float-center">
-        <div class="card">
-            <div class="card-header">Change Count</div>
-            <div class="card-body">
-                <h5 class="card-title" id="changeCount">{{ $changeCount }}</h5>
+    <div class="col-md-4" style="display: flex; justify-content: left;">
+        <div class="card"
+            style="width: 100%; max-width: 400px; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); margin: 20px;">
+            <div class="card-header"
+                style="background-color: #007bff; color: #fff; padding: 10px; text-align: center; border-top-left-radius: 8px; border-top-right-radius: 8px;">
+                Change Count
+            </div>
+            <div class="card-body" style="padding: 20px; text-align: center;">
+                <h5 class="card-title" id="changeCount" style="font-size: 24px; margin-bottom: 0;">{{ $changeCount }}
+                </h5>
             </div>
         </div>
     </div>
+
 
 
     </div>
@@ -213,28 +227,28 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
     <script>
-        function updateChangeCount() {
-            const countElement = document.getElementById('changeCount');
-            countElement.innerText = "{{ $changeCount }}";
-        }
+        // function updateChangeCount() {
+        //     const countElement = document.getElementById('changeCount');
+        //     countElement.innerText = "{{ $changeCount }}";
+        // }
 
-        function incrementChangeCount() {
-            axios.post('{{ route('incrementChangeCount') }}')
-                .then((response) => {
-                    if (response.data.success) {
-                        // Increment the change count on the server
-                        {{ $changeCount++ }};
-                        // Update the count element on the page
-                        updateChangeCount();
-                    }
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
-        }
+        // function incrementChangeCount() {
+        //     axios.post('{{ route('incrementChangeCount') }}')
+        //         .then((response) => {
+        //             if (response.data.success) {
+        //                 // Increment the change count on the server
+        //                 {{ $changeCount++ }};
+        //                 // Update the count element on the page
+        //                 updateChangeCount();
+        //             }
+        //         })
+        //         .catch((error) => {
+        //             console.error(error);
+        //         });
+        // }
 
-        // Update the change count on page load
-        updateChangeCount();
+        // // Update the change count on page load
+        // updateChangeCount();
 
         // Add your remaining JavaScript code here
     </script>

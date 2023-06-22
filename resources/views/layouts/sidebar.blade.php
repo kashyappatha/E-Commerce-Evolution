@@ -2,21 +2,31 @@
 
 
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center ">
         <div class="sidebar-brand-icon">
-
-
-            <img src="{{ asset('admin_assets/img/' . auth()->user()->profile_image) }}"alt="Image" width="30"
-                style="border-radius:23px;">
-            <span class="mr-2 d-none d-lg-inline">
-                {{ auth()->user()->name }}
-                <br>
-
+            <img src="{{ asset('admin_assets/img/' . auth()->user()->profile_image) }}" alt="Image" width="30"
+                style="border-radius: 23px;">
+            <span class="mr-2 d-none d-lg-inline" style="display: flex; justify-content: center; align-items: center;">
+                <span id="userName">{{ auth()->user()->name }}
+                    <small>{{ auth()->user()->level }}</small>
+                </span>
+                <a href="{{ route('profile') }}" class="btn btn-secondary btn-sm text-center" id="editButton"
+                    style="display: none;margin-left:100px;"><i class="fas fa-edit"></i></a>
             </span>
         </div>
     </a>
 
+    <script>
+        const userName = document.getElementById('userName');
+        const editButton = document.getElementById('editButton');
 
+        userName.addEventListener('click', function() {
+            editButton.style.display = 'inline';
+        });
+    </script>
+
+
+    <br />
 
     <!-- Divider -->
 

@@ -81,6 +81,7 @@ public function product()
 
                 $row[] = $product['category_id'];
                 $row[] = $product['title'];
+                $row[]=$product['image'];
                 $row[] = $product['price'];
                 $row[] = $product['small_description'];
                 $row[] = $product['description'];
@@ -88,7 +89,7 @@ public function product()
                 $row[] = $product['product_code'];
 
 
-                $row[] = '<img src="' . asset('admin_assets/img/' . $product->image) . '" alt="Image" style="max-width: 70px; border-radius: 10px;">';
+                // $row[] = '<img src="' . asset('admin_assets/img/' . $product->image) . '" alt="Image" style="max-width: 70px; border-radius: 10px;">';
 
 
                 $row[] = $status;

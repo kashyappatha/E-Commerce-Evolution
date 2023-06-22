@@ -57,7 +57,7 @@ class UserController extends Controller
                 $row[] = ++$counter;
 
 
-                $row[] = '<img src="' . asset('admin_assets/img/' . $user->profile_image) . '" alt="Image" style="max-width: 70px; border-radius: 10px;">';
+                $row[] = '<img src="' . asset('admin_assets/img/' . $user->profile_image) . '" alt="Image" style="max-width: 60px; border-radius: 30px;">';
 
 
                 $row[] = $user['name'];

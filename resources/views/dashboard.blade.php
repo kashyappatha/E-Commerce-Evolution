@@ -6,9 +6,9 @@
     <style>
         /* Custom CSS */
         /* .email-scroll {
-                                                        padding: 3px;
-                                                        background-color: #f7f7f7;
-                                                    } */
+                                                                                    padding: 3px;
+                                                                                    background-color: #f7f7f7;
+                                                                                } */
 
         .email-scroll p {
             padding: 3px;
@@ -46,9 +46,9 @@
 
     <div class="container">
 
-        <div class="row mb-4">
-            <div class="col-md-6">
-                <div class="card">
+        <div class="row mb-4  ">
+            <div class="col-md-6  ">
+                <div class="card ">
                     <div class="card-body">
                         <h5>Category Data</h5>
                     </div>

@@ -29,12 +29,13 @@
                                 <th>id</th>
                                 <th>Category_id</th>
                                 <th>Brand</th>
+                                <th>image</th>
                                 <th>Price</th>
                                 <th>small_description</th>
                                 <th>description</th>
                                 <th>quantity</th>
                                 <th>Product_code</th>
-                                <th>product_image</th>
+                                {{-- <th>product_image</th> --}}
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>

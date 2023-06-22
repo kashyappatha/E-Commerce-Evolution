@@ -41,7 +41,15 @@
                                 </tr>
                                 <tr>
                                     <th>Status:</th>
-                                    <td>{{ $category->status }}</td>
+                                    <td>
+                                        @if ($category->status === 'Active')
+                                            <span
+                                                class="badge rounded-pill text-success bg-success text-light">{{ $category->status }}</span>
+                                        @else
+                                            <span
+                                                class="badge rounded-pill text-danger bg-danger text-light">{{ $category->status }}</span>
+                                        @endif
+                                    </td>
                                 </tr>
 
 

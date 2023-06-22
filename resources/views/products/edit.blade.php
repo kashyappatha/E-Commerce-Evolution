@@ -97,17 +97,17 @@
                                                 value="{{ $product->product_code }}"class="form-control">
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    {{-- <div class="col-md-4">
                                         <div class="mb-3">
                                             <label>Image:</label>
-                                            <input type="file" name="image" class="form-control"
+                                            <input type="file" name="thumbnail" class="form-control"
                                                 accept="image/jpeg, image/png, image/jpg, image/svg"
-                                                value="{{ $product->image }}" placeholder="Enter Image">
-                                            @if ($product->image)
-                                                <img src="{{ asset('admin_assets/img/' . $product->image) }}"
+                                                value="{{ $product->thumbnail }}" placeholder="Enter Image">
+                                            @if ($product->thumbnail)
+                                                <img src="{{ asset('admin_assets/img/' . $product->thumbnail) }}"
                                                     alt="Image" style="max-width:60px;"
                                                     accept="image/jpeg, image/png, image/jpg">
-                                                @if ($product->image)
+                                                @if ($product->thumbnail)
                                                     <div class="mt-2">
                                                         <button type="button" class="btn btn-danger"
                                                             onclick="confirmDelete()">
@@ -153,7 +153,7 @@
                                                     console.error(error);
                                                 });
                                         }
-                                    </script>
+                                    </script> --}}
                                     <div class="col-md-4">
                                         <div class="mb-3">
                                             <label>Status:</label><br>

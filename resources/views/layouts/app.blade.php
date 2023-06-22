@@ -141,6 +141,10 @@
     <!-- Page level plugins -->
 
     <script src="{{ asset('admin_assets/vendor/chart.js/Chart.min.js') }}"></script>
+    <script>
+        axios.defaults.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[name="csrf-token"]').getAttribute(
+            'content');
+    </script>
 
     @yield('scripts')
 

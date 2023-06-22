@@ -114,7 +114,7 @@
                 <i class="fas fa-envelope fa-fw"></i>
 
                 <!-- Counter - Messages -->
-                <span class="badge badge-danger badge-counter">7</span>
+                <span class="badge badge-danger badge-counter">2</span>
 
             </a>
 
@@ -166,12 +166,11 @@
                 style="display: inline-block; background-color: #fff; padding: 5px; border-radius: 5px;"
                 onmouseover="this.style.backgroundColor='lightblue'; this.style.boxShadow='0 0 5px rgba(0, 0, 0, 0.2)';"
                 onmouseout="this.style.backgroundColor='#ffF'; this.style.boxShadow='';">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small text-white">
-                    {{ auth()->user()->name }}
-                    <br>
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small text-white"><br />
                     <img src="{{ asset('admin_assets/img/' . auth()->user()->profile_image) }}" alt="Image"
-                        width="30" style="border-radius: 23px;">
-                    <small>{{ auth()->user()->level }}</small>
+                        width="30" style="border-radius: 23px;"> {{ auth()->user()->name }}
+
+                    {{-- <small>{{ auth()->user()->level }}</small> --}}
                 </span>
             </a>
 

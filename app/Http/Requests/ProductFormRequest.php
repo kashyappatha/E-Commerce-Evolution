@@ -32,6 +32,9 @@ class ProductFormRequest extends FormRequest
                 'required',
                 'string'
             ],
+            'image'=>[
+               'nullable'
+            ],
             'price'=>[
                 'required',
                 'integer'
@@ -41,15 +44,12 @@ class ProductFormRequest extends FormRequest
                 'string'
 
             ],
-            'image'=>[
-                'nullable',
-                // 'string',
-                // 'image|mimes:jpeg,png,jpg'
-            ],
-            // 'image'=>[
-            //     'required',
-            //     'string'
+            // 'thumbnail'=>[
+            //     'nullable',
+            //     // 'string',
+            //     // 'image|mimes:jpeg,png,jpg'
             // ],
+
             'small_description'=>[
                 'required',
                 'string'
