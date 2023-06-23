@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Home Product')
+@section('title', 'Edit Product')
 @section('contents')
 
     <div class="row">
@@ -64,13 +64,32 @@
                                         @endforeach
                                     </select>
                                 </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label>Image:</label>
+                                        <input type="file" name="images" class="form-control"
+                                            accept="image/jpeg, image/png, image/jpg, image/svg"
+                                            value="{{ $product->images }}" placeholder="Enter Image">
+                                        @if ($product->images)
+                                            <img src="{{ asset('admin_assets/img/' . $product->images) }}" alt="Image"
+                                                style="max-width: 130px; border-radius: 10px;">
+                                            @if ($product->images)
+                                                <div class="mt-2">
+                                                    <button type="button" class="btn btn-danger" onclick="confirmDelete()">
+                                                        <i class="fas fa-trash"></i> Delete
+                                                    </button>
+                                                </div>
+                                            @endif
+                                        @endif
+                                    </div>
+                                </div>
                                 <div class="mb-3">
                                     <label>Product Name:</label>
                                     <input type="text" name="title" value="{{ $product->title }}" class="form-control">
                                 </div>
                                 <div class="mb-3">
-                                    <label>Price:</label>
-                                    <input type="number" name="price" value="{{ $product->price }}" class="form-control">
+                                    <label>Brand</label>
+                                    <input type="text" name="brand" value="{{ $product->brand }}"class="form-control">
                                 </div>
                                 <div class="mb-3">
                                     <label>Small_description:</label>
@@ -85,6 +104,20 @@
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="mb-3">
+                                            <label>Orignal_price:</label>
+                                            <input type="text" name="orignal_price"
+                                                value="{{ $product->orignal_price }}" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label>Selling_price:</label>
+                                            <input type="text" name="selling_price"
+                                                value="{{ $product->selling_price }}" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
                                             <label>Quantity:</label>
                                             <input type="number" name="quantity" value="{{ $product->quantity }}"
                                                 class="form-control">
@@ -97,63 +130,7 @@
                                                 value="{{ $product->product_code }}"class="form-control">
                                         </div>
                                     </div>
-                                    {{-- <div class="col-md-4">
-                                        <div class="mb-3">
-                                            <label>Image:</label>
-                                            <input type="file" name="thumbnail" class="form-control"
-                                                accept="image/jpeg, image/png, image/jpg, image/svg"
-                                                value="{{ $product->thumbnail }}" placeholder="Enter Image">
-                                            @if ($product->thumbnail)
-                                                <img src="{{ asset('admin_assets/img/' . $product->thumbnail) }}"
-                                                    alt="Image" style="max-width:60px;"
-                                                    accept="image/jpeg, image/png, image/jpg">
-                                                @if ($product->thumbnail)
-                                                    <div class="mt-2">
-                                                        <button type="button" class="btn btn-danger"
-                                                            onclick="confirmDelete()">
-                                                            <i class="fas fa-trash"></i> Delete
-                                                        </button>
-                                                    </div>
-                                                @endif
-                                            @endif
-                                        </div>
-                                    </div>
-                                    <script>
-                                        function confirmDelete() {
-                                            Swal.fire({
-                                                title: 'Delete Confirmation',
-                                                text: 'Are you sure you want to delete this image?',
-                                                icon: 'warning',
-                                                showCancelButton: true,
-                                                confirmButtonColor: '#d33',
-                                                cancelButtonColor: '#3085d6',
-                                                confirmButtonText: 'Yes, delete it!',
-                                                cancelButtonText: 'Cancel'
-                                            }).then((result) => {
-                                                if (result.isConfirmed) {
-                                                    // Delete the image from the server
-                                                    deleteImage();
-                                                }
-                                            });
-                                        }
 
-                                        function deleteImage() {
-                                            // Send an AJAX request to delete the image
-                                            axios.delete('{{ route('products', $product->id) }}')
-                                                .then((response) => {
-                                                    if (response.data.success) {
-                                                        alert('Image deleted!');
-                                                        // Reload the page or perform any other necessary action
-                                                    } else {
-                                                        alert('Failed to delete image!');
-                                                    }
-                                                })
-                                                .catch((error) => {
-                                                    alert('An error occurred while deleting the image!');
-                                                    console.error(error);
-                                                });
-                                        }
-                                    </script> --}}
                                     <div class="col-md-4">
                                         <div class="mb-3">
                                             <label>Status:</label><br>
@@ -161,6 +138,7 @@
                                                 name="status"{{ $product->status == '1' ? 'checked' : '' }}>
                                         </div>
                                     </div>
+
 
                                 </div>
                             </div>
@@ -176,8 +154,9 @@
                                         <div class="row">
                                             @foreach ($product->productImages as $image)
                                                 <div class="col-md-32">
-                                                    <img src="{{ asset($image->image) }}" alt="Image"
+                                                    <img src="{{ asset('admin_assets/img/' .$image->image) }}" alt="Image"
                                                         class="me-4 border" />
+                                                      
 
                                                     <a href="{{ route('images.destroy', $image->id) }}"
                                                         class="d-block">Remove</a>
@@ -196,19 +175,47 @@
                             <button type="submit" class="btn btn-primary">Update</button>
                         </div>
                     </form>
+                    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+                    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+                    <script>
+                        function confirmDelete() {
+                            Swal.fire({
+                                title: 'Delete Confirmation',
+                                text: 'Are you sure you want to delete this image?',
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#d33',
+                                cancelButtonColor: '#3085d6',
+                                confirmButtonText: 'Yes, delete it!',
+                                cancelButtonText: 'Cancel'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    // Delete the image from the server
+                                    deleteImage();
+                                }
+                            });
+                        }
+
+                        function deleteImage() {
+                            // Send an AJAX request to delete the image
+                            axios.delete('{{ route('products.deleteImage', $product->id) }}')
+                                .then((response) => {
+                                    if (response.data.success) {
+                                        alert('Image deleted!');
+                                        // Reload the page or perform any other necessary action
+                                    } else {
+                                        alert('Failed to delete image!');
+                                    }
+                                })
+                                .catch((error) => {
+                                    alert('An error occurred while deleting the image!');
+                                    console.error(error);
+                                });
+                        }
+                    </script>
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- Include necessary scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        // Initialize the tabs
-        var tabTriggerElList = [].slice.call(document.querySelectorAll('#myTab button'));
-        tabTriggerElList.forEach(function(tabTriggerEl) {
-            new bootstrap.Tab(tabTriggerEl);
-        });
-    </script>
-
 @endsection

@@ -27,8 +27,8 @@
                         <thead>
                             <tr>
                                 <th>id</th>
+                                <th>Category_image</th>
                                 <th>Category Name</th>
-                                <th>image</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>

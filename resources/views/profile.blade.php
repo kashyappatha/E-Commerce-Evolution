@@ -4,7 +4,7 @@
 
 
     @php
-        $changeCount = 0;
+        $changeCount = '0';
     @endphp
 
     <div class="mt-4">
@@ -29,11 +29,11 @@
                     <h2 id="view-profile-heading">View Profile Page</h2>
                     <div class="card-body" id="view-profile-section" style="display: none;">
                         <div class="card-body">
-                            <table class="table table-bordered">
+                            <table class="table table-bordered" style="margin-left:-60px;">
                                 <tr>
                                     <th>Profile Image:</th>
                                     <td><img src="{{ asset('admin_assets/img/' . auth()->user()->profile_image) }}"
-                                            alt="Profile Image" style="max-width: 55px; border-radius: 25px;"></td>
+                                            alt="Profile Image" style="max-width: 50px; border-radius: 25px;"></td>
                                 </tr>
                                 <tr>
                                     <th>Name:</th>
@@ -44,9 +44,10 @@
                                     <td>{{ auth()->user()->email }}</td>
                                 </tr>
                                 <tr>
-                                    <th>Password</th>
+                                    <th>Password:</th>
                                     <td>{{ auth()->user()->password }}</td>
                                 </tr>
+
                             </table>
                         </div>
                     </div>
@@ -61,42 +62,38 @@
                                 </div>
                             @endif
 
-                            <form id="editPasswordForm" action="{{ route('profileupdate') }}"method="POST">
+                            <form id="editPasswordForm" action="{{ route('profileupdate') }}" method="POST">
                                 @csrf
 
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Old password:</label>
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <td><label>Old password:</label></td>
+                                        <td>
                                             <input type="password" name="old_password" id="old_password"
                                                 class="form-control">
-
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>New password:</label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><label>New password:</label></td>
+                                        <td>
                                             <input type="password" name="new_password" id="new_password"
                                                 class="form-control">
-
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Confirm new password:</label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><label>Confirm new password:</label></td>
+                                        <td>
                                             <input type="password" name="confirm_password" id="confirm_password"
                                                 class="form-control">
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <button class="btn btn-primary">Update</button>
-                                    <input type="reset" class="btn btn-primary">
-                                </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <button class="btn btn-primary">Update</button>
+                                            <input type="reset" class="btn btn-primary">
+                                        </td>
+                                    </tr>
+                                </table>
                             </form>
                         </div>
                     </div>
@@ -226,32 +223,7 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
-    <script>
-        // function updateChangeCount() {
-        //     const countElement = document.getElementById('changeCount');
-        //     countElement.innerText = "{{ $changeCount }}";
-        // }
 
-        // function incrementChangeCount() {
-        //     axios.post('{{ route('incrementChangeCount') }}')
-        //         .then((response) => {
-        //             if (response.data.success) {
-        //                 // Increment the change count on the server
-        //                 {{ $changeCount++ }};
-        //                 // Update the count element on the page
-        //                 updateChangeCount();
-        //             }
-        //         })
-        //         .catch((error) => {
-        //             console.error(error);
-        //         });
-        // }
-
-        // // Update the change count on page load
-        // updateChangeCount();
-
-        // Add your remaining JavaScript code here
-    </script>
     <script>
         function previewImage(event) {
             var reader = new FileReader();

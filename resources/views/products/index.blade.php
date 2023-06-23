@@ -4,10 +4,10 @@
 
 @section('style')
 
-    {{-- <link rel="stylesheet" href="{{ asset('css/sweetalert2.min.css') }}"> --}}
+    <link rel="stylesheet" href="{{ asset('css/sweetalert2.min.css') }}">
 
     <link href="https://cdn.datatables.net/v/bs5/dt-1.13.4/datatables.min.css" rel="stylesheet" />
-
+    {{-- <link href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.bootstrap5.css" /> --}}
 
 
 @endsection
@@ -21,21 +21,23 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <div class="card-body">
+                <div class="card-body overflow-auto">
 
-                    <table id="zero_configuration_table" class="table table-striped" style="width:100%">
+                    <table id="zero_configuration_table" class="table table-striped " style="width:165%;">
                         <thead>
                             <tr>
                                 <th>id</th>
                                 <th>Category_id</th>
-                                <th>Brand</th>
+                                <th>images</th>
+                                <th>Product_name</th>
                                 <th>image</th>
-                                <th>Price</th>
+                                <th>Brand</th>
                                 <th>small_description</th>
                                 <th>description</th>
+                                <th>orignal_price</th>
+                                <th>selling_price</th>
                                 <th>quantity</th>
                                 <th>Product_code</th>
-                                {{-- <th>product_image</th> --}}
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
@@ -85,6 +87,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
     <script src="https://cdn.datatables.net/v/bs5/dt-1.13.4/datatables.min.js"></script>
+    {{-- <script src="https://cdn.datatables.net/responsive/2.4.1/js/responsive.bootstrap5.min.js"></script> --}}
 
     <script>
         $.ajaxSetup({

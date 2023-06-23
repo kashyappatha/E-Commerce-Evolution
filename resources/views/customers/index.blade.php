@@ -23,9 +23,9 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <div class="card-body">
+                <div class="card-body overflow-auto">
 
-                    <table id="zero_configuration_table" class="table table-striped" style="width:100%">
+                    <table id="zero_configuration_table" class="table table-striped" style="width:120%">
                         <thead>
                             <tr>
                                 <th>id</th>

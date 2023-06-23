@@ -78,9 +78,12 @@ Route::prefix('admin')->group(function(){
         Route::get('profile', [App\Http\Controllers\AuthController::class,'profile'])->name('profile');
         Route::get('view',[App\Http\Controllers\AuthController::class,'view'])->name('view');
         Route::post('/profile/update',[App\Http\Controllers\ProfileController::class,'profileupdate'])->name('profileupdate');
-        Route::delete('/profile/{id}/delete-image', [ProfileController::class, 'deleteImage'])->name('profileupdate.deleteImage');
+        Route::delete('/profile/update/{id}/delete-image', [ProfileController::class, 'deleteImage'])->name('profileupdate.deleteImage');
         Route::post('/increment-change-count', [ProfileController::class, 'incrementChangeCount'])->name('incrementChangeCount');
-        Route::post('/store-avatar', [ProfileUpdateController::class, 'storeAvatar'])->name('profileupdate.storeAvatar');
+        Route::post('/profile/update/store-avatar', [ProfileUpdateController::class, 'storeAvatar'])->name('profileupdate.storeAvatar');
+        Route::post('profile/update/set-avatar',[ProfileController::class,'setAvatar'])->name('profileupdate.setAvatar');
+
+;
 
         //  Route::post('/profile/update', 'ProfileController@profileupdate')->name('profileupdate');
 

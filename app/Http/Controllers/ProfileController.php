@@ -113,6 +113,8 @@ public function deleteImage($userId)
     return response()->json(['success' => false]);
 }
 
+
+
 public function setAvatar(Request $request)
 {
     $user = auth()->user()->name(); // Retrieve the authenticated user

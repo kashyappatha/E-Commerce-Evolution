@@ -12,6 +12,13 @@
             <hr />
             <table class="table table-bordered">
                 <tr>
+                    <th>Product_thumbnail:</th>
+                    <td>
+                        <img src="{{ asset('admin_assets/img/' . $product->images) }}" alt="Image"
+                            style="max-width: 130px; border-radius: 10px;">
+                    </td>
+                </tr>
+                <tr>
                     <th>Category:</th>
                     <td>
                         <select name="category_id" class="form-control">
@@ -25,49 +32,30 @@
                     </td>
                 </tr>
                 <tr>
-                    <th>Title:</th>
+                    <th>Product_name:</th>
                     <td>{{ $product->title }}</td>
-                </tr>
-                <tr>
-                    <th>Price:</th>
-                    <td>{{ $product->price }}</td>
-                </tr>
-                <tr>
-                    <th>Product Code:</th>
-                    <td>{{ $product->product_code }}</td>
                 </tr>
                 <tr>
                     <th>Image:</th>
                     <td>
-                        <div class="tab-pane fade" id="image-tab-pane" role="tabpanel" aria-labelledby="image-tab">
-                            <div class="mb-3">
-                                <label>Upload Product image:</label>
-                                <input type="file" name="image[]" multiple class="form-control" />
-                            </div>
-                            <div>
-                                @if ($product->productImages)
-                                    <table>
-                                        <tr>
-                                            @foreach ($product->productImages as $image)
-                                                <td>
-                                                    <img src="{{ asset($image->image) }}" alt="Image" class="me-4 border"
-                                                        style="max-width: 70px; border-radius: 10px;" />
-                                                    <a href="{{ route('images.destroy', $image->id) }}"
-                                                        class="d-block">Remove</a>
-                                                </td>
-                                            @endforeach
-                                        </tr>
-                                    </table>
-                                @else
-                                    <h5>No Image Added</h5>
-                                @endif
-                            </div>
-                        </div>
+                        @foreach ($product->productImages as $image)
+                            <tr>
+                                <td>
+                                    <img src="{{ asset('admin_assets/img/' . $image->image) }}" alt="Image" class="me-4 border" />
+                                </td>
+                            </tr>
+                       @endforeach
                     </td>
+
                 </tr>
 
                 <tr>
-                    <th>small_description</th>
+                    <th>Brands:</th>
+                    <td>{{ $product->brand }}</td>
+                </tr>
+
+                <tr>
+                    <th>small_description:</th>
                     <td>{{ $product->small_description }}</td>
                 </tr>
                 <tr>
@@ -75,25 +63,39 @@
                     <td>{{ $product->description }}</td>
                 </tr>
                 <tr>
-                    <th>quantity</th>
+                    <th>orignal_price:</th>
+                    <td>{{ $product->orignal_price }}</td>
+                </tr>
+                <tr>
+                    <th>selling_price:</th>
+                    <td>{{ $product->selling_price }}</td>
+                </tr>
+                <tr>
+                    <th>Quantity:</th>
                     <td>{{ $product->quantity }}</td>
+                </tr>
+
+                <tr>
+                    <th>Product Code:</th>
+                    <td>{{ $product->product_code }}</td>
                 </tr>
                 <tr>
                     <th>Status:</th>
                     <td>
                         @if ($product->status == '1')
-                            <span class="badge rounded-pill text-success bg-success text-light">1-Active</span>
+                            <span class="badge rounded-pill text-success bg-success text-light">
+                                <i class="fas fa-check-circle me-1"></i>Active
+                            </span>
                         @else
-                            <span class="badge rounded-pill text-danger bg-danger text-light">0-Inactive</span>
+                            <span class="badge rounded-pill text-danger bg-danger text-light">
+                                <i class="fas fa-times-circle me-1"></i>Inactive
+                            </span>
                         @endif
                     </td>
                 </tr>
 
-                {{-- <tr>
-                    <th>Image:</th>
-                    <td><img src="{{ asset('admin_assets/img/' . $image->image) }}" alt="Image" class="me-4 border" />
-                    </td>
-                </tr> --}}
+
+
 
 
                 <tr>

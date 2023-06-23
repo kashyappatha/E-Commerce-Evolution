@@ -71,18 +71,6 @@ class AuthController extends Controller
         return redirect('/');
     }
 
-    // public function profile()
-    // {
-    //     return view('profile');
-    // }
-
-    // public function profileupdate(Request $request)
-    // {
-    //     dd("USER NAME --->".$request->name);
-    //     // dd("USER EMAIL--->".$request->email);
-    //     // dd("USER PHONE --->".$request->phone);
-    //     // dd("USER ADDRESS--->".$request->Address);
-    // }
     public function profile()
     {
         $user = Auth::user();

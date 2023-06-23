@@ -58,12 +58,9 @@ class UserController extends Controller
 
 
                 $row[] = '<img src="' . asset('admin_assets/img/' . $user->profile_image) . '" alt="Image" style="max-width: 60px; border-radius: 30px;">';
-
-
                 $row[] = $user['name'];
                 $row[] = $user['email'];
                 // $row[] = $user['password'];
-
                 $Action = '';
 
                 $Action .= '<a href="' . route(('users.edit'), [$user["id"]]) . '">&nbsp;<i class="fas fa-edit"></i>|';

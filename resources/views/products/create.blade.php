@@ -1,12 +1,14 @@
 @extends('layouts.app')
-@section('title', 'Home Product')
+@section('title', '')
 @section('contents')
 
     <div class="row">
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h3> Add Products</h3>
+                    <marquee width="20%" class="bg-primary text-white " direction="left" scroll-amount="30">
+                        <h3> Add Products</h3>
+                    </marquee>
                     <a href="{{ url('admin/products') }}" class="btn btn-primary float-end">Back</a>
                 </div>
                 <div class="card-body">
@@ -48,7 +50,7 @@
 
                         </ul>
                         <div class="tab-content" id="myTabContent">
-                            <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel"
+                            <div class="tab-pane fade border p-3 show active" id="home-tab-pane" role="tabpanel"
                                 aria-labelledby="home-tab" tabindex="0">
                                 <div class="mb-3">
                                     <label>Category</label>
@@ -60,10 +62,10 @@
                                 </div>
                                 <div class="mb-3">
                                     <label>Thumbnail:</label>
-                                    <input type="file" name="image" class="form-control">
+                                    <input type="file" name="images" class="form-control">
                                 </div>
                                 <div class="mb-3">
-                                    <label>Product_Name</label>
+                                    <label>Product_Name:</label>
                                     <input type="text" name="title" class="form-control">
                                 </div>
                                 <div class="mb-3">
@@ -71,53 +73,43 @@
                                     <input type="text" name="brand" class="form-control">
                                 </div>
                                 <div class="mb-3">
-                                    <label>Price</label>
-                                    <input type="number" name="price" class="form-control">
-                                </div>
-                                <div class="mb-3">
-                                    <label>Small_Description</label>
+                                    <label>Small_Description:</label>
                                     <textarea name="small_description" class="form-control" rows="4"></textarea>
                                 </div>
                                 <div class="mb-3">
-                                    <label>Small_Description</label>
-                                    <textarea name="small_description" class="form-control" rows="4"></textarea>
+                                    <label>Description:</label>
+                                    <textarea name="description" class="form-control" rows="4"></textarea>
                                 </div>
                             </div>
-                            {{-- <div class="tab-pane fade" id="seotag-tab-pane" role="tabpanel" aria-labelledby="seotag-tab"
-                                tabindex="0">
-                                <div class="mb-3">
-                                    <label>Small_Description</label>
-                                    <textarea name="small_description" class="form-control" rows="4"></textarea>
-                                </div>
-                                <div class="mb-3">
-                                    <label>Small_Description</label>
-                                    <textarea name="small_description" class="form-control" rows="4"></textarea>
-                                </div>
-
-                            </div> --}}
-                            <div class="tab-pane fade" id="details-tab-pane" role="tabpanel" aria-labelledby="details-tab"
-                                tabindex="0">
+                            <div class="tab-pane fade border p-3" id="details-tab-pane" role="tabpanel"
+                                aria-labelledby="details-tab" tabindex="0">
                                 <div class="col-md-4">
                                     <div class="mb-3">
-                                        <label>Orignal_price</label>
+                                        <label>Orignal_price:</label>
                                         <input type="text" name="orignal_price" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="mb-3">
-                                        <label>Selling_price</label>
+                                        <label>Selling_price:</label>
                                         <input type="text" name="selling_price" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="mb-3">
-                                        <label>Quantity</label>
+                                        <label>Quantity:</label>
                                         <input type="number" name="quantity" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="mb-3">
-                                        <label>Status</label>
+                                        <label>Product_code:</label>
+                                        <input type="text" name="product_code" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label>Status:</label>
                                         <input type="checkbox" name="status" style="width:50px;height:50px;">
                                     </div>
                                 </div>
@@ -125,11 +117,11 @@
 
                             </div>
 
-                            <div class="tab-pane fade" id="image-tab-pane" role="tabpanel"
+                            <div class="tab-pane fade border p-3" id="image-tab-pane" role="tabpanel"
                                 aria-labelledby="image-tab">
                                 <div class="mb-3">
-                                   <label for="">Upload image</label>
-                                   <input type="file" name="image" multiple class="form-control">
+                                    <label for="">Upload image:</label>
+                                    <input type="file" name="image" multiple class="form-control">
                                 </div>
 
                             </div>

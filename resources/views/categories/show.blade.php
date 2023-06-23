@@ -13,23 +13,23 @@
                 <table class="table table-bordered">
                     <tbody>
                         <tr>
-                            <th>Category:</th>
-                            <td>{{ $category->category }}</td>
-                        </tr>
-                        <tr>
-                            <th>Image:</th>
+                            <th>Category_Image:</th>
                             <td><img src="{{ asset('admin_assets/img/' . $category->image) }}" alt="Image"
                                     style="max-width: 130px; border-radius: 10px;"></td>
+                        </tr>
+                        <tr>
+                            <th>Category:</th>
+                            <td>{{ $category->category }}</td>
                         </tr>
                         <tr>
                             <th>Status:</th>
                             <td>
                                 @if ($category->status === 'Active')
-                                    <span
-                                        class="badge rounded-pill text-success bg-success text-light">{{ $category->status }}</span>
+                                    <span class="badge rounded-pill text-success bg-success text-light"><i
+                                            class="fas fa-check-circle me-1">{{ $category->status }}</i></span>
                                 @else
-                                    <span
-                                        class="badge rounded-pill text-danger bg-danger text-light">{{ $category->status }}</span>
+                                    <span class="badge rounded-pill text-danger bg-danger text-light"><i
+                                            class="fas fa-check-circle me-0">{{ $category->status }}</i></span>
                                 @endif
                             </td>
                         </tr>

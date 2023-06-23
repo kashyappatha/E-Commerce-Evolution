@@ -69,10 +69,10 @@ public function product()
 
                 if ($product['status'] == '1')
                 {
-                    $status = '<span class="badge rounded-pill text-success bg-success text-light">Hidden</span>';
+                    $status = '<span class="badge rounded-pill text-success bg-success text-light"> <i class="fas fa-check-circle me-1">Active</i></span>';
                 } else
                 {
-                    $status = '<span class="badge rounded-pill text-danger bg-danger text-light">Visible</span>';
+                    $status = '<span class="badge rounded-pill text-danger bg-danger text-light"><i class="fas fa-check-circle me-0">InActive</i></span>';
                 }
 
 
@@ -80,19 +80,24 @@ public function product()
                 $row[] = ++$counter;
 
                 $row[] = $product['category_id'];
+                $row[] = '<img src="' . asset('admin_assets/img/' . $product->images) . '" alt="Image" style="max-width:100px; border-radius:10px;">';
                 $row[] = $product['title'];
                 $row[]=$product['image'];
-                $row[] = $product['price'];
+                $row[] = $product['brand'];
                 $row[] = $product['small_description'];
                 $row[] = $product['description'];
+                $row[] = $product['orignal_price'];
+                $row[] = $product['selling_price'];
                 $row[] = $product['quantity'];
                 $row[] = $product['product_code'];
 
 
-                // $row[] = '<img src="' . asset('admin_assets/img/' . $product->image) . '" alt="Image" style="max-width: 70px; border-radius: 10px;">';
-
 
                 $row[] = $status;
+
+
+
+                // $row[] = '<img src="' . asset('admin_assets/img' . $product->image) . '" alt="Image" style="max-width: 70px; border-radius: 10px;">';
 
                 $Action = '';
 
@@ -159,15 +164,20 @@ public function product()
         $validatedData = $request->validated();
 
         $category = Category::findOrFail($validatedData['category_id']);
+
+
         $product = $category->products()->create([
             'category_id'=>$validatedData['category_id'],
+            'images'=>$validatedData['images'],
             'title'=>$validatedData['title'],
-            'price'=>$validatedData['price'],
+            'image'=>$validatedData['image'],
+            'brand'=>$validatedData['brand'],
             'small_description'=>$validatedData['small_description'],
             'description'=>$validatedData['description'],
-            'quantity'=>$validatedData['quantity'],
+            'orignal_price'=>$validatedData['orignal_price'],
+            'selling_price'=>$validatedData['selling_price'],
             'product_code'=>$validatedData['product_code'],
-            'image'=>$validatedData['image'],
+            'quantity'=>$validatedData['quantity'],
             'status'=>$request->status == true ? '1':'0',
 
 
@@ -226,25 +236,28 @@ public function product()
         if($product){
             $product->update([
                 'category_id'=>$validatedData['category_id'],
+                'images'=>$validatedData['images'],
                 'title'=>$validatedData['title'],
-                'price'=>$validatedData['price'],
+                'image'=>$validatedData['image'],
+                'brand'=>$validatedData['brand'],
                 'small_description'=>$validatedData['small_description'],
                 'description'=>$validatedData['description'],
+                'orignal_price'=>$validatedData['orignal_price'],
+                'selling_price'=>$validatedData['selling_price'],
                 'quantity'=>$validatedData['quantity'],
                 'product_code'=>$validatedData['product_code'],
-                'image'=>$validatedData['image'],
                 'status'=>$request->status == true ? '1':'0',
 
             ]);
 
             if($request->hasFile('image')){
                 $uploadPath = 'uploads/products/';
-
+                $i = 1;
                 foreach($request->file('image') as $imageFile){
                     $extention = $imageFile->getClientOrignalExtension();
-                    $filename = time().'.'.$extention;
+                    $filename = time().$i++.'.'.$extention;
                     $imageFile->move($uploadPath,$filename);
-                    $finalImagePathName = $uploadPath.'-'.$filename;
+                    $finalImagePathName = $uploadPath.$filename;
                     $product->productImages()->create([
                         'product_id'=> $product->id,
                         'image'=> $finalImagePathName,
@@ -295,15 +308,15 @@ public function product()
     {
     $product = Product::findOrFail($product_id);
 
-    if ($product->image) {
+    if ($product->images) {
         // Delete the image file from the server
-        $imagePath = public_path('admin_assets/img/' . $product->image);
+        $imagePath = public_path('admin_assets/img/' . $product->images);
         if (File::exists($imagePath)) {
             File::delete($imagePath);
         }
 
         // Clear the image field in the category record
-        $product->image = null;
+        $product->images = null;
         $product->save();
 
         return response()->json(['success' => true]);
