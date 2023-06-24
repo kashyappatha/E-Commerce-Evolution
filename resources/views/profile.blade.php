@@ -147,7 +147,7 @@
                     <input type="file" name="profile_image" class="form-control" placeholder="Enter Image File"
                         value="{{ auth()->user()->profile_image }}" onchange="previewImage(event)">
                     @if ($user->profile_image)
-                        <img id="preview" src="{{ asset('admin_assets/img/' . $user->profile_image) }}" alt="Image"
+                        <img id="preview" src="{{ asset('/admin_assets/img/' . $user->profile_image) }}" alt="Image"
                             style="max-width: 50px;border-radius:100px" accept="image/jpeg, image/png, image/jpg">
                         <div class="mt-2">
                             <button type="button" class="btn btn-danger" onclick="confirmDelete()">

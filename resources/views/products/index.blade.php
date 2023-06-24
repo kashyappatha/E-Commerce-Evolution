@@ -23,14 +23,14 @@
             <div class="card">
                 <div class="card-body overflow-auto">
 
-                    <table id="zero_configuration_table" class="table table-striped " style="width:165%;">
+                    <table id="zero_configuration_table" class="table table-striped " style="width:auto;">
                         <thead>
                             <tr>
                                 <th>id</th>
                                 <th>Category_id</th>
                                 <th>images</th>
                                 <th>Product_name</th>
-                                <th>image</th>
+                                {{-- <th>image</th> --}}
                                 <th>Brand</th>
                                 <th>small_description</th>
                                 <th>description</th>

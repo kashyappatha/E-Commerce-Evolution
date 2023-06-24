@@ -95,7 +95,7 @@ public function deleteImage($userId)
     // Delete the image from the server
     if ($imagePath) {
         // Construct the full image path
-        $fullImagePath = public_path('admin_assets/img/') . $imagePath;
+        $fullImagePath = public_path('/admin_assets/img/') . $imagePath;
 
         // Check if the image file exists
         if (file_exists($fullImagePath)) {

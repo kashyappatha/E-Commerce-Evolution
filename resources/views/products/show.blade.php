@@ -35,19 +35,16 @@
                     <th>Product_name:</th>
                     <td>{{ $product->title }}</td>
                 </tr>
-                <tr>
+                {{-- <tr>
                     <th>Image:</th>
                     <td>
                         @foreach ($product->productImages as $image)
-                            <tr>
-                                <td>
-                                    <img src="{{ asset('admin_assets/img/' . $image->image) }}" alt="Image" class="me-4 border" />
-                                </td>
-                            </tr>
-                       @endforeach
+                            <img src="{{ asset('admin_assets/img/' . $product->image) }}" alt="Image"
+                                class="me-4 border" />
+                        @endforeach
                     </td>
 
-                </tr>
+                </tr> --}}
 
                 <tr>
                     <th>Brands:</th>

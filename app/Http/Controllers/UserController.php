@@ -133,26 +133,41 @@ class UserController extends Controller
         return view('users.create');
     }
 
-    public function edit(Request $request, $id)
+    public function edit(Request $request ,$id)
     {
-        Validator::make($request->all(), [
-            'name' => 'required',
-            'email' => 'required|email',
-            'password' => [
-                'required',
-                'confirmed',
-                'min:8',
-                // 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/u'
-            ],
-        ])->validate();
+        // Validator::make($request->all(), [
+        //     'name' => 'required',
+        //     'email' => 'required|email',
+        //     'password' => [
+        //         'required',
+        //         'confirmed',
+        //         'min:8',
+        //         // 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/u'
+        //     ],
+        // ])->validate();
+
+        // $user = User::findOrFail($id);
+        // $user->name = $request->name;
+        // $user->email = $request->email;
+        // $user->password = Hash::make($request->password);
+        // // $user->save();
+        // $user = User::findOrFail($id);
+        // $user->edit($request->all());
+
+        // return redirect('/admin/users/edit/')->route('users')->with('success', 'User added successfully');
+        $user = User::findOrFail($id); // Fetch the user by ID
+
+        // Rest of your code to update the user
+
+        return view('users.edit', compact('user'));    }
+    public function update(Request $request , string $id)
+    {
 
         $user = User::findOrFail($id);
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = Hash::make($request->password);
-        $user->save();
 
-        // return redirect()->route('users.index');
+        $user->update($request->all());
+
+        return redirect()->route('users')->with('success', 'user updated successfully');
     }
     public function store(Request $request)
     {
@@ -173,7 +188,27 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         $user->delete();
 
-        // return redirect()->route('users.index');
+        return redirect()->route('users')->with('success', 'user deleted successfully');
     }
+    public function deleteImage($id)
+{
+    $user = User::findOrFail($id);
+
+    if ($user->profile_image) {
+        // Delete the image file from the server
+        $imagePath = public_path('admin_assets/img/' . $user->profile_image);
+        if (File::exists($imagePath)) {
+            File::delete($imagePath);
+        }
+
+        // Clear the image field in the category record
+        $user->profile_image = null;
+        $user->save();
+
+        return response()->json(['success' => true]);
+    }
+
+    return response()->json(['success' => false]);
+}
 
 }

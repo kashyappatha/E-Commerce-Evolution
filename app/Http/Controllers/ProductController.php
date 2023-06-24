@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
-use App\Models\ProductImage;
+use App\Models\Productimage;
 use Illuminate\Support\Facades\File;
 // use Symfony\Component\HttpFoundation\File\File;
 
@@ -57,7 +57,7 @@ public function product()
 
             // Fetch records
             $categories = Product::orderBy('products.id', "desc")
-                ->where('category_id', 'like', '%' . $searchValue . '%')
+                ->where('category_id', 'like', '%' . $searchValue . '%' )
                 ->select('products.*')
                 ->take($start)
                 ->take($rowperpage)
@@ -79,10 +79,15 @@ public function product()
                 $row = array();
                 $row[] = ++$counter;
 
-                $row[] = $product['category_id'];
-                $row[] = '<img src="' . asset('admin_assets/img/' . $product->images) . '" alt="Image" style="max-width:100px; border-radius:10px;">';
+                // $row[] = $product[$category_id. '->' . $category->category];
+                $category = Category::find($product->category_id);
+                $categoryName = $category ? $category->category : 'N/A';
+
+
+                $row[] = $categoryName;
+                $row[] = '<img src="' . asset($product->images) . '" alt="Image" style="max-width:100px; border-radius:10px;">';
                 $row[] = $product['title'];
-                $row[]=$product['image'];
+                // $row[]= $product['image'];
                 $row[] = $product['brand'];
                 $row[] = $product['small_description'];
                 $row[] = $product['description'];
@@ -160,52 +165,149 @@ public function product()
     /**
      * Store a newly created resource in storage.
      */
-    public function store(ProductFormRequest $request){
-        $validatedData = $request->validated();
+    // public function store(Request $request) {
 
-        $category = Category::findOrFail($validatedData['category_id']);
+    //     // dd($request->image);
+
+    //     // $product = Product::create([
+    //     //     'category_id'=>$request->category_id,
+    //     //     'images'=>$request->images,
+    //     //     'title'=>$request->title,
+    //     //     'brand'=>$request->brand,
+    //     //     'small_description'=>$request->small_description,
+    //     //     'description'=>$request->description,
+    //     //     'orignal_price'=>$request->orignal_price,
+    //     //     'selling_price'=>$request->selling_price,
+    //     //     'product_code'=>$request->product_code,
+    //     //     'quantity'=>$request->quantity,
+    //     //     'status'=>$request->status == true ? '1':'0'
+    //     // ]);
+
+    //     // foreach($request->image as $imageFile){
 
 
-        $product = $category->products()->create([
-            'category_id'=>$validatedData['category_id'],
-            'images'=>$validatedData['images'],
-            'title'=>$validatedData['title'],
-            'image'=>$validatedData['image'],
-            'brand'=>$validatedData['brand'],
-            'small_description'=>$validatedData['small_description'],
-            'description'=>$validatedData['description'],
-            'orignal_price'=>$validatedData['orignal_price'],
-            'selling_price'=>$validatedData['selling_price'],
-            'product_code'=>$validatedData['product_code'],
-            'quantity'=>$validatedData['quantity'],
-            'status'=>$request->status == true ? '1':'0',
+    //     //     Productimage::create([
 
+    //     //         'product_id' => $product->id,
+    //     //         'image' => $imageFile
 
-        ]);
+    //     //     ]);
 
-        if($request->hasFile('image')){
-            $uploadPath = 'uploads/products/';
+    //     // }
+    //     $request->validate([
+    //         'category_id' => 'required',
+    //         'images' => 'required',
+    //         'title' => 'required',
+    //         'brand' => 'required',
+    //         'image.*' => 'required',
+    //         'small_description' => 'required',
+    //         'description' => 'required',
+    //         'orignal_price' => 'required',
+    //         'selling_price' => 'required',
+    //         'product_code' => 'required',
+    //         'quantity' => 'required',
+    //         'status' => 'required',
+    //     ]);
 
-            foreach($request->file('image') as $imageFile){
-                $extention = $imageFile->getClientOrignalExtension();
-                $filename = time().'.'.$extention;
-                $imageFile->move($uploadPath,$filename);
-                $finalImagePathName = $uploadPath.'-'.$filename;
-                $product->productImages()->create([
-                    'product_id'=> $product->id,
-                    'image'=> $finalImagePathName,
-                ]);
-            }
-        }
+    //     $product = new Product;
+    //     $status = $request->has('status') ? 1 : 0;
+    //     $product->category_id = $request->category_id;
 
-        return redirect('admin/products')->with('message','Product Added Sucsessfully');
+    //     if ($request->hasFile('images')) {
+    //         dd($request->hasFile('images'));
+    //         exit;
+    //         $file = $request->file('images');
+    //         $imageName = time() . '_' . $file->getClientOriginalName();
+    //         $file->move(public_path('Product_thumbnails'), $imageName);
+    //         $product->images = 'Product_thumbnails/'.$imageName;
+    //     }
 
-        // return $product->id;
+    //     $product->title = $request->title;
+    //     $product->brand = $request->brand;
+    //     $product->small_description = $request->small_description;
+    //     $product->description = $request->description;
+    //     $product->orignal_price = $request->orignal_price;
+    //     $product->selling_price = $request->selling_price;
+    //     $product->product_code = $request->product_code;
+    //     $product->quantity = $request->quantity;
+    //     $product->status = $status;
+    //     $product->save();
 
+    //     if ($request->hasFile("image")) {
+    //         foreach ($request->file("image") as $file) {
+    //             $imageName = time() . '_' . $file->getClientOriginalName();
+    //             $file->move(public_path("uploaded_images"), $imageName);
+    //             $productImage = new Productimage;
+    //             $productImage->product_id = $product->id;
+    //             $productImage->image = 'uploaded_images/'.$imageName;
+    //             $productImage->save();
+    //         }
+
+    //     }
+    //     // return redirect()->route('/getproduct')
+    //     //     ->with('success', 'Product created successfully.');
+
+    //     // return redirect('admin/products')->with('message','Product Added Sucsessfully');
+    // }
+
+    // /**
+    //  * Display the specified resource.
+    //  */
+
+    public function store(Request $request)
+{
+    $request->validate([
+        'category_id' => 'required',
+        'images' => 'required',
+        'title' => 'required',
+        'brand' => 'required',
+        'small_description' => 'required',
+        'description' => 'required',
+        'orignal_price' => 'required',
+        'selling_price' => 'required',
+        'product_code' => 'required',
+        'quantity' => 'required',
+        'status' => 'required',
+    ]);
+
+    $product = new Product;
+    $status = $request->has('status') ? 1 : 0;
+    $product->category_id = $request->category_id;
+
+    // Upload and store thumbnail image
+    if ($request->hasFile('images')) {
+        $file = $request->file('images');
+        $thumbnailName = time() . '_' . $file->getClientOriginalName();
+        $file->move(public_path('Product_thumbnails'), $thumbnailName);
+        $product->images = 'Product_thumbnails/' . $thumbnailName;
     }
-    /**
-     * Display the specified resource.
-     */
+
+    $product->title = $request->title;
+    $product->brand = $request->brand;
+    $product->small_description = $request->small_description;
+    $product->description = $request->description;
+    $product->orignal_price = $request->orignal_price;
+    $product->selling_price = $request->selling_price;
+    $product->product_code = $request->product_code;
+    $product->quantity = $request->quantity;
+    $product->status = $status;
+    $product->save();
+
+    // Upload and store product images
+    if ($request->hasFile("image")) {
+        foreach ($request->file("image") as $file) {
+            $imageName = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path("uploaded_images"), $imageName);
+            $productImage = new Productimage;
+            $productImage->product_id = $product->id;
+            $productImage->image = 'uploaded_images/' . $imageName;
+            $productImage->save();
+        }
+    }
+
+    return redirect()->route('products')->with('success', 'Product created successfully.');
+}
+
     public function show(int $product_id)
     {
         $categories = Category::all();
@@ -238,7 +340,7 @@ public function product()
                 'category_id'=>$validatedData['category_id'],
                 'images'=>$validatedData['images'],
                 'title'=>$validatedData['title'],
-                'image'=>$validatedData['image'],
+                // 'image'=>$validatedData['image'],
                 'brand'=>$validatedData['brand'],
                 'small_description'=>$validatedData['small_description'],
                 'description'=>$validatedData['description'],
@@ -251,7 +353,7 @@ public function product()
             ]);
 
             if($request->hasFile('image')){
-                $uploadPath = 'uploads/products/';
+                $uploadPath = 'admin_assets/img';
                 $i = 1;
                 foreach($request->file('image') as $imageFile){
                     $extention = $imageFile->getClientOrignalExtension();
@@ -322,6 +424,25 @@ public function product()
         return response()->json(['success' => true]);
     }
 }
+// public function deleteImage1(int $product_id)
+
+// {
+// $product = Product::findOrFail($product_id);
+
+// if ($product->image) {
+//     // Delete the image file from the server
+//     $imagePath = public_path('admin_assets/img/' . $product->image);
+//     if (File::exists($imagePath)) {
+//         File::delete($imagePath);
+//     }
+
+//     // Clear the image field in the category record
+//     $product->image = null;
+//     $product->save();
+
+//     return response()->json(['success' => true]);
+// }
+// }
 
 
 

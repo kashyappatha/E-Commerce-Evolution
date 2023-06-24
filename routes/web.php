@@ -54,6 +54,8 @@ Route::prefix('admin')->group(function(){
             Route::get('destroy/{id}', [ProductController::class, 'destroy'])->name('products.destroy');
             Route::get('/images/{image}', 'ImageController@destroy')->name('images.destroy');
             Route::delete('/products/{id}/delete-image', [ProductController::class, 'deleteImage'])->name('products.deleteImage');
+            // Route::delete('/products/delete-image1', [ProductController::class, 'deleteImage1'])->name('products.deleteImage1');
+
         });
 
 
@@ -101,7 +103,8 @@ Route::prefix('admin')->group(function(){
             Route::get('edit/{id}',[UserController::class,'edit'])->name('users.edit');
             Route::put('update/{id}',[UserController::class,'update'])->name('users.update');
             // Route::delete('destroy/{id}',[UserController::class,'destroy'])->name('users.destroy');
-            Route::delete('destroy/{id}', [UserController::class, 'destroy'])->name('users.destroy');
+            Route::get('destroy/{id}', [UserController::class, 'destroy'])->name('users.destroy');
+            Route::delete('/users/{id}/delete-image', [UserController::class, 'deleteImage'])->name('users.deleteImage');
 
         });
 

@@ -128,9 +128,10 @@
         </table>
         <div class="row">
             <div class="d-grid">
-                <button class="btn btn-warning">Update</button>
+                <button class="btn btn-warning" style="width: 100px;">Update</button>
+                <button class="btn btn-primary" style="width: 100px;">Back</button>
             </div>
-            <button class="btn btn-primary">Back</button><br />
+
 
         </div>
     </form>

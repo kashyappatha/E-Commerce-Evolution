@@ -47,9 +47,9 @@
         </table>
         <div class="row">
             <div class="d-grid">
-                <button type="submit" class="btn btn-primary">Submit</button>
-                <button class="btn btn-primary">Back</button>
-                <button type="reset" class="btn btn-primary">Reset</button>
+                <button type="submit" class="btn btn-primary" style="width:100px;">Submit</button><br />
+                <button type="reset" class="btn btn-primary" style="width:100px;">Reset</button><br />
+                <button class="btn btn-primary" style="width:100px;">Back</button>
             </div>
         </div>
     </form>

@@ -21,7 +21,7 @@
                         </div>
                     @endif
 
-                    <form action="{{ route('products.store') }}" method="POST">
+                    <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
                             <li class="nav-item" role="presentation">
@@ -62,7 +62,7 @@
                                 </div>
                                 <div class="mb-3">
                                     <label>Thumbnail:</label>
-                                    <input type="file" name="images" class="form-control">
+                                    <input type="file" name="images" id="images" class="form-control">
                                 </div>
                                 <div class="mb-3">
                                     <label>Product_Name:</label>
@@ -120,8 +120,8 @@
                             <div class="tab-pane fade border p-3" id="image-tab-pane" role="tabpanel"
                                 aria-labelledby="image-tab">
                                 <div class="mb-3">
-                                    <label for="">Upload image:</label>
-                                    <input type="file" name="image" multiple class="form-control">
+                                    <label for="image">Upload image:</label>
+                                    <input type="file" name="image[]" id="image" multiple class="form-control">
                                 </div>
 
                             </div>

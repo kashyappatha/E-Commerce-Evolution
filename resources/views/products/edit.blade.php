@@ -71,8 +71,8 @@
                                             accept="image/jpeg, image/png, image/jpg, image/svg"
                                             value="{{ $product->images }}" placeholder="Enter Image">
                                         @if ($product->images)
-                                            <img src="{{ asset('admin_assets/img/' . $product->images) }}" alt="Image"
-                                                style="max-width: 130px; border-radius: 10px;">
+                                            <img src="{{ asset($product->images) }}" alt="Image"
+                                                style="max-width: 100px; border-radius:50px;">
                                             @if ($product->images)
                                                 <div class="mt-2">
                                                     <button type="button" class="btn btn-danger" onclick="confirmDelete()">
@@ -142,7 +142,8 @@
 
                                 </div>
                             </div>
-                            <div class="tab-pane fade" id="image-tab-pane" role="tabpanel" aria-labelledby="image-tab">
+                            <div class="tab-pane fade border p-3" id="image-tab-pane" role="tabpanel"
+                                aria-labelledby="image-tab" tabindex="0">
                                 <div class="mb-3">
                                     <label>Upload Product image:</label>
                                     <input type="file" name="image[]" multiple class="form-control" />
@@ -154,9 +155,9 @@
                                         <div class="row">
                                             @foreach ($product->productImages as $image)
                                                 <div class="col-md-32">
-                                                    <img src="{{ asset('admin_assets/img/' .$image->image) }}" alt="Image"
-                                                        class="me-4 border" />
-                                                      
+                                                    <img src="{{ asset($image->image) }}" alt="Image"
+                                                        style="width:80px;height:80px;" class="me-4 border" />
+
 
                                                     <a href="{{ route('images.destroy', $image->id) }}"
                                                         class="d-block">Remove</a>
@@ -169,6 +170,8 @@
                                         <h5>No Image Added</h5>
                                     @endif
                                 </div>
+
+
                             </div>
                         </div>
                         <div>

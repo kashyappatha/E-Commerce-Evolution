@@ -36,9 +36,9 @@ class ProductFormRequest extends FormRequest
                 'required',
                 'string'
             ],
-            'image'=>[
-                'nullable'
-            ],
+            // 'image'=>[
+            //     'nullable'
+            // ],
             'brand'=>[
                 'required',
                 'string',

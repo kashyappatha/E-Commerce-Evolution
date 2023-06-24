@@ -14,12 +14,12 @@
         <div class="row">
             <div class="col mb-3">
                 <label class="form-label">image:</label>
-                <input type="file" name="image" class="form-control"
+                <input type="file" name="profile_image" class="form-control"
                     accept="image/jpeg, image/png, image/jpg, image/svg" onchange="previewImage(event)">
-                @if ($user->image)
-                    <img id="preview" src="{{ asset('admin_assets/img/' . $user->image) }}" alt="Image"
+                @if ($user->profile_image)
+                    <img id="preview" src="{{ asset('admin_assets/img/' . $user->profile_image) }}" alt="Image"
                         style="max-width:60px;" accept="image/jpeg, image/png, image/jpg">
-                    @if ($user->image)
+                    @if ($user->profile_image)
                         <div class="mt-2">
                             <button type="button" class="btn btn-danger" onclick="confirmDelete()">
                                 <i class="fas fa-trash"></i> Delete
@@ -27,52 +27,8 @@
                         </div>
                     @endif
                 @endif
-                <script>
-                    function previewImage(event) {
-                        var render = new FileReader();
-                        render.onload = function() {
-                            var output = document.getElementById('preview');
-                            output.src = render.result;
-                        }
-                        render.readAsDataURL(event.target.files[0]);
-                    }
-                </script>
-                <script>
-                    function confirmDelete() {
-                        Swal.fire({
-                            title: 'Delete Confirmation',
-                            text: 'Are you sure you want to delete this image?',
-                            icon: 'warning',
-                            showCancelButton: true,
-                            confirmButtonColor: '#d33',
-                            cancelButtonColor: '#3085d6',
-                            confirmButtonText: 'Yes, delete it!',
-                            cancelButtonText: 'Cancel'
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                // Delete the image from the server
-                                deleteImage();
-                            }
-                        });
-                    }
 
-                    function deleteImage() {
-                        // Send an AJAX request to delete the image
-                        axios.delete('{{ route('customers.deleteImage', $customer->id) }}')
-                            .then((response) => {
-                                if (response.data.success) {
-                                    alert('Image deleted!');
-                                    // Reload the page or perform any other necessary action
-                                } else {
-                                    alert('Failed to delete image!');
-                                }
-                            })
-                            .catch((error) => {
-                                alert('An error occurred while deleting the image!');
-                                console.error(error);
-                            });
-                    }
-                </script>
+
             </div>
 
             <div class="col mb-3">
@@ -86,29 +42,40 @@
             </div>
         </div>
 
-        {{-- <div class="row">
+        <div class="row">
             <div class="col mb-3">
                 <label class="form-label">Password:</label>
-                <input type="password" name="password" class="form-control" placeholder="Password"
+                <input type="password" name="password" class="form-control" placeholder="Password" style="width: 50%"
                     value="{{ $user->password }}">
             </div>
 
-        </div> --}}
+        </div>
 
 
         <div class="row">
             <div class="d-grid">
-                <button class="btn btn-warning">Update</button>
+                <button class="btn btn-warning" style="width: 90px;">Update</button>
+                <a href="{{ url()->previous() }}" class="btn btn-primary" style="width: 90px;">Back</a>
             </div>
-            <a href="{{ url()->previous() }}" class="btn btn-primary">Back</a>
+
         </div>
     </form>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     <script>
+        function previewImage(event) {
+            var render = new FileReader();
+            render.onload = function() {
+                var output = document.getElementById('preview');
+                output.src = render.result;
+            }
+            render.readAsDataURL(event.target.files[0]);
+        }
+
         function confirmDelete() {
             Swal.fire({
                 title: 'Delete Confirmation',
@@ -121,31 +88,29 @@
                 cancelButtonText: 'Cancel'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    // Proceed with the delete action
-                    alert('Image deleted!');
-                    // Place your delete logic here
+                    // Delete the image from the server
+                    deleteImage();
                 }
             });
         }
 
-        function confirmDeleteProfileImage() {
-            Swal.fire({
-                title: 'Delete Confirmation',
-                text: 'Are you sure you want to delete this profile image?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#3085d6',
-                confirmButtonText: 'Yes, delete it!',
-                cancelButtonText: 'Cancel'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // Proceed with the delete action
-                    alert('Profile image deleted!');
-                    // Place your delete logic here
-                }
-            });
+        function deleteImage() {
+            // Send an AJAX request to delete the image
+            axios.delete('{{ route('users.deleteImage', $user->id) }}')
+                .then((response) => {
+                    if (response.data.success) {
+                        alert('Image deleted!');
+                        // Reload the page or perform any other necessary action
+                    } else {
+                        alert('Failed to delete image!');
+                    }
+                })
+                .catch((error) => {
+                    alert('An error occurred while deleting the image!');
+                    console.error(error);
+                });
         }
+
 
         function validateForm() {
             var statusRadios = document.getElementsByName('status');
@@ -182,17 +147,7 @@
     </script>
 
     </div>
-
-    <div class="row">
-        <div class="d-grid">
-            <button class="btn btn-warning">Update</button>
-        </div>
-        <button class="btn btn-primary">Back</button>
-
     </div>
-
     </form>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
 @endsection
