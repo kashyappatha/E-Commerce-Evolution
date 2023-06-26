@@ -1,12 +1,13 @@
 @extends('layouts.app')
-@section('category', 'Create category')
-@section('contents')
 
+@section('category', 'Create category')
+
+@section('contents')
     <hr />
     <form action="{{ route('customers.store') }}" method="GET" enctype="multipart/form-data">
         @csrf
-        <table class="table table-bordered table-center  shadow rounded-lg ">
-            <h1 class="mb-0 card-header bg-primary text-white shadow rounded-lg  ">Add Customers</h1>
+        <table class="table table-bordered table-center  shadow rounded-lg">
+            <h1 class="mb-0 card-header bg-primary text-white shadow rounded-lg">Add Customers</h1>
             <hr />
             <tr>
                 <td>
@@ -44,35 +45,80 @@
             <tr>
                 <td>
                     <label class="form-label">Country:</label>
-                </td>
-                <td>
-                    <select class="form-select" name="country" id="country" required>
+                    <select name="country" class="form-control" id="country">
                         <option value="">Select Country</option>
-                        <option value="india">India</option>
-                        <option value="australia">Australia</option>
-                        <option value="srilanka">Srilanka</option>
-                        <option value="nepal">Nepal</option>
-                        <option value="america">America</option>
+                        @foreach ($countries as $country)
+                            <option value="{{ $country->id }}">{{ $country->name }}</option>
+                        @endforeach
                     </select>
                 </td>
             </tr>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+            <script>
+                $(document).ready(function() {
+                    // Fetch states based on the selected country
+                    $('#country').on('change', function() {
+                        var idCountry = this.value;
+                        $("#state").html('');
+                        $.ajax({
+                            url: "{{ route('getStatesByCountry') }}",
+                            type: "POST",
+                            data: {
+                                cid: idCountry,
+                                _token: '{{ csrf_token() }}'
+                            },
+                            dataType: 'json',
+                            success: function(result) {
+                                $('#state').html('<option value="">-- Select State --</option>');
+                                $.each(result.states, function(key, value) {
+                                    $("#state").append('<option value="' + value.id + '">' +
+                                        value.name + '</option>');
+                                });
+                                $('#city').html('<option value="">-- Select City --</option>');
+                            }
+                        });
+                    });
+
+                    // Fetch cities based on the selected state
+                    $('#state').change(function() {
+                        var stateId = $(this).val();
+                        if (stateId) {
+                            $.ajax({
+                                url: '{{ route('cities.getCitiesByState') }}',
+                                type: 'POST',
+                                dataType: 'json',
+                                data: {
+                                    _token: '{{ csrf_token() }}',
+                                    state_id: stateId
+                                },
+                                success: function(data) {
+                                    $('#city').html('<option value="">-- Select City --</option>');
+                                    $.each(data.cities, function(key, value) {
+                                        $('#city').append('<option value="' + value.id + '">' +
+                                            value.name +
+                                            '</option>');
+                                    });
+                                }
+                            });
+                        } else {
+                            $('#city').html('<option value="">-- Select City --</option>');
+                        }
+                    });
+                });
+            </script>
             <tr>
                 <td>
                     <label class="form-label">State:</label>
-                </td>
-                <td>
-                    <select class="form-select" name="state" id="state" required>
-                        <option value="">Select State</option>
+                    <select name="state" class="form-control" id="state">
+                        <option value="">-- Select State --</option>
                     </select>
                 </td>
             </tr>
             <tr>
                 <td>
                     <label class="form-label">City:</label>
-                </td>
-                <td>
-                    <select class="form-select" name="city" id="city" required>
-                        <option value="">Select City</option>
+                    <select name="city" class="form-control" id="city">
+                        <option value="">-- Select City --</option>
                     </select>
                 </td>
             </tr>
@@ -111,14 +157,13 @@
         </table>
         <div class="row">
             <div class="d-grid">
-                <button type="submit" class="btn btn-primary">Submit</button>
-                <button class="btn btn-primary">Back</button>
-                <button type="reset"class="btn btn-primary">Reset</button>
+                <button type="submit" class="btn btn-primary" style="width: 80px;">Submit</button>
+                <button class="btn btn-primary" style="width: 80px;">Back</button>
+                <button type="reset" class="btn btn-primary" style="width: 80px;">Reset</button>
             </div>
         </div>
     </form>
 
-    {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/css/bootstrap.min.css"> --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -150,84 +195,5 @@
                 }
             });
         }
-
-
-        function toggleState(countrySelect) {
-            var stateContainer = document.getElementById('stateContainer');
-            var cityContainer = document.getElementById('cityContainer');
-
-            if (countrySelect.value !== '') {
-                stateContainer.style.display = 'block';
-                cityContainer.style.display = 'block';
-            } else {
-                stateContainer.style.display = 'none';
-                cityContainer.style.display = 'none';
-            }
-        }
-
-        const countrySelect = document.getElementById('country');
-        const stateSelect = document.getElementById('state');
-        const citySelect = document.getElementById('city');
-
-        // Define the data for states and cities
-        const data = {
-            india: {
-                gujarat: ['Rajkot', 'Ahmedabad', 'surat', 'Morbi', 'Junagadh', 'Surendranagar', 'Vadodra',
-                    'Gandhinagar', 'Kutch', 'Gir Somnath', 'Dwarka'
-                ],
-                maharashtra: ['Mumbai', 'Pune', 'thane', 'Nashik', 'Amravati'],
-                rajasthan: ['Jaipur', 'Ajmer', 'Udaipur', 'kota', 'Nagpur', 'Jodhpur'],
-                delhi: ['New Delhi', 'Old Delhi', 'North Delhi', 'South Delhi', 'East Delhi', 'West Delhi'],
-                utterpradesh: ['Agra']
-            },
-            australia: {
-                victoria: ['Melbourne', 'Geelong'],
-                nsw: ['Sydney', 'Newcastle']
-            },
-            srilanka: {
-                batticaloa: ['panomapattu', 'Erroverpattu'],
-                colombo: ['sinhalese']
-            }
-        };
-
-        // Function to populate the options for states based on the selected country
-        function populateStates() {
-            const selectedCountry = countrySelect.value;
-            stateSelect.innerHTML = '<option value="">Select State</option>';
-            citySelect.innerHTML = '<option value="">Select City</option>';
-
-            if (selectedCountry && data[selectedCountry]) {
-                const states = Object.keys(data[selectedCountry]);
-                for (const state of states) {
-                    const option = document.createElement('option');
-                    option.value = state;
-                    option.textContent = state.charAt(0).toUpperCase() + state.slice(1);
-                    stateSelect.appendChild(option);
-                }
-            }
-        }
-
-        // Function to populate the options for cities based on the selected state
-        function populateCities() {
-            const selectedCountry = countrySelect.value;
-            const selectedState = stateSelect.value;
-            citySelect.innerHTML = '<option value="">Select City</option>';
-
-            if (selectedCountry && selectedState && data[selectedCountry] && data[selectedCountry][selectedState]) {
-                const cities = data[selectedCountry][selectedState];
-                for (const city of cities) {
-                    const option = document.createElement('option');
-                    option.value = city;
-                    option.textContent = city.charAt(0).toUpperCase() + city.slice(1);
-                    citySelect.appendChild(option);
-                }
-            }
-        }
-
-        // Event listener for country select element
-        countrySelect.addEventListener('change', populateStates);
-        // Event listener for state select element
-        stateSelect.addEventListener('change', populateCities);
     </script>
-
 @endsection

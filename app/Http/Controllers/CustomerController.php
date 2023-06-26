@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use App\Models\Country;
+use App\Models\State;
+use App\Models\City;
 
 class CustomerController extends Controller
 {
@@ -51,10 +54,11 @@ class CustomerController extends Controller
                 $row = array();
                 $row[] = ++$counter;
 
-
+                // $country = $customer->name;
                 $row[] = '<img src="' . asset('admin_assets/img/' . $customer->profile_image) . '" alt="Image" style="max-width: 60px; border-radius: 30px;">';
                 $row[] = $customer['name'];
                 $row[] = $customer['email'];
+                // $row[] = $country['name'];
                 $row[] = $customer['country'];
                 $row[] = $customer['state'];
                 $row[] = $customer['city'];
@@ -118,13 +122,16 @@ class CustomerController extends Controller
     }
 
     public function create()
-    {
-        return view('customers.create');
-    }
-
+{
+    $countries = Country::all();
+    $states = State::all(); // Assuming you also need to display states in the view
+    $cities = City::all(); // Assuming you also need to display cities in the view
+    return view('customers.create', compact('countries', 'states', 'cities'));
+}
     public function store(Request $request)
     {
         Customer::create($request->all());
+
 
         return redirect()->route('customers')->with('success', 'Customers added successfully');
     }
@@ -141,8 +148,12 @@ class CustomerController extends Controller
         $customer = Customer::findOrFail($id);
 
         // $customer->save();
+        $countries = Country::all();
+        $states = State::all(); // Assuming you also need to display states in the view
+        $cities = City::all(); // Assuming you also need to display cities in the view
+        $customer = Customer::findOrFail($id);
+        return view('customers.edit', compact('customer','countries', 'states', 'cities'));
 
-        return view('customers.edit', compact('customer'));
     }
 
     public function update(Request $request, string $id)
@@ -197,5 +208,19 @@ class CustomerController extends Controller
         $categories = $query->paginate(10);
 
         return view('name', compact('customers'));
+    }
+    public function getStatesByCountry(Request $request)
+    {
+        $countryId = $request->input('cid');
+        $states = State::where('country_id', $countryId)->get();
+        return response()->json(['states' => $states]);
+    }
+
+    public function getCitiesByState(Request $request)
+    {
+        $stateId = $request->input('state_id');
+
+       $cities = City::where('state_id', $stateId)->get();
+        return response()->json(['cities' => $cities]);
     }
 }

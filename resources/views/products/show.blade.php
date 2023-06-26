@@ -14,7 +14,7 @@
                 <tr>
                     <th>Product_thumbnail:</th>
                     <td>
-                        <img src="{{ asset('admin_assets/img/' . $product->images) }}" alt="Image"
+                        <img src="{{ asset($product->images) }}" alt="Image"
                             style="max-width: 130px; border-radius: 10px;">
                     </td>
                 </tr>

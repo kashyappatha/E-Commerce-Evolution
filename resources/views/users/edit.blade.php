@@ -10,7 +10,7 @@
         @csrf
         @method('PUT')
         <input type="hidden" name="id" value="{{ $user->id }}">
-
+        
         <div class="row">
             <div class="col mb-3">
                 <label class="form-label">image:</label>

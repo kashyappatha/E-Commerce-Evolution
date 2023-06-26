@@ -331,52 +331,67 @@ public function product()
     /**
      * Update the specified resource in storage.
      */
-    public function update(ProductFormRequest $request,int $product_id)
+    public function update(ProductFormRequest $request, int $product_id)
     {
-        $validatedData = $request->validated();
-        $product = Category::findOrFail($validatedData['category_id'])->products()->where('id',$product_id)->first();
-        if($product){
-            $product->update([
-                'category_id'=>$validatedData['category_id'],
-                'images'=>$validatedData['images'],
-                'title'=>$validatedData['title'],
-                // 'image'=>$validatedData['image'],
-                'brand'=>$validatedData['brand'],
-                'small_description'=>$validatedData['small_description'],
-                'description'=>$validatedData['description'],
-                'orignal_price'=>$validatedData['orignal_price'],
-                'selling_price'=>$validatedData['selling_price'],
-                'quantity'=>$validatedData['quantity'],
-                'product_code'=>$validatedData['product_code'],
-                'status'=>$request->status == true ? '1':'0',
+        $request->validate([
+            'category_id' => 'required',
+            'images' => 'required',
+            'title' => 'required',
+            'brand' => 'required',
+            'small_description' => 'required',
+            'description' => 'required',
+            'orignal_price' => 'required',
+            'selling_price' => 'required',
+            'product_code' => 'required',
+            'quantity' => 'required',
+            'status' => 'required',
+        ]);
 
-            ]);
+        $product = Product::find($product_id);
 
-            if($request->hasFile('image')){
+        if ($product) {
+            $status = $request->has('status') ? 1 : 0;
+            $product->category_id = $request->category_id;
+
+            if ($request->hasFile('images')) {
+                $file = $request->file('images');
+                $thumbnailName = time() . '_' . $file->getClientOriginalName();
+                $file->move(public_path('Product_thumbnails'), $thumbnailName);
+                $product->images = 'Product_thumbnails/' . $thumbnailName;
+            }
+
+            $product->title = $request->title;
+            $product->brand = $request->brand;
+            $product->small_description = $request->small_description;
+            $product->description = $request->description;
+            $product->orignal_price = $request->orignal_price;
+            $product->selling_price = $request->selling_price;
+            $product->product_code = $request->product_code;
+            $product->quantity = $request->quantity;
+            $product->status = $status;
+            $product->save();
+
+            if ($request->hasFile('image')) {
                 $uploadPath = 'admin_assets/img';
                 $i = 1;
-                foreach($request->file('image') as $imageFile){
-                    $extention = $imageFile->getClientOrignalExtension();
-                    $filename = time().$i++.'.'.$extention;
-                    $imageFile->move($uploadPath,$filename);
-                    $finalImagePathName = $uploadPath.$filename;
+                foreach ($request->file('image') as $imageFile) {
+                    $extension = $imageFile->getClientOriginalExtension();
+                    $filename = time() . $i++ . '.' . $extension;
+                    $imageFile->move($uploadPath, $filename);
+                    $finalImagePathName = $uploadPath . '/' . $filename;
                     $product->productImages()->create([
-                        'product_id'=> $product->id,
-                        'image'=> $finalImagePathName,
+                        'product_id' => $product->id,
+                        'image' => $finalImagePathName,
                     ]);
                 }
             }
-            return redirect('admin/products')->with('message','Product Updated Succesfully');
 
-        }else{
-            return redirect('admin/products')->with('message','No such Product ID Found');
-
+            return redirect('admin/products')->with('message', 'Product Updated Successfully');
+        } else {
+            return redirect('admin/products')->with('message', 'No such Product ID Found');
         }
-
-        // $product->update($request->all());
-
-        // return redirect()->route('products.index')->with('success', 'Product updated successfully');
     }
+
     public function destroyImage(int $product_image_id){
         $productImage = ProductImage::findOrFail($product_image_id);
         if(File::exists($productImage->image)){
@@ -384,7 +399,8 @@ public function product()
 
         }
         $productImage->delete();
-        return redirect('')->back()->with('message','Product Image Deleted');
+
+    return redirect()->back()->with('message', 'Product Image Deleted');
     }
     /**
      * Remove the specified resource from storage.

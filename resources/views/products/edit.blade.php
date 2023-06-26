@@ -72,7 +72,7 @@
                                             value="{{ $product->images }}" placeholder="Enter Image">
                                         @if ($product->images)
                                             <img src="{{ asset($product->images) }}" alt="Image"
-                                                style="max-width: 100px; border-radius:50px;">
+                                                style="max-width: 100px; border-radius: 10px;">
                                             @if ($product->images)
                                                 <div class="mt-2">
                                                     <button type="button" class="btn btn-danger" onclick="confirmDelete()">
@@ -83,6 +83,7 @@
                                         @endif
                                     </div>
                                 </div>
+
                                 <div class="mb-3">
                                     <label>Product Name:</label>
                                     <input type="text" name="title" value="{{ $product->title }}" class="form-control">

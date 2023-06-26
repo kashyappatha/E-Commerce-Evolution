@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\ResetPasswordController;
+use App\Http\Controllers\RoleController;
 use App\Models\Product;
 use App\Models\User;
 
@@ -38,10 +39,16 @@ Route::prefix('admin')->group(function(){
         Route::get('logout','logout')->middleware('auth')->name('logout');
     });
 
+
+
+
     Route::middleware('auth')->group(function(){
         Route::get('/dashborad',function (){
             return view('dashboard');
         })->name('dashboard');
+
+
+
 
         Route::prefix('products')->group(function () {
             Route::get('', [ProductController::class, 'product'])->name('products');
@@ -51,8 +58,9 @@ Route::prefix('admin')->group(function(){
             Route::get('show/{id}', [ProductController::class, 'show'])->name('products.show');
             Route::get('edit/{id}', [ProductController::class, 'edit'])->name('products.edit');
             Route::put('update/{product}', [ProductController::class, 'update'])->name('products.update');
-            Route::get('destroy/{id}', [ProductController::class, 'destroy'])->name('products.destroy');
-            Route::get('/images/{image}', 'ImageController@destroy')->name('images.destroy');
+
+            Route::get('/destroy/{id}', [ProductController::class, 'destroy'])->name('products.destroy');
+            Route::get('/images/{image}', [ProductController::class, 'destroyImage'])->name('images.destroy');
             Route::delete('/products/{id}/delete-image', [ProductController::class, 'deleteImage'])->name('products.deleteImage');
             // Route::delete('/products/delete-image1', [ProductController::class, 'deleteImage1'])->name('products.deleteImage1');
 
@@ -117,13 +125,21 @@ Route::prefix('admin')->group(function(){
             Route::get('show/{id}',[CustomerController::class,'show'])->name('customers.show');
             Route::get('edit/{id}',[CustomerController::class,'edit'])->name('customers.edit');
             Route::put('update/{id}',[CustomerController::class,'update'])->name('customers.update');
-            Route::delete('destroy/{id}',[CustomerController::class,'destroy'])->name('customers.destroy');
+            Route::get('destroy/{id}',[CustomerController::class,'destroy'])->name('customers.destroy');
             Route::delete('/customers/{id}/delete-image', [CustomerController::class, 'deleteImage'])->name('customers.deleteImage');
+            // Route::resource('customers', CustomerController::class);
+            Route::post('getStatesByCountry', [CustomerController::class, 'getStatesByCountry'])->name('getStatesByCountry');
+            Route::post('cities/getCitiesByState', [CustomerController::class, 'getCitiesByState'])->name('cities.getCitiesByState');
+            // Route::get('customer/states/{country}', 'Customer@getStatesByCountry')->name('getStatesByCountry');
+
+
             // Route::get('index', [CustomerController::class, 'index'])->name('customers.index');
 
 
         });
 
+        Route::resource('/roles', RoleController::class);
+        Route::post('/getroles',[RoleController::class, 'getroles'])->name('getroles');
 
 
 

@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use  Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Spatie\Permission\Models\Role;
+use Illuminate\Support\Arr;
+
 
 
 class UserController extends Controller
@@ -57,6 +60,7 @@ class UserController extends Controller
                 $row[] = ++$counter;
 
 
+                $row[] = $user['roles'];
                 $row[] = '<img src="' . asset('admin_assets/img/' . $user->profile_image) . '" alt="Image" style="max-width: 60px; border-radius: 30px;">';
                 $row[] = $user['name'];
                 $row[] = $user['email'];
@@ -129,8 +133,9 @@ class UserController extends Controller
         //     'password' => Hash::make($request->password),
         //     'level' => 'User',
         // ]);
+        $roles = Role::pluck('name','name')->all();
 
-        return view('users.create');
+        return view('users.create',compact('roles'));
     }
 
     public function edit(Request $request ,$id)
@@ -155,25 +160,69 @@ class UserController extends Controller
         // $user->edit($request->all());
 
         // return redirect('/admin/users/edit/')->route('users')->with('success', 'User added successfully');
-        $user = User::findOrFail($id); // Fetch the user by ID
+        // $user = User::findOrFail($id); // Fetch the user by ID
 
-        // Rest of your code to update the user
+        // // Rest of your code to update the user
 
-        return view('users.edit', compact('user'));    }
+        // return view('users.edit', compact('user'));
+        $user = User::find($id);
+        $roles = Role::pluck('name','id')->all();
+        $userRole = $user->roles->pluck('name','id')->toArray();
+
+        return view('users.edit',compact('user','roles','userRole'));
+    }
     public function update(Request $request , string $id)
     {
+        $this->validate($request, [
+            'roles' => 'required',
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email,'.$id,
+            'password' => 'same:confirm-password'
 
-        $user = User::findOrFail($id);
+        ]);
 
-        $user->update($request->all());
+        $input = $request->all();
+        if(!empty($input['password'])){
+            $input['password'] = Hash::make($input['password']);
+        }else{
+            $input = Arr::except($input,array('password'));
+        }
 
-        return redirect()->route('users')->with('success', 'user updated successfully');
+        $user = User::find($id);
+        $user->update($input);
+        DB::table('model_has_roles')->where('model_id',$id)->delete();
+
+        $user->assignRole($request->input('roles'));
+
+        return redirect()->route('users.index')
+                        ->with('success','User updated successfully');
+
+        // $user = User::findOrFail($id);
+
+        // $user->update($request->all());
+
+        // return redirect()->route('users')->with('success', 'user updated successfully');
     }
     public function store(Request $request)
     {
-        User::create($request->all());
+        // User::create($request->all());
 
-        return redirect()->route('users')->with('success', 'User added successfully');
+        // return redirect()->route('users')->with('success', 'User added successfully');
+        $this->validate($request, [
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|same:confirm-password',
+            'roles' => 'required'
+        ]);
+
+        $input = $request->all();
+        $input['password'] = Hash::make($input['password']);
+
+        $user = User::create($input);
+        $user->assignRole($request->input('roles'));
+
+        return redirect()->route('users.index')
+                        ->with('success','User created successfully');
 
     }
 
@@ -207,6 +256,7 @@ class UserController extends Controller
 
         return response()->json(['success' => true]);
     }
+
 
     return response()->json(['success' => false]);
 }

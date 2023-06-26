@@ -12,6 +12,18 @@
             <div class="col-md-8">
                 <div class="table-responsive shadow">
                     <table class="table table-bordered">
+                       {{-- <tr>
+                         <td>
+                            <select name="roles[]" multiple>
+                                @foreach ($roles as $id => $name)
+                                    <option value="{{ $id }}" {{ in_array($id, $userRoles) ? 'selected' : '' }}>
+                                        {{ $name }}
+                                    </option>
+                                @endforeach
+                            </select>
+
+                         </td>
+                       </tr> --}}
                         <tr>
                             <td>
                                 <label class="form-label">Profile Image:</label>

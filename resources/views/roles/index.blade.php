@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
-@section('title', 'Home User')
+@section('title', 'Home Roles')
 
 
 @section('style')
 
-    <link rel="stylesheet" href="{{ asset('css/sweetalert2.min.css') }}">
+    {{-- <link rel="stylesheet" href="{{ asset('css/sweetalert2.min.css') }}"> --}}
 
     <link href="https://cdn.datatables.net/v/bs5/dt-1.13.4/datatables.min.css" rel="stylesheet" />
 
@@ -16,7 +16,7 @@
 @section('contents')
     <div class="d-flex align-items-center justify-content-between">
         <div></div> <!-- Add an empty div to create space on the left side -->
-        <a href="{{ route('users.create') }}" class="btn btn-primary">Add User</a>
+        <a href="{{ route('roles.create') }}" class="btn btn-primary">Add Role</a>
     </div>
 
     <div class="row">
@@ -27,11 +27,8 @@
                     <table id="zero_configuration_table" class="table table-striped" style="width:100%">
                         <thead>
                             <tr>
-                                <th>id</th>
-                                <th>Role</th>
-                                <th>Profile_image</th>
-                                <th>name</th>
-                                <th>email</th>
+                                <th>No.</th>
+                                <th>Role Name</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -104,7 +101,7 @@
                 'serverSide': true, // Feature control DataTables' server-side processing mode.
 
                 "ajax": {
-                    "url": "{{ route('getuser') }}",
+                    "url": "{{ route('getroles') }}",
                     'beforeSend': function(request) {
                         request.setRequestHeader("X-CSRF-TOKEN", $('meta[name="csrf-token"]').attr(
                             'content'));

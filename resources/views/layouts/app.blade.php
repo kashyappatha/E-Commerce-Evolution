@@ -138,6 +138,10 @@
     <!-- Custom scripts for all pages-->
 
     <script src="{{ asset('admin_assets/js/sb-admin-2.min.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+
 
     <!-- Page level plugins -->
 
