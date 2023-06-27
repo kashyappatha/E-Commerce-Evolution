@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rules\Password;
+use Spatie\Permission\Models\Role;
+// use Spatie\Permission\Models\Permission;
 // use App\Models\User;
 
 
@@ -30,6 +32,7 @@ class ProfileController extends Controller
     public function profileupdate(Request $request)
     {
         $request->validate([
+            // 'roles'=>'required',
             'profile_image' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Adjust the validation rules as per your requirements
             // 'old_password' => 'required',
             // 'new_password' => ['required', 'string', Password::min(8)->letters()->numbers()->mixedCase()->symbols()],
@@ -74,6 +77,7 @@ class ProfileController extends Controller
 
         // Update the other profile fields as needed
         $user = Auth::user();
+        $user->roles =$request->input('roles');
         $user->name = $request->input('name');
         $user->email = $request->input('email');
         $user->password = $request->input('password');

@@ -31,6 +31,10 @@
                         <div class="card-body">
                             <table class="table table-bordered" style="margin-left:-60px;">
                                 <tr>
+                                    <th>Roles:</th>
+                                    <td style="display:inline; padding: 2px 5px; border-radius: 20px; margin-left:9px; background-color:#008000; color:white;margin-top:-10px;"> <i class="fas fa-check-circle"></i> {{auth()->user()->roles }}</td>
+                                </tr>
+                                <tr>
                                     <th>Profile Image:</th>
                                     <td><img src="{{ asset('admin_assets/img/' . auth()->user()->profile_image) }}"
                                             alt="Profile Image" style="max-width: 50px; border-radius: 25px;"></td>
@@ -139,6 +143,15 @@
                     <div class="row" id="res"></div>
                 </td>
             </tr>
+            <tr>
+               <td>
+                     <label class="labels">Roles:</label>
+               </td>
+               <td>
+                    <input type="text" name="roles" placeholder="Name" class="form-control" value="{{auth()->user()->roles}}">
+               </td>
+
+
             <tr>
                 <td>
                     <label class="labels">Profile Image:</label>

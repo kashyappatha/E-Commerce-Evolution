@@ -5,9 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
-use App\Models\Country;
-use App\Models\State;
-use App\Models\City;
+use App\Models\{Country,State,City};
 
 class CustomerController extends Controller
 {
@@ -121,6 +119,26 @@ class CustomerController extends Controller
             exit;
     }
 
+    public function getStatesByCountry(Request $request)
+    {
+        // $countryId = $request->input('cid');
+        // $states = State::where('country_id', $countryId)->get();
+        // return response()->json(['states' => $states]);
+        $data['states'] = State::where('country_id',$request->cid)->get(['name','id']);
+        return response()->json($data);
+    }
+
+    public function getCitiesByState(Request $request)
+    {
+        $stateId = $request->input('state_id');
+
+       $cities = City::where('state_id', $stateId)->get();
+        return response()->json(['cities' => $cities]);
+    // $data['cities'] =City::where('state_id',$request->sid)->get(['name','id']);
+    // return response()->json($data);
+
+    }
+
     public function create()
 {
     $countries = Country::all();
@@ -131,7 +149,6 @@ class CustomerController extends Controller
     public function store(Request $request)
     {
         Customer::create($request->all());
-
 
         return redirect()->route('customers')->with('success', 'Customers added successfully');
     }
@@ -208,19 +225,6 @@ class CustomerController extends Controller
         $categories = $query->paginate(10);
 
         return view('name', compact('customers'));
-    }
-    public function getStatesByCountry(Request $request)
-    {
-        $countryId = $request->input('cid');
-        $states = State::where('country_id', $countryId)->get();
-        return response()->json(['states' => $states]);
-    }
 
-    public function getCitiesByState(Request $request)
-    {
-        $stateId = $request->input('state_id');
-
-       $cities = City::where('state_id', $stateId)->get();
-        return response()->json(['cities' => $cities]);
-    }
+   }
 }

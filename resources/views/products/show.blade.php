@@ -61,11 +61,11 @@
                 </tr>
                 <tr>
                     <th>orignal_price:</th>
-                    <td>{{ $product->orignal_price }}</td>
+                    <td>{{ $product->orignal_price }}₹-/</td>
                 </tr>
                 <tr>
                     <th>selling_price:</th>
-                    <td>{{ $product->selling_price }}</td>
+                    <td>{{ $product->selling_price }}₹-/</td>
                 </tr>
                 <tr>
                     <th>Quantity:</th>
@@ -74,8 +74,14 @@
 
                 <tr>
                     <th>Product Code:</th>
-                    <td>{{ $product->product_code }}</td>
+                    <td>
+                        <span style="display: inline-block; padding: 5px px; background-color: red; color: #FFFFFF; border-radius: 20px;width: 90px;">
+                            <i class="fas fa-barcode" style="margin-left: 6px;"></i>
+                            {{ $product->product_code }}
+                        </span>
+                    </td>
                 </tr>
+
                 <tr>
                     <th>Status:</th>
                     <td>
@@ -90,6 +96,21 @@
                         @endif
                     </td>
                 </tr>
+                <tr>
+                    <th>Product Image:</th>
+                    <td>
+                        <div style="white-space: nowrap;">
+                            @foreach ($product->productImages as $image)
+                                <div style="display: inline; margin-right: 10px;">
+                                    <img src="{{ asset($image->image) }}" alt="Product Image" style="width: 100px; height: 100px; bransition: transform 0.3s ease;" onmouseover="this.style.transform = 'scale(1.7)';" onmouseout="this.style.transform = 'scale(1)';" />
+                                </div>
+                            @endforeach
+                        </div>
+                    </td>
+                </tr>
+
+
+
 
 
 

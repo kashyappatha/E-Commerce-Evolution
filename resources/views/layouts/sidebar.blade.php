@@ -8,7 +8,7 @@
                 style="border-radius: 23px;">
             <span class="mr-2 d-none d-lg-inline" style="display: flex; justify-content: center; align-items: center;">
                 <span id="userName">{{ auth()->user()->name }}
-                    <small>{{ auth()->user()->level }}</small>
+                    <small style="display: inline-block; padding: 2px 3px;border-radius:40px;font-weight:bold;color:white; "class="badge rounded-pill text-success bg-success text-light font-weight-bold"><i class="fas fa-user">{{ auth()->user()->roles }}</i></small>
                 </span>
                 <a href="{{ route('profile') }}" class="btn btn-secondary btn-sm text-center" id="editButton"
                     style="display: none;margin-left:100px;"><i class="fas fa-edit"></i></a>

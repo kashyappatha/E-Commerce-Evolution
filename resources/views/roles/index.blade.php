@@ -24,7 +24,7 @@
             <div class="card">
                 <div class="card-body">
 
-                    <table id="zero_configuration_table" class="table table-striped" style="width:100%">
+                    <table id="zero_configuration_table" class="table table-striped">
                         <thead>
                             <tr>
                                 <th>No.</th>
@@ -74,7 +74,7 @@
 
 
 @section('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script> --}}
     <script src="https://cdn.datatables.net/v/bs5/dt-1.13.4/datatables.min.js"></script>
 
     <script>

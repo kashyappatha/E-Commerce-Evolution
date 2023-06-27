@@ -26,7 +26,7 @@
 
 
 
-                    <form action="{{ route('products.update', $product->id) }}" method="POST">
+                    <form action="{{ route('products.update', $product->id) }}" method="POST"  enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <ul class="nav nav-tabs" id="myTab" role="tablist">

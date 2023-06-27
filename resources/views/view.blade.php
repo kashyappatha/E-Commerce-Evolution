@@ -12,6 +12,11 @@
 
             <table class="table table-bordered">
                 <tr>
+
+                    <th>Roles:</th>
+                  <td   style="display: inline-block; padding: 5px 5px;border-radius:10px;font-weight:bold;color:white;margin-top: 10px; " class="badge rounded-pill text-success bg-success text-light font-weight-bold; "><i class="fas fa-user">{{ auth()->user()->roles }}</i></td>
+                </tr>
+                <tr>
                     <th>Profile Image:</th>
                     <td><img src="{{ asset('admin_assets/img/' . auth()->user()->profile_image) }}" alt="Profile Image"
                             style="max-width: 55px; border-radius: 25px;"></td>

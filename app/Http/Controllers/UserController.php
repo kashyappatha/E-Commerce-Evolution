@@ -59,6 +59,17 @@ class UserController extends Controller
                 $row = array();
                 $row[] = ++$counter;
 
+                if ($user['roles'] === 'SuperAdmin')
+                {
+                    $roles = '<span class="badge rounded-pill text-success bg-success text-light"> <i class="fas fa-check-circle me-1">SuperAdmin</i></span>';
+                } else if($user['roles'] === 'Admin')
+                {
+                    $roles = '<span class="badge rounded-pill text-success bg-success text-light font-weight-bold"><i class="fas fa-check-circle me-1"></i>Admin</span>';
+
+                }else{
+                    $roles = '<span class="badge rounded-pill text-danger bg-danger text-light"> <i class="fas fa-check-circle me-1">User</i></span>';
+
+                }
 
                 $row[] = $user['roles'];
                 $row[] = '<img src="' . asset('admin_assets/img/' . $user->profile_image) . '" alt="Image" style="max-width: 60px; border-radius: 30px;">';
@@ -134,8 +145,9 @@ class UserController extends Controller
         //     'level' => 'User',
         // ]);
         $roles = Role::pluck('name','name')->all();
+        $userRoles = [];
 
-        return view('users.create',compact('roles'));
+        return view('users.create',compact('roles','userRoles'));
     }
 
     public function edit(Request $request ,$id)
@@ -166,8 +178,8 @@ class UserController extends Controller
 
         // return view('users.edit', compact('user'));
         $user = User::find($id);
-        $roles = Role::pluck('name','id')->all();
-        $userRole = $user->roles->pluck('name','id')->toArray();
+        $roles = Role::pluck('name','name')->all();
+        $userRole = $user->roles;
 
         return view('users.edit',compact('user','roles','userRole'));
     }

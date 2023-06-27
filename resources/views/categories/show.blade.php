@@ -25,14 +25,15 @@
                             <th>Status:</th>
                             <td>
                                 @if ($category->status === 'Active')
-                                    <span class="badge rounded-pill text-success bg-success text-light"><i
+                                    <span class="badge rounded-pill text-success bg-success text-light font-weight-bold"><i
                                             class="fas fa-check-circle me-1">{{ $category->status }}</i></span>
                                 @else
-                                    <span class="badge rounded-pill text-danger bg-danger text-light"><i
-                                            class="fas fa-check-circle me-0">{{ $category->status }}</i></span>
+                                    <span class="badge rounded-pill text-danger bg-danger text-light font-weight-bold"><i
+                                            class="fas fa-times-circle me-1">{{ $category->status }}</i></span>
                                 @endif
                             </td>
                         </tr>
+
 
                         <tr>
                             <th>created_at:</th>

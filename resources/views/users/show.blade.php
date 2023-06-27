@@ -11,6 +11,10 @@
         <div class="card-body">
             <table class="table table-bordered">
                 <tr>
+                    <th>Roles:</th>
+                    <td style="display:inline; padding: 2px 5px; border-radius: 20px; margin-right: 5px; background-color:#008000; color:white;"> <i class="fas fa-check-circle"></i> {{ $user->roles }}</td>
+                </tr>
+                <tr>
                     <th>User Image:</th>
                     <td><img src="{{ asset('admin_assets/img/' . $user->profile_image) }}" alt="Image"
                             style="max-width: 55px; border-radius: 23px;"></td>

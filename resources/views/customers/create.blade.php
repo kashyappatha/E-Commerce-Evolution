@@ -53,59 +53,6 @@
                     </select>
                 </td>
             </tr>
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-            <script>
-                $(document).ready(function() {
-                    // Fetch states based on the selected country
-                    $('#country').on('change', function() {
-                        var idCountry = this.value;
-                        $("#state").html('');
-                        $.ajax({
-                            url: "{{ route('getStatesByCountry') }}",
-                            type: "POST",
-                            data: {
-                                cid: idCountry,
-                                _token: '{{ csrf_token() }}'
-                            },
-                            dataType: 'json',
-                            success: function(result) {
-                                $('#state').html('<option value="">-- Select State --</option>');
-                                $.each(result.states, function(key, value) {
-                                    $("#state").append('<option value="' + value.id + '">' +
-                                        value.name + '</option>');
-                                });
-                                $('#city').html('<option value="">-- Select City --</option>');
-                            }
-                        });
-                    });
-
-                    // Fetch cities based on the selected state
-                    $('#state').change(function() {
-                        var stateId = $(this).val();
-                        if (stateId) {
-                            $.ajax({
-                                url: '{{ route('cities.getCitiesByState') }}',
-                                type: 'POST',
-                                dataType: 'json',
-                                data: {
-                                    _token: '{{ csrf_token() }}',
-                                    state_id: stateId
-                                },
-                                success: function(data) {
-                                    $('#city').html('<option value="">-- Select City --</option>');
-                                    $.each(data.cities, function(key, value) {
-                                        $('#city').append('<option value="' + value.id + '">' +
-                                            value.name +
-                                            '</option>');
-                                    });
-                                }
-                            });
-                        } else {
-                            $('#city').html('<option value="">-- Select City --</option>');
-                        }
-                    });
-                });
-            </script>
             <tr>
                 <td>
                     <label class="form-label">State:</label>
@@ -163,6 +110,59 @@
             </div>
         </div>
     </form>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Fetch states based on the selected country
+            $('#country').on('change', function() {
+                var idCountry = this.value;
+                $("#state").html('');
+                $.ajax({
+                    url: "{{ route('getStatesByCountry') }}",
+                    type: "POST",
+                    data: {
+                        cid: idCountry,
+                        _token: '{{ csrf_token() }}'
+                    },
+                    dataType: 'json',
+                    success: function(result) {
+                        $('#state').html('<option value="">-- Select State --</option>');
+                        $.each(result.states, function(key, value) {
+                            $("#state").append('<option value="' + value.id + '">' +
+                                value.name + '</option>');
+                        });
+                        $('#city').html('<option value="">-- Select City --</option>');
+                    }
+                });
+            });
+
+            // Fetch cities based on the selected state
+            $('#state').change(function() {
+                var stateId = $(this).val();
+                if (stateId) {
+                    $.ajax({
+                        url: '{{ route('cities.getCitiesByState') }}',
+                        type: 'POST',
+                        dataType: 'json',
+                        data: {
+                            _token: '{{ csrf_token() }}',
+                            state_id: stateId
+                        },
+                        success: function(data) {
+                            $('#city').html('<option value="">-- Select City --</option>');
+                            $.each(data.cities, function(key, value) {
+                                $('#city').append('<option value="' + value.id + '">' +
+                                    value.name +
+                                    '</option>');
+                            });
+                        }
+                    });
+                } else {
+                    $('#city').html('<option value="">-- Select City --</option>');
+                }
+            });
+        });
+    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>

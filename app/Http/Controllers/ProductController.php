@@ -91,10 +91,18 @@ public function product()
                 $row[] = $product['brand'];
                 $row[] = $product['small_description'];
                 $row[] = $product['description'];
-                $row[] = $product['orignal_price'];
-                $row[] = $product['selling_price'];
+                $row[] = '&#8377; ' . $product['orignal_price'];
+                $row[] = '&#8377; ' . $product['selling_price'];
+
                 $row[] = $product['quantity'];
-                $row[] = $product['product_code'];
+                $row[] = '<span style="display: inline-block; padding: 5px px; background-color: red; border-radius: 20px; font-weight: bold; color: white; margin-right: 5px; width: 90px;">
+                <i class="fas fa-barcode" style="margin-left: 6px;color: white;"></i>' . $product['product_code'] . '
+            </span>';
+
+
+
+
+
 
 
 

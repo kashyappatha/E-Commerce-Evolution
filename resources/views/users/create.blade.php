@@ -12,18 +12,19 @@
             <div class="col-md-8">
                 <div class="table-responsive shadow">
                     <table class="table table-bordered">
-                       {{-- <tr>
-                         <td>
-                            <select name="roles[]" multiple>
-                                @foreach ($roles as $id => $name)
-                                    <option value="{{ $id }}" {{ in_array($id, $userRoles) ? 'selected' : '' }}>
-                                        {{ $name }}
-                                    </option>
-                                @endforeach
-                            </select>
+                        <tr>
+                            <td>
+                                <strong>Role:</strong>
+                                <select name="roles" class="form-control" id="roles">
+                                    <option value="">Select Role</option>
+                                    @foreach ($roles as $role)
+                                        <option value="{{ $role }}" {{ $userRoles == $role ? 'selected' : '' }}>
+                                            {{ $role }}</option>
+                                    @endforeach
+                                </select>
 
-                         </td>
-                       </tr> --}}
+                            </td>
+                        </tr>
                         <tr>
                             <td>
                                 <label class="form-label">Profile Image:</label>
@@ -51,9 +52,9 @@
         </div>
         <div class="row mt-3">
             <div class="d-grid gap-2">
-                <button type="submit" class="btn btn-primary">Submit</button>
-                <a href="{{ url()->previous() }}" class="btn btn-primary">Back</a>
-                <button type="reset" class="btn btn-primary">Reset</button>
+                <button type="submit" class="btn btn-primary" style="width:70px;">Submit</button>
+                <a href="{{ url()->previous() }}" class="btn btn-primary"style="width: 70px;">Back</a>
+                <button type="reset" class="btn btn-primary" style="width: 70px;">Reset</button>
             </div>
         </div>
     </form>

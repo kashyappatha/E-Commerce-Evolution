@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('content')
+@section('contents')
 <div class="row">
     <div class="col-lg-12 margin-tb">
         <div class="pull-left">
@@ -18,11 +18,17 @@
         <th>Permissions</th>
     </tr>
     <tr>
-        <td>{{ $role->name }}</td>
+        <td>
+            <span  style="display: inline-block; padding: 10px 12px;border-radius: 4px;font-weight:bold;color:white; " class="badge rounded-pill {{ $role->name === 'Admin' ? 'bg-success text-light' : 'bg-primary text-light' }}">
+                <i class="{{ $role->name === 'Admin' ? 'fas fa-user' : 'fas fa-crown' }}"></i>
+                {{ $role->name }}
+            </span>
+        </td>
+
         <td>
             @if(!empty($rolePermissions))
                 @foreach($rolePermissions as $v)
-                    <span class="label label-success">{{ $v->name }}</span>
+                    <span style="display: inline-block; padding: 5px 10px; background-color: green; color: white; border-radius: 4px; margin-right: 5px;"> <i class="fas fa-check-circle me-1">{{ $v->name }}</i></span>
                 @endforeach
             @endif
         </td>

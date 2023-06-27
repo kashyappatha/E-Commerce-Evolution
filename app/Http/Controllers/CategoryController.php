@@ -56,10 +56,10 @@ class CategoryController extends Controller
 
                 if ($category['status'] === 'Active')
                 {
-                    $status = '<span class="badge rounded-pill text-success bg-success text-light">Active</span>';
+                    $status = '<span class="badge rounded-pill text-success bg-success text-light font-weight-bold"> <i class="fas fa-check-circle me-1">Active</i></span>';
                 } else
                 {
-                    $status = '<span class="badge rounded-pill text-danger bg-danger text-light">Inactive</span>';
+                    $status = '<span class="badge rounded-pill text-danger bg-danger text-light font-weight-bold"> <i class="fas fa-times-circle me-1">Inactive</i></span>';
                 }
 
 

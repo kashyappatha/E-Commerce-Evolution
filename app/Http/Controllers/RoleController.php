@@ -8,6 +8,8 @@ use App\Http\Controllers\Controller;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+
 
 // use DB;
 class RoleController extends Controller
@@ -19,7 +21,7 @@ class RoleController extends Controller
      */
     // function __construct()
     // {
-    //      $this->middleware('permission:role-list|role-create|role-edit|role-delete', ['only' => ['index','store']]);
+    //      $this->middleware('permission:role-list|role-create|role-edit|role-delete', ['only' => ['index','store','create', 'edit', 'update', 'destroy']]);
     //      $this->middleware('permission:role-create', ['only' => ['create','store']]);
     //      $this->middleware('permission:role-edit', ['only' => ['edit','update']]);
     //      $this->middleware('permission:role-delete', ['only' => ['destroy']]);
@@ -72,41 +74,48 @@ class RoleController extends Controller
 
                 $row = array();
                 $row[] = ++$counter;
-
-                $row[] = $role['name'];
+                // $row[] = '<span class="badge rounded-pill ' . ($role['name'] === 'Admin' ? 'bg-success text-light' : 'bg-success text-light') . '">
+                // <i class="fas fa-user"></i>' . $role['name'] . '</span>';
+                $row[] = '<span class="badge rounded-pill ' . ($role['name'] === 'Admin' ? 'bg-success text-light' : 'bg-primary text-light') . '">
+              <i class="' . ($role['name'] === 'Admin' ? 'fas fa-user' : 'fas fa-crown') . '"></i>' . $role['name'] . '</span>';
 
                 $Action = '';
 
                 $Action .= '<a href="' . route(('roles.edit'), [$role["id"]]) . '">&nbsp;<i class="fas fa-edit"></i>|';
 
-                $Action .= '<a href="' . route(('roles.show'), [$role["id"]]) . '">&nbsp;<i class="fas fa-eye"></i>|';
 
 
-                $Action .= '<a data-id="' . $role["id"] . '" href="' . route("roles.destroy", ["id" => $role["id"]]) . '" onclick="event
-                .preventDefault(); deleteUser(' . $role["id"] . ')"><i class="fas fa-trash-alt"></i></a>';
 
-                // JavaScript code for the SweetAlert confirmation dialog
-                $Action .= '
-                <script>
 
-                    function deleteUser(id) {
-                        Swal.fire({
-                            title: "Are you sure?",
-                            text: "You Want to Remove the User !",
-                            icon: "warning",
-                            showCancelButton: true,
-                            confirmButtonColor: "#3085d6",
-                            cancelButtonColor: "#d33",
-                            confirmButtonText: "Yes, remove it!",
+                // if (Auth::user()->can('role-delete')) {
 
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                // Perform the delete action here
-                                window.location.href = "' . route("roles.destroy", ["id" => $role["id"]]) . '?id=" + id;
-                            }
-                        });
-                    }
-                </script>';
+                    $Action .= '<a href="' . route(('roles.show'), [$role["id"]]) . '">&nbsp;<i class="fas fa-eye"></i>|';
+
+                // }
+
+                $Action .= '<a href="' . route(('roles.destroy'),[$role["id"]]) .'">&nbsp;<i class="fas fa-trash-alt"></i></a>';
+                // // JavaScript code for the SweetAlert confirmation dialog
+                // $Action .= '
+                // <script>
+
+                //     function deleteUser(id) {
+                //         Swal.fire({
+                //             title: "Are you sure?",
+                //             text: "You Want to Remove the User !",
+                //             icon: "warning",
+                //             showCancelButton: true,
+                //             confirmButtonColor: "#3085d6",
+                //             cancelButtonColor: "#d33",
+                //             confirmButtonText: "Yes, remove it!",
+
+                //         }).then((result) => {
+                //             if (result.isConfirmed) {
+                //                 // Perform the delete action here
+                //                 window.location.href = "' . route("roles.destroy", ["id" => $role["id"]]) . '?id=" + id;
+                //             }
+                //         });
+                //     }
+                // </script>';
 
                 $row[] = $Action;
                 $data[] = $row;
@@ -180,12 +189,13 @@ class RoleController extends Controller
     public function edit($id)
     {
         $role = Role::find($id);
+        $roles = Role::all();
         $permission = Permission::get();
         $rolePermissions = DB::table("role_has_permissions")->where("role_has_permissions.role_id",$id)
             ->pluck('role_has_permissions.permission_id','role_has_permissions.permission_id')
             ->all();
 
-        return view('roles.edit',compact('role','permission','rolePermissions'));
+        return view('roles.edit',compact('role','roles','permission','rolePermissions'));
     }
 
     /**

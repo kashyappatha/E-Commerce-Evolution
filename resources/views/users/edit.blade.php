@@ -10,8 +10,17 @@
         @csrf
         @method('PUT')
         <input type="hidden" name="id" value="{{ $user->id }}">
-        
+
         <div class="row">
+            <div class="col mb-3">
+                <strong>Role:</strong>
+                    <select name="roles" class="form-control" id="roles">
+                        <option value="">Select Role</option>
+                        @foreach($roles as $role)
+                            <option value="{{ $role }}" {{ $userRole == $role ? 'selected' : '' }}>{{ $role }}</option>
+                        @endforeach
+                    </select>
+            </div>
             <div class="col mb-3">
                 <label class="form-label">image:</label>
                 <input type="file" name="profile_image" class="form-control"
