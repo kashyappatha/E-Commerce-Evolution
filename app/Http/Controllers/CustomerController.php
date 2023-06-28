@@ -53,7 +53,7 @@ class CustomerController extends Controller
                 $row[] = ++$counter;
 
                 // $country = $customer->name;
-                $row[] = '<img src="' . asset('admin_assets/img/' . $customer->profile_image) . '" alt="Image" style="max-width: 60px; border-radius: 30px;">';
+                $row[] = '<img src="' . asset('admin_assets/img/' . $customer->profile_image) . '" alt="Image" style="max-width: 60px; border-radius: 30px;box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.7);">';
                 $row[] = $customer['name'];
                 $row[] = $customer['email'];
                 // $row[] = $country['name'];

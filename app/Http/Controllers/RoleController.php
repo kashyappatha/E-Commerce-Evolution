@@ -21,10 +21,10 @@ class RoleController extends Controller
      */
     // function __construct()
     // {
-    //      $this->middleware('permission:role-list|role-create|role-edit|role-delete', ['only' => ['index','store','create', 'edit', 'update', 'destroy']]);
-    //      $this->middleware('permission:role-create', ['only' => ['create','store']]);
-    //      $this->middleware('permission:role-edit', ['only' => ['edit','update']]);
-    //      $this->middleware('permission:role-delete', ['only' => ['destroy']]);
+    //     //  $this->middleware('permission:role-list|role-create|role-edit|role-delete', ['only' => ['index','store','create', 'edit', 'update', 'destroy']]);
+    //     $this->middleware('permission:role-create', ['only' => ['create','store']]);
+    //     $this->middleware('permission:role-edit', ['only' => ['edit','update']]);
+    //     $this->middleware('permission:role-delete', ['only' => ['destroy']]);
     // }
 
     /**
@@ -77,7 +77,8 @@ class RoleController extends Controller
                 // $row[] = '<span class="badge rounded-pill ' . ($role['name'] === 'Admin' ? 'bg-success text-light' : 'bg-success text-light') . '">
                 // <i class="fas fa-user"></i>' . $role['name'] . '</span>';
                 $row[] = '<span class="badge rounded-pill ' . ($role['name'] === 'Admin' ? 'bg-success text-light' : 'bg-primary text-light') . '">
-              <i class="' . ($role['name'] === 'Admin' ? 'fas fa-user' : 'fas fa-crown') . '"></i>' . $role['name'] . '</span>';
+                <i class="' . ($role['name'] === 'User' ? 'fas fa-user' : 'fas fa-crown') . '"></i>' . $role['name'] . '</span>';
+
 
                 $Action = '';
 

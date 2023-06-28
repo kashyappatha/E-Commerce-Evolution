@@ -15,7 +15,13 @@
                         <tr>
                             <th>Category_Image:</th>
                             <td><img src="{{ asset('admin_assets/img/' . $category->image) }}" alt="Image"
-                                    style="max-width: 130px; border-radius: 10px;"></td>
+                                    style="max-width: 130px; border-radius: 10px;transition: transform 0.2s;">
+                                    <style>
+                                        img:hover {
+                                            transform: scale(1.3);
+                                        }
+                                    </style>
+                                </td>
                         </tr>
                         <tr>
                             <th>Category:</th>

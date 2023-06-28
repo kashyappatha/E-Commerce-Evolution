@@ -12,6 +12,7 @@ use  Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Arr;
+use Spatie\Permission\Models\Permission;
 
 
 
@@ -72,7 +73,7 @@ class UserController extends Controller
                 }
 
                 $row[] = $user['roles'];
-                $row[] = '<img src="' . asset('admin_assets/img/' . $user->profile_image) . '" alt="Image" style="max-width: 60px; border-radius: 30px;">';
+                $row[] = '<img src="' . asset('admin_assets/img/' . $user->profile_image) . '" alt="Image" style="max-width: 60px; border-radius: 30px;box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.7);margin-left:30px;margin-top:-5px;">';
                 $row[] = $user['name'];
                 $row[] = $user['email'];
                 // $row[] = $user['password'];
@@ -179,6 +180,7 @@ class UserController extends Controller
         // return view('users.edit', compact('user'));
         $user = User::find($id);
         $roles = Role::pluck('name','name')->all();
+      
         $userRole = $user->roles;
 
         return view('users.edit',compact('user','roles','userRole'));

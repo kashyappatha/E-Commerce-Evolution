@@ -3,12 +3,13 @@
 
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center ">
+        <img  style="width:55px;border-radius:50px;"src="{{asset('admin_assets/img/images1.png')}}" alt="Image">
         <div class="sidebar-brand-icon">
             <img src="{{ asset('admin_assets/img/' . auth()->user()->profile_image) }}" alt="Image" width="30"
                 style="border-radius: 23px;">
             <span class="mr-2 d-none d-lg-inline" style="display: flex; justify-content: center; align-items: center;">
                 <span id="userName">{{ auth()->user()->name }}
-                    <small style="display: inline-block; padding: 2px 3px;border-radius:40px;font-weight:bold;color:white; "class="badge rounded-pill text-success bg-success text-light font-weight-bold"><i class="fas fa-user">{{ auth()->user()->roles }}</i></small>
+                    <small style="display: inline-block; padding: 2px 3px;border-radius:40px;font-weight:bold;color:white; "class="badge rounded-pill text-success bg-success text-light font-weight-bold"><i class="fas fa-crown">{{ auth()->user()->roles }}</i></small>
                 </span>
                 <a href="{{ route('profile') }}" class="btn btn-secondary btn-sm text-center" id="editButton"
                     style="display: none;margin-left:100px;"><i class="fas fa-edit"></i></a>

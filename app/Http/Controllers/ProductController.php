@@ -85,7 +85,14 @@ public function product()
 
 
                 $row[] = $categoryName;
-                $row[] = '<img src="' . asset($product->images) . '" alt="Image" style="max-width:100px; border-radius:10px;">';
+                $row[] = '<img src="' . asset($product->images) . '" alt="Image" style="max-width:100px; border-radius:10px; margin-top:-15px; transition: transform 0.2s;">
+
+                <style>
+                    img:hover {
+                        transform: scale(1.4);
+                    }
+                </style>';
+
                 $row[] = $product['title'];
                 // $row[]= $product['image'];
                 $row[] = $product['brand'];

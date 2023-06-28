@@ -15,7 +15,13 @@
                 <tr>
                     <th>Customer Image:</th>
                     <td><img src="{{ asset('admin_assets/img/' . $customer->profile_image) }}" alt="Profile Image"
-                            style="max-width: 55px; border-radius: 25px;"></td>
+                            style="max-width: 55px; border-radius: 25px; box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.7);transition: transform 0.2s;">
+                            <style>
+                                img:hover {
+                                    transform: scale(1.2);
+                                }
+                            </style>
+                    </td>
                 </tr>
                 <tr>
                     <th>Name:</th>

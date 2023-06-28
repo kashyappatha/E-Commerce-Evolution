@@ -66,7 +66,13 @@ class CategoryController extends Controller
                 $row = array();
                 $row[] = ++$counter;
 
-                $row[] = '<img src="' . asset('admin_assets/img/' . $category->image) . '" alt="Image" style="max-width: 70px; border-radius: 10px;">';
+                $row[] = '<img src="' . asset('admin_assets/img/' . $category->image) . '" alt="Image" style="max-width: 70px; border-radius: 10px;transition: transform 0.2s;">
+
+                <style>
+                    img:hover {
+                        transform: scale(1.4);
+                    }
+                </style>';
 
                 $row[] = $category['category'];
 

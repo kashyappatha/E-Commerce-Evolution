@@ -3,7 +3,7 @@
 @section('contents')
 
 
-    @php
+     @php
         $changeCount = '0';
     @endphp
 
@@ -32,12 +32,13 @@
                             <table class="table table-bordered" style="margin-left:-60px;">
                                 <tr>
                                     <th>Roles:</th>
-                                    <td style="display:inline; padding: 2px 5px; border-radius: 20px; margin-left:9px; background-color:#008000; color:white;margin-top:-10px;"> <i class="fas fa-check-circle"></i> {{auth()->user()->roles }}</td>
+                                    <td   style="display: inline-block; padding: 5px 5px;border-radius:10px;font-weight:bold;color:white;margin-top: 10px; " class="badge rounded-pill text-success bg-success text-light font-weight-bold; "><i class="fas fa-check-circle">{{ auth()->user()->roles }}</i></td>
+
                                 </tr>
                                 <tr>
                                     <th>Profile Image:</th>
                                     <td><img src="{{ asset('admin_assets/img/' . auth()->user()->profile_image) }}"
-                                            alt="Profile Image" style="max-width: 50px; border-radius: 25px;"></td>
+                                            alt="Profile Image" style="max-width: 50px; border-radius: 25px; box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.7);"></td>
                                 </tr>
                                 <tr>
                                     <th>Name:</th>
@@ -47,10 +48,10 @@
                                     <th>Email:</th>
                                     <td>{{ auth()->user()->email }}</td>
                                 </tr>
-                                <tr>
+                                {{-- <tr>
                                     <th>Password:</th>
                                     <td>{{ auth()->user()->password }}</td>
-                                </tr>
+                                </tr> --}}
 
                             </table>
                         </div>
@@ -149,6 +150,18 @@
                </td>
                <td>
                     <input type="text" name="roles" placeholder="Name" class="form-control" value="{{auth()->user()->roles}}">
+                    {{-- <select name="roles" class="form-control" id="roles">
+                        <option value="">Select Role</option>
+                       <option value="{{auth()->user()->roles}}">Admin</option>
+                    </select> --}}
+                    {{-- <select name="roles" class="form-control" id="roles">
+                        <option value="">Select Role</option>
+                        @foreach($roles as $role)
+                            <option value="{{ $role }}" {{ $userRole == $role ? 'selected' : '' }}>{{ $role }}</option>
+                        @endforeach
+                    </select> --}}
+
+
                </td>
 
 

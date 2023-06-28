@@ -15,8 +15,15 @@
                     <th>Product_thumbnail:</th>
                     <td>
                         <img src="{{ asset($product->images) }}" alt="Image"
-                            style="max-width: 130px; border-radius: 10px;">
+                            style="max-width: 130px; border-radius: 10px; transition: transform 0.2s;">
+                            <style>
+                                img:hover {
+                                    transform: scale(1.2);
+                                }
+                            </style>
                     </td>
+
+
                 </tr>
                 <tr>
                     <th>Category:</th>

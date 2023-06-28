@@ -13,18 +13,21 @@
 </div>
 
 <table class="table table-bordered">
+
     <tr>
-        <th>Name</th>
-        <th>Permissions</th>
-    </tr>
-    <tr>
+        <th>Role:</th>
         <td>
             <span  style="display: inline-block; padding: 10px 12px;border-radius: 4px;font-weight:bold;color:white; " class="badge rounded-pill {{ $role->name === 'Admin' ? 'bg-success text-light' : 'bg-primary text-light' }}">
-                <i class="{{ $role->name === 'Admin' ? 'fas fa-user' : 'fas fa-crown' }}"></i>
+                {{-- <i class="{{ $role->name === 'Admin' ? 'fas fa-user' : 'fas fa-crown' }}"></i> --}}
+                <i class="{{$role['name'] === 'User' ? 'fas fa-user' : 'fas fa-crown'}}"></i>
                 {{ $role->name }}
             </span>
         </td>
 
+
+    </tr>
+    <tr>
+        <th>Permissions:</th>
         <td>
             @if(!empty($rolePermissions))
                 @foreach($rolePermissions as $v)
